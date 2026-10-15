@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chuyến Bay Hạnh Phúc TU013 | Đức Trí & Tố Uyên - Tháng 11.2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            royal: '#0A2578',
+            royalLight: '#1E40AF',
+            skyPastel: '#CDE2F5',
+            skySoft: '#EBF5FF',
+            sunYellow: '#FFD13B',
+            sunWarm: '#F59E0B',
+            creamPaper: '#FAF6EE',
+          },
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+            script: ['"Dancing Script"', 'cursive'],
+            serif: ['"Playfair Display"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: linear-gradient(180deg, #CFE8FF 0%, #EBF5FF 35%, #FAF6EE 70%, #D8EEFF 100%);
+      color: #0A2578;
+      overflow-x: hidden;
+    }
+    .paper-card {
+      background-color: #FAF7F0;
+      background-image: radial-gradient(#0A2578 0.45px, transparent 0.45px);
+      background-size: 18px 18px;
+    }
+    .washi-tape {
+      background: rgba(255, 214, 68, 0.88);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      backdrop-filter: blur(2px);
+    }
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(2deg); }
+    }
+    .animate-float {
+      animation: floatSlow 4s ease-in-out infinite;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
+      display: flex;
+      width: max-content;
+      animation: marquee 45s linear infinite;
+    }
+    .animate-marquee:hover {
+      animation-play-state: paused;
+    }
+    .polaroid-item {
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .polaroid-item:hover {
+      transform: translateY(-6px) rotate(0deg) scale(1.02) !important;
+      z-index: 20;
+    }
+    @keyframes spinVinyl {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .vinyl-spin {
+      animation: spinVinyl 5s linear infinite;
+    }
+    .vinyl-paused {
+      animation-play-state: paused;
+    }
+    @keyframes eqBar {
+      0%, 100% { height: 4px; }
+      50% { height: 14px; }
+    }
+    .eq-bar-1 { animation: eqBar 0.7s ease-in-out infinite; }
+    .eq-bar-2 { animation: eqBar 0.5s ease-in-out infinite 0.2s; }
+    .eq-bar-3 { animation: eqBar 0.8s ease-in-out infinite 0.4s; }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-sunYellow selection:text-royal">
+
+  <!-- TRÌNH PHÁT NHẠC NỀN CỐ ĐỊNH -->
+  <audio id="bgMusic" src="the-gioi-cua-anh.mp3" loop preload="auto"></audio>
+
+  <div onclick="toggleMusic()" class="fixed bottom-4 right-4 z-50 flex items-center gap-2.5 bg-white/95 backdrop-blur-md p-2 pr-4 rounded-full shadow-2xl border-2 border-royal cursor-pointer hover:scale-105 transition" title="Bật / Tắt nhạc nền">
+    <div class="relative w-11 h-11 rounded-full bg-royal text-sunYellow flex items-center justify-center shadow-md">
+      <div id="vinylDisc" class="w-9 h-9 rounded-full border-2 border-dashed border-sunYellow/80 flex items-center justify-center vinyl-spin vinyl-paused">
+        <span class="text-sm">🎵</span>
+      </div>
+      <span id="musicStatusDot" class="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-amber-400 border-2 border-white"></span>
+    </div>
+
+    <div class="text-left">
+      <div class="flex items-center gap-1.5">
+        <span class="text-[10px] font-extrabold uppercase tracking-wider text-royalLight">NHẠC NỀN TU013</span>
+        <div id="musicEq" class="hidden items-end gap-0.5 h-3.5">
+          <span class="w-0.5 bg-amber-500 rounded-full eq-bar-1"></span>
+          <span class="w-0.5 bg-royal rounded-full eq-bar-2"></span>
+          <span class="w-0.5 bg-amber-500 rounded-full eq-bar-3"></span>
+        </div>
+      </div>
+      <p class="text-xs font-extrabold text-royal leading-tight">Thế Giới Của Anh 💙</p>
+      <p id="musicHintText" class="text-[10px] text-slate-500 font-medium">Chạm để phát nhạc</p>
+    </div>
+  </div>
+
+  <!-- THANH ĐIỀU HƯỚNG MỚI (WEDDING DAY & ALBUM) -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b-2 border-skyPastel shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- LOGO THƯ PHÁP MỚI -->
+      <a href="#top" class="flex flex-col group">
+        <span class="font-script text-2xl sm:text-3xl text-royal font-bold tracking-wide group-hover:scale-105 transition origin-left">
+          Đức Trí <span class="text-sunWarm">&amp;</span> Tố Uyên
+        </span>
+        <span class="text-[10px] font-extrabold tracking-[0.25em] uppercase text-royal/70 -mt-1">A N D &nbsp; B E Y O N D</span>
+      </a>
+
+      <!-- MENU RÚT GỌN: WEDDING DAY & ALBUM -->
+      <nav class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm font-extrabold">
+        <a href="#three-events-section" class="px-4 py-2 rounded-full bg-skySoft hover:bg-sunYellow text-royal shadow-sm transition flex items-center gap-1.5">
+          💍 Wedding Day
+        </a>
+        <a href="#mega-album" class="px-4 py-2 rounded-full bg-royal text-sunYellow shadow-md hover:bg-royalLight transition flex items-center gap-1.5">
+          📸 Album
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PHẦN 1: HERO & LỊCH THÁNG 11 -->
+  <section id="top" class="relative py-10 px-4">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      
+      <!-- Cột Trái: Lịch -->
+      <div id="calendar-section" class="lg:col-span-6 paper-card rounded-3xl p-6 sm:p-8 shadow-xl border-4 border-white relative">
+        <div class="bg-[#CFDFF2] rounded-2xl p-5 pb-6 relative shadow-inner mx-auto max-w-sm">
+          <div class="absolute -top-6 -left-5 w-16 h-16 bg-white rounded-full shadow-md flex items-center justify-center text-3xl animate-float">
+            🐻‍❄️<span class="absolute -top-2 text-sm">👑</span>
+          </div>
+          <div class="absolute top-12 -right-6 w-16 h-16 bg-amber-100 rounded-full border-2 border-amber-400 shadow-md flex items-center justify-center text-3xl animate-float">
+            🌞
+          </div>
+
+          <div class="relative rounded-xl overflow-hidden aspect-[4/4.3] bg-white shadow-md group">
+            <img id="heroCoverImg" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80" alt="Đức Trí & Tố Uyên" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-royal/70 via-transparent to-transparent flex flex-col justify-end p-4 text-center text-white">
+              <p class="text-[11px] uppercase tracking-widest opacity-90">WE'RE GETTING MARRIED</p>
+              <p class="font-script text-4xl text-sunYellow drop-shadow">Save the Date</p>
+              <p class="font-bold text-sm tracking-wider mt-0.5">ĐỨC TRÍ &amp; TỐ UYÊN • 11.2026</p>
+            </div>
+            <label class="absolute top-3 right-3 bg-white/90 hover:bg-sunYellow text-royal text-xs font-bold px-3 py-1.5 rounded-full shadow cursor-pointer transition">
+              📷 Đổi ảnh bìa
+              <input type="file" accept="image/*" class="hidden" onchange="changeCoverImage(event)" />
+            </label>
+          </div>
+
+          <div class="mt-4 flex items-center justify-center relative">
+            <span class="absolute left-1 -bottom-2 text-2xl rotate-[-15deg]">🧷</span>
+            <h1 class="font-script text-5xl text-royal tracking-wide">Save the Date</h1>
+          </div>
+        </div>
+
+        <div class="mt-7 text-center">
+          <div class="inline-block relative">
+            <span class="text-sm font-serif font-bold text-royal absolute -top-4 right-0">2026</span>
+            <h2 class="font-serif text-5xl sm:text-6xl text-royal tracking-tight">Tháng 11</h2>
+            <p class="font-script text-2xl text-royal -mt-2 text-left pl-2">Calendar</p>
+          </div>
+
+          <div class="mt-4 bg-white/80 rounded-2xl p-4 shadow-sm border border-skyPastel">
+            <div class="grid grid-cols-7 gap-1 text-[10px] sm:text-xs font-extrabold text-royal border-b border-skyPastel pb-2 mb-2">
+              <div>THỨ 2</div><div>THỨ 3</div><div>THỨ 4</div><div>THỨ 5</div><div>THỨ 6</div><div class="text-royalLight">THỨ 7</div><div class="text-amber-600">CHỦ NHẬT</div>
+            </div>
+            <div class="grid grid-cols-7 gap-y-2.5 gap-x-1 text-center items-center text-royal">
+              <div></div><div></div><div></div><div></div><div></div><div></div>
+              <div class="py-1"><div class="font-bold text-sm">1</div><div class="text-[9px] opacity-60">23/9</div></div>
+              <div class="py-1"><div class="font-bold text-sm">2</div><div class="text-[9px] opacity-60">24/9</div></div>
+              <div class="py-1"><div class="font-bold text-sm">3</div><div class="text-[9px] opacity-60">25/9</div></div>
+              <div class="py-1"><div class="font-bold text-sm">4</div><div class="text-[9px] opacity-60">26/9</div></div>
+              <div class="py-1"><div class="font-bold text-sm">5</div><div class="text-[9px] opacity-60">27/9</div></div>
+              <div class="py-1"><div class="font-bold text-sm">6</div><div class="text-[9px] opacity-60">28/9</div></div>
+              <button onclick="scrollToEvent('nhagai')" class="group relative mx-auto w-11 h-11 rounded-full bg-royal text-white flex flex-col items-center justify-center shadow-md hover:scale-110 hover:bg-sunYellow hover:text-royal transition" title="Tiệc Nhà Gái 07.11">
+                <span class="text-xs font-extrabold leading-none">❤️ 7</span><span class="text-[8px] font-bold opacity-90">29/9</span>
+              </button>
+              <div class="py-1"><div class="font-bold text-sm">8</div><div class="text-[9px] opacity-60">30/9</div></div>
+              <div class="py-1"><div class="font-bold text-sm">9</div><div class="text-[9px] opacity-60">1/10</div></div>
+              <div class="py-1"><div class="font-bold text-sm">10</div><div class="text-[9px] opacity-60">2/10</div></div>
+              <div class="py-1"><div class="font-bold text-sm">11</div><div class="text-[9px] opacity-60">3/10</div></div>
+              <div class="py-1"><div class="font-bold text-sm">12</div><div class="text-[9px] opacity-60">4/10</div></div>
+              <div class="py-1"><div class="font-bold text-sm">13</div><div class="text-[9px] opacity-60">5/10</div></div>
+              <button onclick="scrollToEvent('giatien')" class="group relative mx-auto w-11 h-11 rounded-full bg-royal text-white flex flex-col items-center justify-center shadow-md hover:scale-110 hover:bg-sunYellow hover:text-royal transition" title="Lễ Gia Tiên 14.11">
+                <span class="text-xs font-extrabold leading-none">❤️ 14</span><span class="text-[8px] font-bold opacity-90">6/10</span>
+              </button>
+              <div class="py-1"><div class="font-bold text-sm">15</div><div class="text-[9px] opacity-60">7/10</div></div>
+              <div class="py-1"><div class="font-bold text-sm">16</div><div class="text-[9px] opacity-60">8/10</div></div>
+              <div class="py-1"><div class="font-bold text-sm">17</div><div class="text-[9px] opacity-60">9/10</div></div>
+              <div class="py-1"><div class="font-bold text-sm">18</div><div class="text-[9px] opacity-60">10/10</div></div>
+              <div class="py-1"><div class="font-bold text-sm">19</div><div class="text-[9px] opacity-60">11/10</div></div>
+              <div class="py-1"><div class="font-bold text-sm">20</div><div class="text-[9px] opacity-60">12/10</div></div>
+              <button onclick="scrollToEvent('nhatrai')" class="group relative mx-auto w-11 h-11 rounded-full bg-royal text-white flex flex-col items-center justify-center shadow-md hover:scale-110 hover:bg-sunYellow hover:text-royal transition" title="Tiệc Nhà Trai 21.11">
+                <span class="text-xs font-extrabold leading-none">❤️ 21</span><span class="text-[8px] font-bold opacity-90">13/10</span>
+              </button>
+              <div class="py-1"><div class="font-bold text-sm">22</div><div class="text-[9px] opacity-60">14/10</div></div>
+              <div class="py-1"><div class="font-bold text-sm">23</div><div class="text-[9px] opacity-60">15/10</div></div>
+              <div class="py-1"><div class="font-bold text-sm">24</div><div class="text-[9px] opacity-60">16/10</div></div>
+              <div class="py-1"><div class="font-bold text-sm">25</div><div class="text-[9px] opacity-60">17/10</div></div>
+              <div class="py-1"><div class="font-bold text-sm">26</div><div class="text-[9px] opacity-60">18/10</div></div>
+              <div class="py-1"><div class="font-bold text-sm">27</div><div class="text-[9px] opacity-60">19/10</div></div>
+              <div class="py-1"><div class="font-bold text-sm">28</div><div class="text-[9px] opacity-60">20/10</div></div>
+              <div class="py-1"><div class="font-bold text-sm">29</div><div class="text-[9px] opacity-60">21/10</div></div>
+              <div class="py-1"><div class="font-bold text-sm">30</div><div class="text-[9px] opacity-60">22/10</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cột Phải -->
+      <div class="lg:col-span-6 space-y-6">
+        <div class="bg-white/95 rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-skyPastel relative">
+          <div class="washi-tape w-32 h-7 mx-auto -mt-10 mb-4 rotate-[-2deg] rounded-sm"></div>
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full bg-sunYellow text-royal font-extrabold text-xs tracking-wider uppercase">BOARDING PASS • TU013</span>
+            <span class="text-2xl animate-float">🎈</span>
+          </div>
+
+          <h2 class="font-script text-4xl sm:text-5xl text-royal text-center mt-2">Chuyến Bay Hạnh Phúc</h2>
+          <div class="w-40 h-1 bg-sunYellow mx-auto my-2 rounded-full"></div>
+          <p class="text-center text-xs sm:text-sm font-extrabold text-royal uppercase leading-relaxed">
+            KÍNH CHÀO QUÝ KHÁCH ĐÃ ĐẾN VỚI CHUYẾN BAY ĐẶC BIỆT MANG SỐ HIỆU <span class="text-amber-600 underline">TU013</span> CỦA HÃNG HÀNG KHÔNG TÌNH YÊU <span class="text-royalLight">TUAIRLINE</span>!
+          </p>
+
+          <div class="mt-6 space-y-3">
+            <div onclick="scrollToEvent('nhagai')" class="cursor-pointer p-3.5 rounded-2xl bg-skySoft hover:bg-sunYellow/40 border border-skyPastel flex items-center justify-between transition">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-royal text-white flex flex-col items-center justify-center font-extrabold">
+                  <span class="text-sm">07</span><span class="text-[9px] text-sunYellow">TH11</span>
+                </div>
+                <div>
+                  <h4 class="font-extrabold text-royal text-sm">Tiệc Cưới Nhà Gái • 17:30 Thứ Bảy</h4>
+                  <p class="text-xs text-royal/80">Nhà hàng tiệc cưới Merastis (Sảnh RUBY - Lầu 3)</p>
+                </div>
+              </div>
+              <span class="text-xs font-bold text-royalLight">Xem →</span>
+            </div>
+
+            <div onclick="scrollToEvent('giatien')" class="cursor-pointer p-3.5 rounded-2xl bg-amber-50 hover:bg-sunYellow/40 border border-amber-300 flex items-center justify-between transition">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-sunYellow text-royal border border-royal flex flex-col items-center justify-center font-extrabold">
+                  <span class="text-sm">14</span><span class="text-[9px]">TH11</span>
+                </div>
+                <div>
+                  <h4 class="font-extrabold text-royal text-sm">Lễ Gia Tiên &amp; Vu Quy • 09:00 - 16:00</h4>
+                  <p class="text-xs text-royal/80">Tại Tư Gia (Phường Tam Thắng, TP. Hồ Chí Minh)</p>
+                </div>
+              </div>
+              <span class="text-xs font-bold text-royalLight">Xem →</span>
+            </div>
+
+            <div onclick="scrollToEvent('nhatrai')" class="cursor-pointer p-3.5 rounded-2xl bg-skySoft hover:bg-sunYellow/40 border border-skyPastel flex items-center justify-between transition">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-royal text-white flex flex-col items-center justify-center font-extrabold">
+                  <span class="text-sm">21</span><span class="text-[9px] text-sunYellow">TH11</span>
+                </div>
+                <div>
+                  <h4 class="font-extrabold text-royal text-sm">Tiệc Cưới Nhà Trai • 18:00 Thứ Bảy</h4>
+                  <p class="text-xs text-royal/80">CAPELLA PARK VIEW (Sảnh SARIN - Tầng 1)</p>
+                </div>
+              </div>
+              <span class="text-xs font-bold text-royalLight">Xem →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DẢI PHIM KỶ NIỆM (ALBUM CƯỚI PRE-WEDDING ĐÃ PHÓNG TO KÍCH CỠ) -->
+  <section class="py-5 bg-royal/95 border-y-4 border-sunYellow overflow-hidden shadow-lg">
+    <div class="max-w-6xl mx-auto px-4 mb-2.5 flex items-center justify-between text-white text-xs">
+      <span class="font-bold tracking-wider uppercase text-sunYellow">🎞️ ALBUM CƯỚI PRE-WEDDING ĐỨC TRÍ &amp; TỐ UYÊN (BẤM ĐỂ XEM LỚN)</span>
+      <span id="totalPhotoCounter" class="bg-white/20 px-3.5 py-1 rounded-full font-semibold">24 ảnh</span>
+    </div>
+    <div id="marqueeTrack" class="animate-marquee gap-5 px-4"></div>
+  </section>
+
+  <!-- PHẦN 2: 3 THẺ TÓM TẮT & THIỆP MỜI -->
+  <section id="three-events-section" class="py-12 px-4 max-w-6xl mx-auto">
+    <div class="text-center mb-10">
+      <span class="px-4 py-1 rounded-full bg-sunYellow/80 text-royal font-extrabold text-xs uppercase tracking-widest">LỊCH TRÌNH 3 CỘT MỐC TRỌNG ĐẠI</span>
+      <h2 class="font-serif text-3xl sm:text-4xl font-bold text-royal mt-2">Thông Tin Ngày Cưới &amp; Địa Điểm</h2>
+      <p class="text-sm text-royal/75 mt-1">Bấm vào từng mục để lọc riêng album ảnh của từng ngày</p>
+    </div>
+
+    <!-- 3 CARD TÓM TẮT -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div onclick="scrollToEvent('nhagai')" class="cursor-pointer bg-white rounded-2xl border-4 border-royal shadow-lg overflow-hidden hover:-translate-y-1 transition">
+        <div class="h-3 bg-royal"></div>
+        <div class="p-6">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h3 class="text-2xl font-extrabold text-royal leading-tight">Tiệc Nhà Gái<br/>07.11</h3>
+              <p class="text-xs font-semibold text-slate-500 mt-1.5">Nhằm ngày 29 tháng 09 năm Bính Ngọ</p>
+            </div>
+            <div class="w-14 h-16 rounded-2xl bg-[#DCEBFA] border-2 border-royal flex flex-col items-center justify-center shrink-0">
+              <span class="text-xl font-extrabold text-royal leading-none">07</span>
+              <span class="text-[10px] font-bold text-royal mt-1">TH11</span>
+            </div>
+          </div>
+          <div class="border-t border-dashed border-skyPastel my-4"></div>
+          <ul class="space-y-2 text-xs sm:text-sm font-medium text-slate-700">
+            <li class="flex items-center gap-2"><span class="text-amber-500">🕒</span> Đón khách: <strong>17:30</strong> | Khai tiệc: <strong>18:30</strong></li>
+            <li class="flex items-start gap-2"><span class="text-royal">📍</span> <span><strong>Nhà hàng tiệc cưới Merastis</strong> – Sảnh RUBY (Lầu 3), 356 Trương Công Định, Tam Thắng, TP.HCM</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div onclick="scrollToEvent('giatien')" class="cursor-pointer bg-white rounded-2xl border-4 border-skyPastel shadow-lg overflow-hidden hover:-translate-y-1 transition">
+        <div class="h-3 bg-skyPastel"></div>
+        <div class="p-6">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h3 class="text-2xl font-extrabold text-royal leading-tight">Lễ Gia Tiên<br/>14.11</h3>
+              <p class="text-xs font-semibold text-slate-500 mt-1.5">Nhằm ngày 06 tháng 10 năm Bính Ngọ</p>
+            </div>
+            <div class="w-14 h-16 rounded-2xl bg-sunYellow border-2 border-royal flex flex-col items-center justify-center shrink-0">
+              <span class="text-xl font-extrabold text-royal leading-none">14</span>
+              <span class="text-[10px] font-bold text-royal mt-1">TH11</span>
+            </div>
+          </div>
+          <div class="border-t border-dashed border-skyPastel my-4"></div>
+          <ul class="space-y-2 text-xs sm:text-sm font-medium text-slate-700">
+            <li class="flex items-center gap-2"><span class="text-amber-500">🕒</span> Thời gian: <strong>Từ 09:00 đến 16:00</strong></li>
+            <li class="flex items-start gap-2"><span class="text-rose-500">❤️</span> <span><strong>Tại Tư Gia</strong> – Phường Tam Thắng, TP. Hồ Chí Minh</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div onclick="scrollToEvent('nhatrai')" class="cursor-pointer bg-white rounded-2xl border-4 border-skyPastel shadow-lg overflow-hidden hover:-translate-y-1 transition">
+        <div class="h-3 bg-skyPastel"></div>
+        <div class="p-6">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h3 class="text-2xl font-extrabold text-royal leading-tight">Tiệc Nhà Trai<br/>21.11</h3>
+              <p class="text-xs font-semibold text-slate-500 mt-1.5">Nhằm ngày 13 tháng 10 năm Bính Ngọ</p>
+            </div>
+            <div class="w-14 h-16 rounded-2xl bg-[#DCEBFA] border-2 border-royal flex flex-col items-center justify-center shrink-0">
+              <span class="text-xl font-extrabold text-royal leading-none">21</span>
+              <span class="text-[10px] font-bold text-royal mt-1">TH11</span>
+            </div>
+          </div>
+          <div class="border-t border-dashed border-skyPastel my-4"></div>
+          <ul class="space-y-2 text-xs sm:text-sm font-medium text-slate-700">
+            <li class="flex items-center gap-2"><span class="text-amber-500">🕒</span> Đón khách: <strong>18:00</strong> | Khai tiệc: <strong>19:00</strong></li>
+            <li class="flex items-start gap-2"><span class="text-royal">📍</span> <span><strong>CAPELLA PARK VIEW</strong> – Sảnh SARIN (Tầng 1), Số 3 Đ. Đặng Văn Sâm, Đức Nhuận, TP.HCM</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- THANH CHUYỂN ĐỔI TAB -->
+    <div class="flex flex-wrap items-center justify-center gap-2 mb-10 bg-white/80 p-2 rounded-2xl shadow-sm border border-skyPastel max-w-2xl mx-auto">
+      <button onclick="switchEventTab('all')" id="tab-all" class="px-4 py-2 rounded-xl font-extrabold text-xs sm:text-sm bg-royal text-sunYellow shadow transition">✨ Xem Tất Cả 3 Mục</button>
+      <button onclick="switchEventTab('nhagai')" id="tab-nhagai" class="px-4 py-2 rounded-xl font-bold text-xs sm:text-sm text-royal hover:bg-skySoft transition">🌸 Nhà Gái 07.11</button>
+      <button onclick="switchEventTab('giatien')" id="tab-giatien" class="px-4 py-2 rounded-xl font-bold text-xs sm:text-sm text-royal hover:bg-skySoft transition">🏮 Gia Tiên 14.11</button>
+      <button onclick="switchEventTab('nhatrai')" id="tab-nhatrai" class="px-4 py-2 rounded-xl font-bold text-xs sm:text-sm text-royal hover:bg-skySoft transition">🥂 Nhà Trai 21.11</button>
+    </div>
+
+    <!-- MỤC 1: NHÀ GÁI -->
+    <div id="event-nhagai" class="event-block mb-16 scroll-mt-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-skyPastel text-center relative">
+          <span class="inline-block px-3 py-1 rounded-full bg-skySoft text-royal text-xs font-extrabold mb-3">MỤC 01 • TIỆC NHÀ GÁI</span>
+          <h3 class="text-base sm:text-lg font-medium text-royal tracking-wide uppercase">
+            TIỆC CƯỚI NHÀ GÁI TỔ CHỨC<br/>VÀO LÚC <strong class="font-extrabold">17:30 - THỨ BẢY</strong>
+          </h3>
+          <p class="text-xs font-bold text-amber-600 mt-1">(Đón khách: 17h30 • Khai tiệc: 18h30)</p>
+          <div class="my-5 flex items-center justify-center gap-4">
+            <div class="flex-1 border-y border-royal py-2 text-sm font-medium text-royal">THÁNG 11</div>
+            <div class="font-serif text-6xl text-royal leading-none px-1">07</div>
+            <div class="flex-1 border-y border-royal py-2 text-sm font-medium text-royal">NĂM 2026</div>
+          </div>
+          <p class="italic text-xs text-royal/80 mb-3">(Nhằm ngày 29 tháng 09 năm Bính Ngọ)</p>
+          <div class="space-y-1 text-royal">
+            <p class="text-base">Tại <strong class="font-extrabold">Nhà hàng tiệc cưới Merastis</strong></p>
+            <p class="italic text-xs font-medium text-royal/90">Sảnh RUBY - LẦU 3 • 356 Trương Công Định, TP.HCM</p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-skySoft flex items-center justify-center">
+            <a href="https://www.google.com/maps/search/?api=1&query=Nha+hang+tiec+cuoi+Merastis+356+Truong+Cong+Dinh" target="_blank" class="inline-flex items-center gap-2 text-sm font-bold text-royal hover:text-royalLight group">
+              <span>💙</span><span class="underline">Xem chỉ đường tại đây</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 bg-white/90 rounded-3xl p-6 shadow-xl border-2 border-skyPastel">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <div>
+              <h4 class="font-extrabold text-lg text-royal flex items-center gap-2">
+                📸 Album Nhà Gái (07.11) <span id="count-nhagai" class="text-xs px-2.5 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">8 ảnh</span>
+              </h4>
+              <p class="text-xs text-royal/70">Rê chuột vào ảnh để hiện nút xóa (✕)</p>
+            </div>
+            <label class="px-4 py-2 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-xs cursor-pointer shadow transition flex items-center gap-1.5">
+              ➕ Thêm Ảnh (07.11)
+              <input type="file" accept="image/*" multiple class="hidden" onchange="handleBatchUpload(event, 'nhagai')" />
+            </label>
+          </div>
+          <div id="grid-nhagai" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MỤC 2: GIA TIÊN -->
+    <div id="event-giatien" class="event-block mb-16 scroll-mt-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-5 bg-[#F2F6FF] rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-amber-300 text-center relative">
+          <span class="inline-block px-3 py-1 rounded-full bg-sunYellow text-royal text-xs font-extrabold mb-3">MỤC 02 • LỄ GIA TIÊN &amp; VU QUY</span>
+          <h3 class="text-base sm:text-lg font-medium text-royal tracking-wide uppercase">
+            LỄ GIA TIÊN TỔ CHỨC<br/>VÀO LÚC <strong class="font-extrabold">09:00 - THỨ BẢY</strong>
+          </h3>
+          <p class="text-xs font-bold text-amber-700 mt-1">(Thời gian: Từ 09h00 đến 16h00)</p>
+          <div class="my-5 flex items-center justify-center gap-4">
+            <div class="flex-1 border-y border-royal py-2 text-sm font-medium text-royal">THÁNG 11</div>
+            <div class="font-serif text-6xl text-royal leading-none px-1">14</div>
+            <div class="flex-1 border-y border-royal py-2 text-sm font-medium text-royal">NĂM 2026</div>
+          </div>
+          <p class="italic text-xs text-royal/80 mb-3">(Nhằm ngày 06 tháng 10 năm Bính Ngọ)</p>
+          <div class="space-y-1 text-royal">
+            <p class="text-base">Tại <strong class="font-extrabold">Tư Gia</strong></p>
+            <p class="italic text-xs font-medium text-royal/90">Phường Tam Thắng, TP. Hồ Chí Minh</p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-skyPastel flex items-center justify-center">
+            <a href="https://www.google.com/maps/search/?api=1&query=Phuong+Tam+Thang+TP+Ho+Chi+Minh" target="_blank" class="inline-flex items-center gap-2 text-sm font-bold text-royal hover:text-royalLight group">
+              <span>💙</span><span class="underline">Xem vị trí Tư Gia</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 bg-white/90 rounded-3xl p-6 shadow-xl border-2 border-amber-300">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <div>
+              <h4 class="font-extrabold text-lg text-royal flex items-center gap-2">
+                🏮 Album Gia Tiên (14.11) <span id="count-giatien" class="text-xs px-2.5 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">8 ảnh</span>
+              </h4>
+              <p class="text-xs text-royal/70">Rê chuột vào ảnh để hiện nút xóa (✕)</p>
+            </div>
+            <label class="px-4 py-2 rounded-xl bg-sunYellow hover:bg-amber-400 text-royal font-extrabold text-xs cursor-pointer shadow transition flex items-center gap-1.5">
+              ➕ Thêm Ảnh (14.11)
+              <input type="file" accept="image/*" multiple class="hidden" onchange="handleBatchUpload(event, 'giatien')" />
+            </label>
+          </div>
+          <div id="grid-giatien" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MỤC 3: NHÀ TRAI -->
+    <div id="event-nhatrai" class="event-block mb-8 scroll-mt-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-skyPastel text-center relative">
+          <span class="inline-block px-3 py-1 rounded-full bg-skySoft text-royal text-xs font-extrabold mb-3">MỤC 03 • TIỆC NHÀ TRAI</span>
+          <h3 class="text-base sm:text-lg font-medium text-royal tracking-wide uppercase">
+            TIỆC CƯỚI NHÀ TRAI TỔ CHỨC<br/>VÀO LÚC <strong class="font-extrabold">18:00 - THỨ BẢY</strong>
+          </h3>
+          <p class="text-xs font-bold text-amber-600 mt-1">(Đón khách: 18h00 • Khai tiệc: 19h00)</p>
+          <div class="my-5 flex items-center justify-center gap-4">
+            <div class="flex-1 border-y border-royal py-2 text-sm font-medium text-royal">THÁNG 11</div>
+            <div class="font-serif text-6xl text-royal leading-none px-1">21</div>
+            <div class="flex-1 border-y border-royal py-2 text-sm font-medium text-royal">NĂM 2026</div>
+          </div>
+          <p class="italic text-xs text-royal/80 mb-3">(Nhằm ngày 13 tháng 10 năm Bính Ngọ)</p>
+          <div class="space-y-1 text-royal">
+            <p class="text-base">Tại <strong class="font-extrabold uppercase">CAPELLA PARK VIEW</strong></p>
+            <p class="italic text-xs font-medium text-royal/90">Sảnh SARIN (Tầng 1) • Số 3 Đ. Đặng Văn Sâm, TP.HCM</p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-skySoft flex items-center justify-center">
+            <a href="https://www.google.com/maps/search/?api=1&query=Capella+Park+View+3+Dang+Van+Sam" target="_blank" class="inline-flex items-center gap-2 text-sm font-bold text-royal hover:text-royalLight group">
+              <span>💙</span><span class="underline">Xem chỉ đường tại đây</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 bg-white/90 rounded-3xl p-6 shadow-xl border-2 border-skyPastel">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <div>
+              <h4 class="font-extrabold text-lg text-royal flex items-center gap-2">
+                🥂 Album Nhà Trai (21.11) <span id="count-nhatrai" class="text-xs px-2.5 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">8 ảnh</span>
+              </h4>
+              <p class="text-xs text-royal/70">Rê chuột vào ảnh để hiện nút xóa (✕)</p>
+            </div>
+            <label class="px-4 py-2 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-xs cursor-pointer shadow transition flex items-center gap-1.5">
+              ➕ Thêm Ảnh (21.11)
+              <input type="file" accept="image/*" multiple class="hidden" onchange="handleBatchUpload(event, 'nhatrai')" />
+            </label>
+          </div>
+          <div id="grid-nhatrai" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHẦN 3: KHO ẢNH CHUYẾN BAY HẠNH PHÚC (RÚT GỌN TIÊU ĐỀ THEO YÊU CẦU) -->
+  <section id="mega-album" class="py-14 px-4 bg-white/75 border-y-2 border-skyPastel scroll-mt-16">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div>
+          <span class="px-3.5 py-1 rounded-full bg-royal text-sunYellow font-extrabold text-xs uppercase tracking-widest">
+            ✈️ KHO ẢNH CHUYẾN BAY HẠNH PHÚC
+          </span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-royal mt-2">Siêu Album Cưới Đa Chế Độ</h2>
+          <p class="text-sm text-royal/75 mt-1">Bấm ✕ trên góc ảnh để xóa linh hoạt • Đổi chế độ xem Polaroid, Lưới hoặc Thu gọn tùy thích</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 bg-skySoft p-1.5 rounded-2xl border border-skyPastel">
+          <button onclick="setGalleryLayout('polaroid')" id="layout-polaroid" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-royal text-sunYellow shadow transition">📌 Polaroid</button>
+          <button onclick="setGalleryLayout('masonry')" id="layout-masonry" class="px-3.5 py-2 rounded-xl text-xs font-bold text-royal hover:bg-white transition">🧱 Lưới</button>
+          <button onclick="setGalleryLayout('compact')" id="layout-compact" class="px-3.5 py-2 rounded-xl text-xs font-bold text-royal hover:bg-white transition">🔍 Thu Gọn</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-8 items-center">
+        <div class="lg:col-span-7 flex flex-wrap gap-2">
+          <button onclick="setAlbumFilter('all')" id="filter-all" class="px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold bg-sunYellow text-royal shadow-sm transition">Tất cả (<span id="badge-all">24</span>)</button>
+          <button onclick="setAlbumFilter('nhagai')" id="filter-nhagai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🌸 Nhà Gái (<span id="badge-nhagai">8</span>)</button>
+          <button onclick="setAlbumFilter('giatien')" id="filter-giatien" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🏮 Gia Tiên (<span id="badge-giatien">8</span>)</button>
+          <button onclick="setAlbumFilter('nhatrai')" id="filter-nhatrai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🥂 Nhà Trai (<span id="badge-nhatrai">8</span>)</button>
+        </div>
+
+        <div class="lg:col-span-5 flex items-center justify-end gap-2">
+          <select id="uploadCategorySelect" class="px-3 py-2.5 rounded-xl bg-white border-2 border-skyPastel text-royal font-bold text-xs focus:outline-none">
+            <option value="nhagai">Bỏ vào: Nhà Gái (07.11)</option>
+            <option value="giatien">Bỏ vào: Gia Tiên (14.11)</option>
+            <option value="nhatrai">Bỏ vào: Nhà Trai (21.11)</option>
+          </select>
+          <label class="px-4 py-2.5 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-xs cursor-pointer shadow-md transition shrink-0">
+            📤 Tải Ảnh Lên
+            <input type="file" accept="image/*" multiple class="hidden" onchange="handleMegaUpload(event)" />
+          </label>
+        </div>
+      </div>
+
+      <div id="megaGalleryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5"></div>
+    </div>
+  </section>
+
+  <!-- PHẦN 4: TRÒ CHƠI THẢ MÁY BAY -->
+  <section class="py-14 px-4 max-w-5xl mx-auto">
+    <div class="bg-white/95 rounded-3xl p-6 sm:p-10 shadow-xl border-2 border-skyPastel relative">
+      <div class="washi-tape w-36 h-8 mx-auto -mt-12 mb-4 rotate-1 rounded-sm"></div>
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+        <div class="md:col-span-7 space-y-4">
+          <span class="px-3 py-1 rounded-full bg-skySoft text-royal font-extrabold text-xs uppercase">HOẠT ĐỘNG TƯƠNG TÁC ĐẶC BIỆT</span>
+          <h3 class="font-script text-4xl sm:text-5xl text-royal">Thả máy bay - Gửi lời chúc</h3>
+          <p class="text-xs sm:text-sm font-bold text-royal/80">
+            Cùng nhau đi khắp thế gian trên chuyến bay mang số hiệu <strong>TU013</strong> của hãng hàng không tình yêu <strong>TUAIRLINE</strong>!
+          </p>
+          <div class="space-y-3 pt-2">
+            <div class="flex items-start gap-3 p-3 rounded-2xl bg-skySoft/60">
+              <span class="w-8 h-8 rounded-full bg-sunYellow text-royal font-extrabold flex items-center justify-center shrink-0">♡</span>
+              <p class="text-xs sm:text-sm"><strong class="bg-sunYellow px-1.5 py-0.5 rounded">Bước 1:</strong> Viết những lời chúc yêu thương lên giấy và ký tên nhen!</p>
+            </div>
+            <div class="flex items-start gap-3 p-3 rounded-2xl bg-skySoft/60">
+              <span class="w-8 h-8 rounded-full bg-sunYellow text-royal font-extrabold flex items-center justify-center shrink-0">✈️</span>
+              <p class="text-xs sm:text-sm"><strong class="bg-sunYellow px-1.5 py-0.5 rounded">Bước 2:</strong> Gấp tờ giấy thành chiếc máy bay thật xinh xắn.</p>
+            </div>
+            <div class="flex items-start gap-3 p-3 rounded-2xl bg-skySoft/60">
+              <span class="w-8 h-8 rounded-full bg-sunYellow text-royal font-extrabold flex items-center justify-center shrink-0">⭐</span>
+              <p class="text-xs sm:text-sm"><strong class="bg-sunYellow px-1.5 py-0.5 rounded">Bước 3:</strong> Khi MC ra tín hiệu, hãy phóng máy bay về phía <strong>Đức Trí &amp; Tố Uyên</strong>!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="md:col-span-5 bg-skySoft/80 rounded-2xl p-5 border-2 border-skyPastel">
+          <h4 class="font-extrabold text-base text-royal mb-3 flex items-center gap-2">✈️ Phóng Máy Bay Lời Chúc Online</h4>
+          <form onsubmit="sendWishPlane(event)" class="space-y-3">
+            <input id="guestName" type="text" required placeholder="Tên của bạn..." class="w-full px-3.5 py-2 rounded-xl border border-skyPastel text-sm focus:outline-none focus:border-royal" />
+            <select id="guestEvent" class="w-full px-3.5 py-2 rounded-xl border border-skyPastel text-xs font-bold text-royal focus:outline-none">
+              <option value="Tiệc Nhà Gái 07.11">Tiệc Nhà Gái 07.11</option>
+              <option value="Lễ Gia Tiên 14.11">Lễ Gia Tiên 14.11</option>
+              <option value="Tiệc Nhà Trai 21.11">Tiệc Nhà Trai 21.11</option>
+            </select>
+            <textarea id="guestWish" rows="3" required placeholder="Viết lời chúc gửi đến Đức Trí & Tố Uyên..." class="w-full px-3.5 py-2 rounded-xl border border-skyPastel text-sm focus:outline-none focus:border-royal"></textarea>
+            <button type="submit" class="w-full py-2.5 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-sm shadow transition">🚀 Phóng Máy Bay Ngay</button>
+          </form>
+
+          <div id="wishSkyList" class="mt-4 space-y-2 max-h-44 overflow-y-auto pr-1">
+            <div class="bg-white p-2.5 rounded-xl text-xs shadow-sm border border-skyPastel">
+              <div class="flex justify-between font-bold text-royal">
+                <span>✈️ Minh Anh</span><span class="text-[10px] text-amber-600">Tiệc Nhà Gái</span>
+              </div>
+              <p class="text-slate-600 mt-1">Chúc chuyến bay TU013 của Trí &amp; Uyên mãi hạnh phúc viên mãn!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL LIGHTBOX FULLSCREEN -->
+  <div id="lightboxModal" class="fixed inset-0 z-50 bg-royal/95 backdrop-blur-md hidden flex-col justify-between p-4 text-white">
+    <div class="flex items-center justify-between max-w-6xl w-full mx-auto py-2">
+      <div>
+        <span id="lightboxBadge" class="px-3 py-1 rounded-full bg-sunYellow text-royal font-extrabold text-xs">Nhà Gái</span>
+        <span id="lightboxCaption" class="ml-2 text-sm font-semibold text-skyPastel">Khoảnh khắc</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="toggleSlideshow()" id="slideshowBtn" class="px-3 py-1.5 rounded-xl bg-white/15 hover:bg-sunYellow hover:text-royal text-xs font-bold transition">▶️ Slideshow</button>
+        <button onclick="closeLightbox()" class="w-9 h-9 rounded-full bg-white/20 hover:bg-rose-500 text-lg font-bold flex items-center justify-center transition">✕</button>
+      </div>
+    </div>
+    <div class="relative flex-1 flex items-center justify-center max-w-5xl w-full mx-auto my-2 overflow-hidden">
+      <button onclick="stepLightbox(-1)" class="absolute left-2 z-10 w-11 h-11 rounded-full bg-white/20 hover:bg-sunYellow hover:text-royal text-xl font-extrabold flex items-center justify-center transition">❮</button>
+      <img id="lightboxImg" src="" alt="Preview" class="max-h-[70vh] max-w-full object-contain rounded-2xl shadow-2xl border-4 border-white" />
+      <button onclick="stepLightbox(1)" class="absolute right-2 z-10 w-11 h-11 rounded-full bg-white/20 hover:bg-sunYellow hover:text-royal text-xl font-extrabold flex items-center justify-center transition">❯</button>
+    </div>
+    <div id="lightboxThumbs" class="max-w-5xl w-full mx-auto flex items-center gap-2 overflow-x-auto py-2 px-2"></div>
+  </div>
+
+  <footer class="py-8 pb-20 text-center text-xs text-royal/80 border-t border-skyPastel bg-white/60">
+    <p class="font-script text-3xl text-royal mb-1">Đức Trí &amp; Tố Uyên • AND BEYOND</p>
+    <p class="font-bold">Hãng Hàng Không Tình Yêu TUAIRLINE • Số Hiệu Chuyến Bay TU013</p>
+    <p class="mt-1">07.11.2026 (Nhà Gái) • 14.11.2026 (Gia Tiên) • 21.11.2026 (Nhà Trai)</p>
+  </footer>
+
+  <!-- JAVASCRIPT XỬ LÝ NHẠC, XÓA ẢNH LINH HOẠT & HIỆU ỨNG -->
+  <script>
+    const bgMusic = document.getElementById('bgMusic');
+    const vinylDisc = document.getElementById('vinylDisc');
+    const musicStatusDot = document.getElementById('musicStatusDot');
+    const musicHintText = document.getElementById('musicHintText');
+    const musicEq = document.getElementById('musicEq');
+
+    function updateMusicUI(playing) {
+      if (playing) {
+        vinylDisc.classList.remove('vinyl-paused');
+        musicStatusDot.className = 'absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-white animate-ping';
+        musicHintText.textContent = 'Đang phát nhạc nền...';
+        musicEq.classList.remove('hidden');
+        musicEq.classList.add('flex');
+      } else {
+        vinylDisc.classList.add('vinyl-paused');
+        musicStatusDot.className = 'absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-amber-400 border-2 border-white';
+        musicHintText.textContent = 'Chạm để phát nhạc';
+        musicEq.classList.add('hidden');
+        musicEq.classList.remove('flex');
+      }
+    }
+
+    function toggleMusic() {
+      if (bgMusic.paused) {
+        bgMusic.play().then(() => updateMusicUI(true)).catch(() => updateMusicUI(false));
+      } else {
+        bgMusic.pause();
+        updateMusicUI(false);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      bgMusic.volume = 0.8;
+      bgMusic.play().then(() => updateMusicUI(true)).catch(() => {
+        const unlockAudio = () => {
+          if (bgMusic.paused) bgMusic.play().then(() => updateMusicUI(true)).catch(() => {});
+          document.removeEventListener('click', unlockAudio);
+          document.removeEventListener('touchstart', unlockAudio);
+        };
+        document.addEventListener('click', unlockAudio, { once: true });
+        document.addEventListener('touchstart', unlockAudio, { once: true });
+      });
+    });
+
+    const eventLabels = {
+      nhagai: 'Tiệc Nhà Gái 07.11',
+      giatien: 'Lễ Gia Tiên 14.11',
+      nhatrai: 'Tiệc Nhà Trai 21.11'
+    };
+
+    // Bộ ảnh Pre-wedding & sự kiện
+    let photos = [
+      { id: 1, cat: 'nhagai', url: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80', title: 'Pre-wedding 1' },
+      { id: 2, cat: 'nhagai', url: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80', title: 'Pre-wedding 2' },
+      { id: 3, cat: 'nhagai', url: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80', title: 'Pre-wedding 3' },
+      { id: 4, cat: 'nhagai', url: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80', title: 'Pre-wedding 4' },
+      { id: 5, cat: 'nhagai', url: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80', title: 'Nhà Gái 1' },
+      { id: 6, cat: 'nhagai', url: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80', title: 'Nhà Gái 2' },
+      { id: 7, cat: 'nhagai', url: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80', title: 'Nhà Gái 3' },
+      { id: 8, cat: 'nhagai', url: 'https://images.unsplash.com/photo-1544078751-58fee2d8a03b?auto=format&fit=crop&w=800&q=80', title: 'Nhà Gái 4' },
+
+      { id: 9, cat: 'giatien', url: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=80', title: 'Gia Tiên 1' },
+      { id: 10, cat: 'giatien', url: 'https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=800&q=80', title: 'Gia Tiên 2' },
+      { id: 11, cat: 'giatien', url: 'https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=800&q=80', title: 'Gia Tiên 3' },
+      { id: 12, cat: 'giatien', url: 'https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=800&q=80', title: 'Gia Tiên 4' },
+      { id: 13, cat: 'giatien', url: 'https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=800&q=80', title: 'Gia Tiên 5' },
+      { id: 14, cat: 'giatien', url: 'https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=800&q=80', title: 'Gia Tiên 6' },
+      { id: 15, cat: 'giatien', url: 'https://images.unsplash.com/photo-1510076857177-7470076d4098?auto=format&fit=crop&w=800&q=80', title: 'Gia Tiên 7' },
+      { id: 16, cat: 'giatien', url: 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80', title: 'Gia Tiên 8' },
+
+      { id: 17, cat: 'nhatrai', url: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80', title: 'Nhà Trai 1' },
+      { id: 18, cat: 'nhatrai', url: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=80', title: 'Nhà Trai 2' },
+      { id: 19, cat: 'nhatrai', url: 'https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=800&q=80', title: 'Nhà Trai 3' },
+      { id: 20, cat: 'nhatrai', url: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=800&q=80', title: 'Nhà Trai 4' },
+      { id: 21, cat: 'nhatrai', url: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80', title: 'Nhà Trai 5' },
+      { id: 22, cat: 'nhatrai', url: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80', title: 'Nhà Trai 6' },
+      { id: 23, cat: 'nhatrai', url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80', title: 'Nhà Trai 7' },
+      { id: 24, cat: 'nhatrai', url: 'https://images.unsplash.com/photo-1525772764200-be829a350797?auto=format&fit=crop&w=800&q=80', title: 'Nhà Trai 8' }
+    ];
+
+    let currentFilter = 'all';
+    let currentLayout = 'polaroid';
+    let currentLightboxIndex = 0;
+    let slideshowTimer = null;
+
+    // Hàm xóa ảnh linh hoạt
+    function deletePhoto(event, id) {
+      event.stopPropagation(); // Không cho mở modal khi bấm nút xóa
+      if (confirm('Bạn có chắc chắn muốn xóa tấm hình này khỏi album không?')) {
+        photos = photos.filter(p => p.id !== id);
+        renderAllGalleries();
+      }
+    }
+
+    function renderAllGalleries() {
+      ['nhagai', 'giatien', 'nhatrai'].forEach(cat => {
+        const list = photos.filter(p => p.cat === cat);
+        document.getElementById(`count-${cat}`).textContent = `${list.length} ảnh`;
+        document.getElementById(`badge-${cat}`).textContent = list.length;
+
+        const gridEl = document.getElementById(`grid-${cat}`);
+        gridEl.innerHTML = list.map((item) => {
+          const globalIndex = photos.findIndex(x => x.id === item.id);
+          return `
+            <div class="group cursor-pointer relative rounded-xl overflow-hidden aspect-square bg-skySoft border border-skyPastel shadow-sm">
+              <img onclick="openLightbox(${globalIndex})" src="${item.url}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-110 transition duration-300" loading="lazy" />
+              <!-- Nút xóa (✕) hiển thị khi rê chuột -->
+              <button onclick="deletePhoto(event, ${item.id})" class="absolute top-2 right-2 w-7 h-7 rounded-full bg-rose-600 text-white font-bold text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 shadow-md hover:scale-110 transition" title="Xóa ảnh này">✕</button>
+              <div onclick="openLightbox(${globalIndex})" class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-royal/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition p-2 flex items-end">
+                <span class="text-[10px] text-white font-semibold leading-tight line-clamp-1">${item.title}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      });
+
+      document.getElementById('badge-all').textContent = photos.length;
+      document.getElementById('totalPhotoCounter').textContent = `${photos.length} ảnh`;
+
+      // Dải phim Pre-wedding đã phóng to kích thước rõ nét hơn
+      const marqueeEl = document.getElementById('marqueeTrack');
+      const doubled = [...photos, ...photos];
+      marqueeEl.innerHTML = doubled.map((item) => {
+        const globalIndex = photos.findIndex(x => x.id === item.id);
+        return `
+          <div onclick="openLightbox(${globalIndex})" class="cursor-pointer w-48 h-32 rounded-xl overflow-hidden border-2 border-white shrink-0 relative group shadow-lg">
+            <img src="${item.url}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-110 transition" loading="lazy" />
+            <span class="absolute bottom-1.5 right-1.5 bg-royal/90 text-sunYellow text-[10px] font-extrabold px-2 py-0.5 rounded shadow">${eventLabels[item.cat].split(' ').pop()}</span>
+          </div>
+        `;
+      }).join('');
+
+      renderMegaGallery();
+    }
+
+    function renderMegaGallery() {
+      const megaGrid = document.getElementById('megaGalleryGrid');
+      const filtered = currentFilter === 'all' ? photos : photos.filter(p => p.cat === currentFilter);
+
+      if (currentLayout === 'polaroid') {
+        megaGrid.className = 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6';
+        megaGrid.innerHTML = filtered.map((item, idx) => {
+          const globalIndex = photos.findIndex(x => x.id === item.id);
+          const rot = idx % 2 === 0 ? 'rotate-[-1deg]' : 'rotate-[1deg]';
+          return `
+            <div class="polaroid-item group bg-white p-3 pb-4 rounded-2xl shadow-md border border-skyPastel relative ${rot}">
+              <button onclick="deletePhoto(event, ${item.id})" class="absolute top-2 right-2 z-20 w-7 h-7 rounded-full bg-rose-600 text-white font-bold text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 shadow-md hover:scale-110 transition" title="Xóa ảnh">✕</button>
+              <div class="washi-tape w-16 h-4 mx-auto -mt-5 mb-2 rounded-sm"></div>
+              <div onclick="openLightbox(${globalIndex})" class="aspect-[4/4] rounded-xl overflow-hidden bg-skySoft cursor-pointer">
+                <img src="${item.url}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition" loading="lazy" />
+              </div>
+              <div class="mt-2.5 flex items-center justify-between gap-1">
+                <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-skySoft text-royal">${eventLabels[item.cat]}</span>
+                <span class="text-xs">✈️</span>
+              </div>
+              <p class="text-xs font-bold text-royal mt-1 line-clamp-1">${item.title}</p>
+            </div>
+          `;
+        }).join('');
+      } else if (currentLayout === 'masonry') {
+        megaGrid.className = 'columns-2 sm:columns-3 md:columns-4 gap-4 space-y-4';
+        megaGrid.innerHTML = filtered.map((item, idx) => {
+          const globalIndex = photos.findIndex(x => x.id === item.id);
+          const heightClass = idx % 3 === 0 ? 'aspect-[3/4]' : (idx % 3 === 1 ? 'aspect-square' : 'aspect-[4/3]');
+          return `
+            <div class="break-inside-avoid group relative rounded-2xl overflow-hidden shadow-md border-2 border-white bg-skySoft">
+              <button onclick="deletePhoto(event, ${item.id})" class="absolute top-2 right-2 z-20 w-7 h-7 rounded-full bg-rose-600 text-white font-bold text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 shadow-md transition" title="Xóa ảnh">✕</button>
+              <img onclick="openLightbox(${globalIndex})" src="${item.url}" alt="${item.title}" class="w-full ${heightClass} object-cover cursor-pointer group-hover:scale-105 transition" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-royal/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition flex flex-col justify-end p-3 text-white pointer-events-none">
+                <span class="text-[10px] font-extrabold text-sunYellow">${eventLabels[item.cat]}</span>
+                <p class="text-xs font-bold">${item.title}</p>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } else {
+        megaGrid.className = 'grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2.5';
+        megaGrid.innerHTML = filtered.map((item) => {
+          const globalIndex = photos.findIndex(x => x.id === item.id);
+          return `
+            <div class="group cursor-pointer relative aspect-square rounded-xl overflow-hidden border border-skyPastel bg-skySoft">
+              <button onclick="deletePhoto(event, ${item.id})" class="absolute top-1 right-1 z-20 w-6 h-6 rounded-full bg-rose-600 text-white font-bold text-[10px] flex items-center justify-center opacity-0 group-hover:opacity-100 shadow transition" title="Xóa">✕</button>
+              <img onclick="openLightbox(${globalIndex})" src="${item.url}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-110 transition" loading="lazy" />
+              <span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-royal/80 text-sunYellow text-[8px] font-bold">${eventLabels[item.cat].split(' ').pop()}</span>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    function handleBatchUpload(event, category) {
+      const files = Array.from(event.target.files || []);
+      if (!files.length) return;
+      files.forEach((file, idx) => {
+        const url = URL.createObjectURL(file);
+        photos.unshift({
+          id: Date.now() + idx,
+          cat: category,
+          url,
+          title: file.name.replace(/\.[^/.]+$/, '') || `Ảnh kỷ niệm`
+        });
+      });
+      renderAllGalleries();
+      event.target.value = '';
+    }
+
+    function handleMegaUpload(event) {
+      const cat = document.getElementById('uploadCategorySelect').value;
+      handleBatchUpload(event, cat);
+    }
+
+    function changeCoverImage(event) {
+      const file = event.target.files?.[0];
+      if (file) document.getElementById('heroCoverImg').src = URL.createObjectURL(file);
+    }
+
+    function setAlbumFilter(filter) {
+      currentFilter = filter;
+      ['all', 'nhagai', 'giatien', 'nhatrai'].forEach(k => {
+        const btn = document.getElementById(`filter-${k}`);
+        btn.className = k === filter 
+          ? 'px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold bg-sunYellow text-royal shadow-sm transition' 
+          : 'px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition';
+      });
+      renderMegaGallery();
+    }
+
+    function setGalleryLayout(layout) {
+      currentLayout = layout;
+      ['polaroid', 'masonry', 'compact'].forEach(k => {
+        const btn = document.getElementById(`layout-${k}`);
+        btn.className = k === layout 
+          ? 'px-3.5 py-2 rounded-xl text-xs font-extrabold bg-royal text-sunYellow shadow transition' 
+          : 'px-3.5 py-2 rounded-xl text-xs font-bold text-royal hover:bg-white transition';
+      });
+      renderMegaGallery();
+    }
+
+    function switchEventTab(tab) {
+      const blocks = {
+        nhagai: document.getElementById('event-nhagai'),
+        giatien: document.getElementById('event-giatien'),
+        nhatrai: document.getElementById('event-nhatrai')
+      };
+      ['all', 'nhagai', 'giatien', 'nhatrai'].forEach(k => {
+        const btn = document.getElementById(`tab-${k}`);
+        if (btn) {
+          btn.className = k === tab 
+            ? 'px-4 py-2 rounded-xl font-extrabold text-xs sm:text-sm bg-royal text-sunYellow shadow transition' 
+            : 'px-4 py-2 rounded-xl font-bold text-xs sm:text-sm text-royal hover:bg-skySoft transition';
+        }
+      });
+      Object.keys(blocks).forEach(k => {
+        blocks[k].style.display = (tab === 'all' || tab === k) ? 'block' : 'none';
+      });
+    }
+
+    function scrollToEvent(cat) {
+      switchEventTab('all');
+      document.getElementById(`event-${cat}`).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function openLightbox(index) {
+      currentLightboxIndex = index;
+      const modal = document.getElementById('lightboxModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      updateLightboxView();
+    }
+
+    function updateLightboxView() {
+      const item = photos[currentLightboxIndex];
+      if (!item) return;
+      document.getElementById('lightboxImg').src = item.url;
+      document.getElementById('lightboxBadge').textContent = eventLabels[item.cat];
+      document.getElementById('lightboxCaption').textContent = `${item.title} (${currentLightboxIndex + 1}/${photos.length})`;
+
+      const thumbs = document.getElementById('lightboxThumbs');
+      thumbs.innerHTML = photos.map((p, i) => `
+        <img onclick="openLightbox(${i})" src="${p.url}" class="w-14 h-14 object-cover rounded-lg cursor-pointer shrink-0 transition ${i === currentLightboxIndex ? 'ring-4 ring-sunYellow scale-105' : 'opacity-50 hover:opacity-100'}" />
+      `).join('');
+    }
+
+    function stepLightbox(dir) {
+      currentLightboxIndex = (currentLightboxIndex + dir + photos.length) % photos.length;
+      updateLightboxView();
+    }
+
+    function toggleSlideshow() {
+      const btn = document.getElementById('slideshowBtn');
+      if (slideshowTimer) {
+        clearInterval(slideshowTimer);
+        slideshowTimer = null;
+        btn.textContent = '▶️ Slideshow';
+      } else {
+        slideshowTimer = setInterval(() => stepLightbox(1), 2500);
+        btn.textContent = '⏸️ Dừng';
+      }
+    }
+
+    function closeLightbox() {
+      if (slideshowTimer) toggleSlideshow();
+      const modal = document.getElementById('lightboxModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function sendWishPlane(e) {
+      e.preventDefault();
+      const name = document.getElementById('guestName').value.trim();
+      const ev = document.getElementById('guestEvent').value;
+      const wish = document.getElementById('guestWish').value.trim();
+      if (!name || !wish) return;
+
+      const list = document.getElementById('wishSkyList');
+      const card = document.createElement('div');
+      card.className = 'bg-white p-2.5 rounded-xl text-xs shadow-sm border border-sunYellow animate-pulse';
+      card.innerHTML = `
+        <div class="flex justify-between font-bold text-royal">
+          <span>✈️ ${name}</span><span class="text-[10px] text-amber-600">${ev}</span>
+        </div>
+        <p class="text-slate-600 mt-1">${wish}</p>
+      `;
+      list.prepend(card);
+      setTimeout(() => card.classList.remove('animate-pulse'), 1500);
+      e.target.reset();
+    }
+
+    renderAllGalleries();
+  </script>
+</body>
+</html>
