@@ -64,7 +64,7 @@
     .animate-marquee {
       display: flex;
       width: max-content;
-      animation: marquee 55s linear infinite;
+      animation: marquee 50s linear infinite;
     }
     .animate-marquee:hover {
       animation-play-state: paused;
@@ -338,7 +338,7 @@
     </div>
   </section>
 
-  <!-- DẢI PHIM CUỘN PRE-WEDDING (TỰ ĐỘNG LẤY TỪ GITHUB ToUyen132/triuyenandbeyond) -->
+  <!-- DẢI PHIM CUỘN PRE-WEDDING (CHỈ HIỂN THỊ BỘ ẢNH CƯỚI CỦA CÔ DÂU CHÚ RỂ) -->
   <section class="py-6 bg-royal/95 border-y-4 border-sunYellow overflow-hidden shadow-lg">
     <div class="max-w-6xl mx-auto px-4 mb-3 flex flex-wrap items-center justify-between gap-2 text-white text-xs">
       <span class="font-extrabold tracking-wider uppercase text-sunYellow text-sm">
@@ -349,11 +349,12 @@
     <div id="marqueeTrack" class="animate-marquee gap-5 px-4"></div>
   </section>
 
-  <!-- PHẦN 2: LỊCH TRÌNH 3 MỤC NGÀY CƯỚI & KHO ẢNH SỰ KIỆN -->
+  <!-- PHẦN 2: LỊCH TRÌNH 3 MỤC NGÀY CƯỚI & KHU VỰC KHÁCH TỰ UP HÌNH -->
   <section id="three-events-section" class="py-12 px-4 max-w-6xl mx-auto">
     <div class="text-center mb-10">
       <span class="px-4 py-1 rounded-full bg-sunYellow/80 text-royal font-extrabold text-xs uppercase tracking-widest">WEDDING DAY • THÁNG 11.2026</span>
       <h2 class="font-serif text-3xl sm:text-4xl font-bold text-royal mt-2">Thông Tin Ngày Cưới &amp; Địa Điểm</h2>
+      <p class="text-xs sm:text-sm text-royal/75 mt-1">Khách mời tham dự tiệc vui lòng nhấn nút <strong>"➕ Thêm Nhiều Hình"</strong> ở từng ngày để chia sẻ khoảnh khắc cùng tụi mình nhé!</p>
     </div>
 
     <!-- 3 CARD TÓM TẮT -->
@@ -422,7 +423,7 @@
       </div>
     </div>
 
-    <!-- MỤC 1: NHÀ GÁI -->
+    <!-- MỤC 1: NHÀ GÁI (TRỐNG BAN ĐẦU ĐỂ KHÁCH TỰ UP HÌNH) -->
     <div id="event-nhagai" class="event-block mb-14 scroll-mt-24">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         <div class="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-skyPastel text-center">
@@ -453,9 +454,9 @@
           <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
             <div>
               <h4 class="font-extrabold text-lg text-royal flex items-center gap-2">
-                📸 Album Hình Tiệc Nhà Gái (07.11) <span id="count-nhagai" class="text-xs px-2.5 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">6 ảnh</span>
+                📸 Album Hình Tiệc Nhà Gái (07.11) <span id="count-nhagai" class="text-xs px-2.5 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">0 ảnh</span>
               </h4>
-              <p class="text-xs text-royal/70">Rê chuột vào ảnh để đổi hình (✏️) hoặc xóa (✕)</p>
+              <p class="text-xs text-royal/70">Dành cho khách mời tải ảnh chụp tại Tiệc Nhà Gái (07.11)</p>
             </div>
             <label class="px-4 py-2 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-xs cursor-pointer shadow transition">
               ➕ Thêm Nhiều Hình (07.11)
@@ -467,7 +468,7 @@
       </div>
     </div>
 
-    <!-- MỤC 2: GIA TIÊN -->
+    <!-- MỤC 2: GIA TIÊN (TRỐNG BAN ĐẦU ĐỂ KHÁCH TỰ UP HÌNH) -->
     <div id="event-giatien" class="event-block mb-14 scroll-mt-24">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         <div class="lg:col-span-5 bg-[#F2F6FF] rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-amber-300 text-center">
@@ -497,9 +498,9 @@
           <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
             <div>
               <h4 class="font-extrabold text-lg text-royal flex items-center gap-2">
-                🏮 Album Hình Lễ Gia Tiên (14.11) <span id="count-giatien" class="text-xs px-2.5 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">6 ảnh</span>
+                🏮 Album Hình Lễ Gia Tiên (14.11) <span id="count-giatien" class="text-xs px-2.5 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">0 ảnh</span>
               </h4>
-              <p class="text-xs text-royal/70">Rê chuột vào ảnh để đổi hình (✏️) hoặc xóa (✕)</p>
+              <p class="text-xs text-royal/70">Dành cho người thân &amp; bạn bè tải ảnh chụp tại Lễ Gia Tiên (14.11)</p>
             </div>
             <label class="px-4 py-2 rounded-xl bg-sunYellow hover:bg-amber-400 text-royal font-extrabold text-xs cursor-pointer shadow transition">
               ➕ Thêm Nhiều Hình (14.11)
@@ -511,7 +512,7 @@
       </div>
     </div>
 
-    <!-- MỤC 3: NHÀ TRAI -->
+    <!-- MỤC 3: NHÀ TRAI (TRỐNG BAN ĐẦU ĐỂ KHÁCH TỰ UP HÌNH) -->
     <div id="event-nhatrai" class="event-block mb-8 scroll-mt-24">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         <div class="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-skyPastel text-center">
@@ -542,9 +543,9 @@
           <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
             <div>
               <h4 class="font-extrabold text-lg text-royal flex items-center gap-2">
-                🥂 Album Hình Tiệc Nhà Trai (21.11) <span id="count-nhatrai" class="text-xs px-2.5 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">6 ảnh</span>
+                🥂 Album Hình Tiệc Nhà Trai (21.11) <span id="count-nhatrai" class="text-xs px-2.5 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">0 ảnh</span>
               </h4>
-              <p class="text-xs text-royal/70">Rê chuột vào ảnh để đổi hình (✏️) hoặc xóa (✕)</p>
+              <p class="text-xs text-royal/70">Dành cho khách mời tải ảnh chụp tại Tiệc Nhà Trai (21.11)</p>
             </div>
             <label class="px-4 py-2 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-xs cursor-pointer shadow transition">
               ➕ Thêm Nhiều Hình (21.11)
@@ -557,7 +558,7 @@
     </div>
   </section>
 
-  <!-- PHẦN 3: KHO ẢNH CHUYẾN BAY HẠNH PHÚC -->
+  <!-- PHẦN 3: KHO ẢNH CHUYẾN BAY HẠNH PHÚC (TỔNG HỢP HÌNH KHÁCH MỜI ĐĂNG LÊN) -->
   <section id="mega-album" class="py-12 px-4 bg-white/75 border-y-2 border-skyPastel scroll-mt-16">
     <div class="max-w-6xl mx-auto">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
@@ -576,10 +577,10 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-8 items-center">
         <div class="lg:col-span-7 flex flex-wrap gap-2">
-          <button onclick="setAlbumFilter('all')" id="filter-all" class="px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold bg-sunYellow text-royal shadow-sm transition">Tất cả (<span id="badge-all">18</span>)</button>
-          <button onclick="setAlbumFilter('nhagai')" id="filter-nhagai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🌸 Nhà Gái (<span id="badge-nhagai">6</span>)</button>
-          <button onclick="setAlbumFilter('giatien')" id="filter-giatien" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🏮 Gia Tiên (<span id="badge-giatien">6</span>)</button>
-          <button onclick="setAlbumFilter('nhatrai')" id="filter-nhatrai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🥂 Nhà Trai (<span id="badge-nhatrai">6</span>)</button>
+          <button onclick="setAlbumFilter('all')" id="filter-all" class="px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold bg-sunYellow text-royal shadow-sm transition">Tất cả (<span id="badge-all">0</span>)</button>
+          <button onclick="setAlbumFilter('nhagai')" id="filter-nhagai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🌸 Nhà Gái (<span id="badge-nhagai">0</span>)</button>
+          <button onclick="setAlbumFilter('giatien')" id="filter-giatien" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🏮 Gia Tiên (<span id="badge-giatien">0</span>)</button>
+          <button onclick="setAlbumFilter('nhatrai')" id="filter-nhatrai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🥂 Nhà Trai (<span id="badge-nhatrai">0</span>)</button>
         </div>
 
         <div class="lg:col-span-5 flex items-center justify-end gap-2">
@@ -589,7 +590,7 @@
             <option value="nhatrai">Bỏ vào: Nhà Trai (21.11)</option>
           </select>
           <label class="px-4 py-2.5 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-xs cursor-pointer shadow-md transition shrink-0">
-            📤 Tải Ảnh Lên
+            📤 Khách Tải Ảnh Lên
             <input type="file" accept="image/*" multiple class="hidden" onchange="handleMegaUpload(event)" />
           </label>
         </div>
@@ -686,10 +687,6 @@
 
   <!-- JAVASCRIPT -->
   <script>
-    // =========================================================================
-    // TRÌNH TẢI ẢNH THÔNG MINH:
-    // Tự động tìm ở thư mục hiện tại -> thư mục images/ -> Kho GitHub ToUyen132/triuyenandbeyond
-    // =========================================================================
     const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/ToUyen132/triuyenandbeyond/main/';
 
     function resolveSmartImage(imgEl, rawFileName) {
@@ -767,14 +764,13 @@
     });
 
     // =========================================================================
-    // 2. DANH SÁCH ĐẦY ĐỦ ẢNH CUỘN PHIM PRE-WEDDING (GỒM CẢ CÁC MÃ HÌNH MỚI NHẤT)
+    // 2. DẢI PHIM CUỘN PRE-WEDDING (CHỈ CHỨA HÌNH CƯỚI CỦA CÔ DÂU & CHÚ RỂ)
     // =========================================================================
     const filmstripPhotos = [
       { file: 'KBEA030.jpg', title: 'Save the Date - Đức Trí & Tố Uyên' },
       { file: 'KBEA020.jpg', title: 'Nâng ly chúc mừng hạnh phúc' },
       { file: 'KBEA059.jpg', title: 'Đức Trí & Tố Uyên bên cặp gấu len handmade' },
       { file: 'KBEA051.jpg', title: 'Vườn hoa vàng rực rỡ & cặp gấu đôi' },
-      { file: 'KBEA097.jpg', title: 'Khoảnh khắc tinh nghịch cùng gấu len' },
       { file: 'KBEA075.jpg', title: 'Khoảnh khắc ngọt ngào' },
       { file: 'KBEA085.jpg', title: 'Nụ cười rạng rỡ' },
       { file: 'KBEA0113.jpg', title: 'Hạnh phúc bên nhau' },
@@ -784,13 +780,9 @@
       { file: 'KBEA0168.jpg', title: 'Sánh đôi giữa vườn hoa vàng' },
       { file: 'KBEA0174.jpg', title: 'Khoảnh khắc dưới tấm voan cưới' },
       { file: 'KBEA0207.jpg', title: 'Pre-Wedding Đức Trí & Tố Uyên' },
-      { file: 'KBEA0201.jpg', title: 'Chú rể Đức Trí lịch lãm' },
       { file: 'NOTEA18.jpg', title: 'Khiêu vũ lãng mạn' },
       { file: 'NOTEA36.jpg', title: 'Ánh mắt trao nhau ngọt ngào' },
-      { file: 'NOTEA71.jpg', title: 'Khiêu vũ cùng bó hoa len' },
-      { file: 'NOTEA115.jpg', title: 'Nâng ly rượu vẽ chibi cô dâu chú rể' },
-      { file: 'NOTEA11.jpg', title: 'Nụ hôn lên tay cô dâu đầy trân trọng' },
-      { file: 'NOTEA48.jpg', title: 'Khoảnh khắc lãng mạn ngọt ngào' }
+      { file: 'NOTEA71.jpg', title: 'Khiêu vũ cùng bó hoa len' }
     ];
 
     function renderFilmstrip() {
@@ -810,7 +802,7 @@
     }
 
     // =========================================================================
-    // 3. KHO ẢNH SỰ KIỆN 3 NGÀY TIỆC (CẬP NHẬT ĐẦY ĐỦ CÁC MÃ HÌNH MỚI)
+    // 3. KHO ẢNH SỰ KIỆN 3 NGÀY TIỆC (ĐỂ TRỐNG ĐỂ KHÁCH ĐẾN TIỆC TỰ UP HÌNH)
     // =========================================================================
     const eventLabels = {
       nhagai: 'Tiệc Nhà Gái 07.11',
@@ -818,31 +810,8 @@
       nhatrai: 'Tiệc Nhà Trai 21.11'
     };
 
-    let photos = [
-      // Mục Nhà Gái 07.11
-      { id: 1, cat: 'nhagai', url: 'KBEA020.jpg', title: 'Nâng ly hạnh phúc 07.11' },
-      { id: 2, cat: 'nhagai', url: 'KBEA059.jpg', title: 'Bên cặp gấu len handmade' },
-      { id: 3, cat: 'nhagai', url: 'KBEA051.jpg', title: 'Vườn hoa vàng rực rỡ' },
-      { id: 4, cat: 'nhagai', url: 'KBEA097.jpg', title: 'Khoảnh khắc đáng yêu' },
-      { id: 5, cat: 'nhagai', url: 'KBEA075.jpg', title: 'Kỷ niệm Tiệc Nhà Gái' },
-      { id: 6, cat: 'nhagai', url: 'KBEA085.jpg', title: 'Nụ cười ngày vui' },
-
-      // Mục Lễ Gia Tiên 14.11
-      { id: 7, cat: 'giatien', url: 'KBEA0155.jpg', title: 'Bên hoa cẩm tú cầu xanh' },
-      { id: 8, cat: 'giatien', url: 'KBEA0160.jpg', title: 'Trao nhẫn cưới' },
-      { id: 9, cat: 'giatien', url: 'KBEA0165.jpg', title: 'Chung đôi ngày 14.11' },
-      { id: 10, cat: 'giatien', url: 'KBEA0168.jpg', title: 'Hạnh phúc viên mãn' },
-      { id: 11, cat: 'giatien', url: 'KBEA0174.jpg', title: 'Dưới lớp voan cưới' },
-      { id: 12, cat: 'giatien', url: 'KBEA0207.jpg', title: 'Sánh bước bên nhau' },
-
-      // Mục Nhà Trai 21.11
-      { id: 13, cat: 'nhatrai', url: 'KBEA030.jpg', title: 'Chuyến bay hạnh phúc 21.11' },
-      { id: 14, cat: 'nhatrai', url: 'KBEA0113.jpg', title: 'Khoảnh khắc ngọt ngào' },
-      { id: 15, cat: 'nhatrai', url: 'NOTEA18.jpg', title: 'Khiêu vũ lãng mạn' },
-      { id: 16, cat: 'nhatrai', url: 'NOTEA36.jpg', title: 'Ánh mắt yêu thương' },
-      { id: 17, cat: 'nhatrai', url: 'NOTEA71.jpg', title: 'Bên bó hoa len rực rỡ' },
-      { id: 18, cat: 'nhatrai', url: 'NOTEA115.jpg', title: 'Nâng ly chúc mừng' }
-    ];
+    // Khởi tạo mảng rỗng: Không để hình cưới của cô dâu chú rể ở đây nữa
+    let photos = [];
 
     let currentFilter = 'all';
     let currentLayout = 'polaroid';
@@ -881,15 +850,28 @@
         document.getElementById(`badge-${cat}`).textContent = list.length;
 
         const gridEl = document.getElementById(`grid-${cat}`);
-        gridEl.innerHTML = list.map((item) => `
-          <div class="group cursor-pointer relative rounded-xl overflow-hidden aspect-[3/4] bg-skySoft border border-skyPastel shadow-sm">
-            <img onclick="openSimplePreview(this.src, '${item.title}', '${eventLabels[item.cat]}')" src="${item.url}" onerror="resolveSmartImage(this, '${item.url}')" alt="${item.title}" class="w-full h-full object-cover object-top group-hover:scale-110 transition duration-300" />
-            <div class="absolute top-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
-              <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-royal text-sunYellow font-bold text-xs flex items-center justify-center shadow-md hover:scale-110 transition" title="Đổi ảnh">✏️</button>
-              <button onclick="deletePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-rose-600 text-white font-bold text-xs flex items-center justify-center shadow-md hover:scale-110 transition" title="Xóa ảnh">✕</button>
+        if (list.length === 0) {
+          // Hiển thị khung mời khách tải ảnh lên khi chưa có ảnh nào
+          gridEl.innerHTML = `
+            <label class="col-span-full cursor-pointer border-2 border-dashed border-skyPastel hover:border-royal bg-skySoft/50 hover:bg-skySoft rounded-2xl p-8 text-center flex flex-col items-center justify-center transition group">
+              <span class="w-14 h-14 rounded-full bg-white shadow-sm flex items-center justify-center text-3xl mb-3 group-hover:scale-110 transition">📸</span>
+              <p class="font-extrabold text-sm text-royal">Chưa có hình ảnh nào trong mục ${eventLabels[cat]}</p>
+              <p class="text-xs text-royal/70 mt-1 max-w-md">Khách mời đến dự tiệc hãy bấm vào đây hoặc nút <strong>"➕ Thêm Nhiều Hình"</strong> phía trên để chia sẻ những bức ảnh thật đẹp nhé!</p>
+              <span class="mt-4 px-4 py-2 rounded-full bg-sunYellow text-royal font-extrabold text-xs shadow-sm group-hover:bg-amber-400 transition">📤 Chọn Ảnh Từ Điện Thoại / Máy Tính</span>
+              <input type="file" accept="image/*" multiple class="hidden" onchange="handleBatchUpload(event, '${cat}')" />
+            </label>
+          `;
+        } else {
+          gridEl.innerHTML = list.map((item) => `
+            <div class="group cursor-pointer relative rounded-xl overflow-hidden aspect-[3/4] bg-skySoft border border-skyPastel shadow-sm">
+              <img onclick="openSimplePreview(this.src, '${item.title}', '${eventLabels[item.cat]}')" src="${item.url}" alt="${item.title}" class="w-full h-full object-cover object-top group-hover:scale-110 transition duration-300" />
+              <div class="absolute top-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
+                <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-royal text-sunYellow font-bold text-xs flex items-center justify-center shadow-md hover:scale-110 transition" title="Đổi ảnh">✏️</button>
+                <button onclick="deletePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-rose-600 text-white font-bold text-xs flex items-center justify-center shadow-md hover:scale-110 transition" title="Xóa ảnh">✕</button>
+              </div>
             </div>
-          </div>
-        `).join('');
+          `).join('');
+        }
       });
 
       document.getElementById('badge-all').textContent = photos.length;
@@ -900,6 +882,18 @@
     function renderMegaGallery() {
       const megaGrid = document.getElementById('megaGalleryGrid');
       const filtered = currentFilter === 'all' ? photos : photos.filter(p => p.cat === currentFilter);
+
+      if (filtered.length === 0) {
+        megaGrid.className = 'grid grid-cols-1';
+        megaGrid.innerHTML = `
+          <div class="border-2 border-dashed border-skyPastel bg-skySoft/40 rounded-3xl p-10 text-center flex flex-col items-center justify-center">
+            <span class="text-4xl mb-2">✈️</span>
+            <p class="font-extrabold text-base text-royal">Kho Ảnh Chuyến Bay Hạnh Phúc đang chờ những bức hình đầu tiên từ Quý Khách!</p>
+            <p class="text-xs text-royal/70 mt-1">Khi khách mời tải ảnh lên ở 3 mục Tiệc Nhà Gái (07.11), Lễ Gia Tiên (14.11) hoặc Tiệc Nhà Trai (21.11), toàn bộ hình ảnh sẽ tự động xuất hiện tại đây.</p>
+          </div>
+        `;
+        return;
+      }
 
       if (currentLayout === 'polaroid') {
         megaGrid.className = 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6';
@@ -913,7 +907,7 @@
               </div>
               <div class="washi-tape w-16 h-4 mx-auto -mt-5 mb-2 rounded-sm"></div>
               <div onclick="openSimplePreview(this.querySelector('img').src, '${item.title}', '${eventLabels[item.cat]}')" class="aspect-[3/4] rounded-xl overflow-hidden bg-skySoft cursor-pointer">
-                <img src="${item.url}" onerror="resolveSmartImage(this, '${item.url}')" alt="${item.title}" class="w-full h-full object-cover object-top group-hover:scale-105 transition" />
+                <img src="${item.url}" alt="${item.title}" class="w-full h-full object-cover object-top group-hover:scale-105 transition" />
               </div>
               <div class="mt-2.5 flex items-center justify-between gap-1">
                 <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-skySoft text-royal">${eventLabels[item.cat]}</span>
@@ -931,7 +925,7 @@
               <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-royal text-sunYellow font-bold text-xs flex items-center justify-center shadow-md">✏️</button>
               <button onclick="deletePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-rose-600 text-white font-bold text-xs flex items-center justify-center shadow-md">✕</button>
             </div>
-            <img onclick="openSimplePreview(this.src, '${item.title}', '${eventLabels[item.cat]}')" src="${item.url}" onerror="resolveSmartImage(this, '${item.url}')" alt="${item.title}" class="w-full aspect-[3/4] object-cover object-top cursor-pointer group-hover:scale-105 transition" />
+            <img onclick="openSimplePreview(this.src, '${item.title}', '${eventLabels[item.cat]}')" src="${item.url}" alt="${item.title}" class="w-full aspect-[3/4] object-cover object-top cursor-pointer group-hover:scale-105 transition" />
           </div>
         `).join('');
       } else {
@@ -942,7 +936,7 @@
               <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-6 h-6 rounded-full bg-royal text-sunYellow font-bold text-[9px] flex items-center justify-center shadow">✏️</button>
               <button onclick="deletePhoto(event, ${item.id})" class="w-6 h-6 rounded-full bg-rose-600 text-white font-bold text-[9px] flex items-center justify-center shadow">✕</button>
             </div>
-            <img onclick="openSimplePreview(this.src, '${item.title}', '${eventLabels[item.cat]}')" src="${item.url}" onerror="resolveSmartImage(this, '${item.url}')" alt="${item.title}" class="w-full h-full object-cover object-top group-hover:scale-110 transition" />
+            <img onclick="openSimplePreview(this.src, '${item.title}', '${eventLabels[item.cat]}')" src="${item.url}" alt="${item.title}" class="w-full h-full object-cover object-top group-hover:scale-110 transition" />
           </div>
         `).join('');
       }
@@ -955,7 +949,7 @@
           id: Date.now() + idx,
           cat: category,
           url: URL.createObjectURL(file),
-          title: file.name.replace(/\.[^/.]+$/, '') || 'Ảnh kỷ niệm'
+          title: file.name.replace(/\.[^/.]+$/, '') || 'Khoảnh khắc khách mời'
         });
       });
       renderAllGalleries();
