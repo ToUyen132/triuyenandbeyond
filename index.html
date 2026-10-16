@@ -64,7 +64,7 @@
     .animate-marquee {
       display: flex;
       width: max-content;
-      animation: marquee 42s linear infinite;
+      animation: marquee 55s linear infinite;
     }
     .animate-marquee:hover {
       animation-play-state: paused;
@@ -101,7 +101,7 @@
   <input type="file" id="logoFileInput" accept="image/*" class="hidden" onchange="changeLogoImage(event)" />
 
   <!-- TRÌNH PHÁT NHẠC NỀN CỐ ĐỊNH: THẾ GIỚI CỦA ANH -->
-  <audio id="bgMusic" src="the-gioi-cua-anh.mp3" loop preload="auto"></audio>
+  <audio id="bgMusic" src="the-gioi-cua-anh.mp3" onerror="if(!this.dataset.git){this.dataset.git='1';this.src='https://raw.githubusercontent.com/ToUyen132/triuyenandbeyond/main/the-gioi-cua-anh.mp3';}" loop preload="auto"></audio>
 
   <div onclick="toggleMusic()" class="fixed bottom-4 right-4 z-50 flex items-center gap-2.5 bg-white/95 backdrop-blur-md p-2 pr-4 rounded-full shadow-2xl border-2 border-royal cursor-pointer hover:scale-105 transition" title="Bật / Tắt nhạc nền">
     <div class="relative w-11 h-11 rounded-full bg-royal text-sunYellow flex items-center justify-center shadow-md">
@@ -132,7 +132,7 @@
       <a href="#top" ondblclick="document.getElementById('logoFileInput').click()" class="block group" title="Đức Trí & Tố Uyên - And Beyond">
         <img 
           src="Đức Trí & Tố Uyên Wedding Logo.png" 
-          onerror="if(this.src.indexOf('images/logo.png')===-1){this.src='images/logo.png';}else{this.src='logo.png';}" 
+          onerror="resolveSmartImage(this, 'Đức Trí & Tố Uyên Wedding Logo.png')" 
           alt="Đức Trí & Tố Uyên - AND BEYOND" 
           class="brand-logo-img wedding-logo-img h-11 sm:h-14 w-auto object-contain group-hover:scale-105 transition duration-300" 
         />
@@ -164,9 +164,9 @@
             🌞
           </div>
 
-          <!-- ẢNH SAVE THE DATE (Tự động tìm trong images/KBEA030.jpg hoặc KBEA030.jpg) -->
+          <!-- ẢNH SAVE THE DATE (KBEA030.jpg) -->
           <div class="relative rounded-xl overflow-hidden aspect-[3/3.8] bg-white shadow-md group">
-            <img id="heroCoverImg" src="images/KBEA030.jpg" onerror="if(this.src.indexOf('KBEA030.jpg')!==-1 && this.src.indexOf('images/')!==-1){this.src='KBEA030.jpg';}" alt="Đức Trí & Tố Uyên" class="w-full h-full object-cover object-top" />
+            <img id="heroCoverImg" src="KBEA030.jpg" onerror="resolveSmartImage(this, 'KBEA030.jpg')" alt="Đức Trí & Tố Uyên" class="w-full h-full object-cover object-top" />
             <div class="absolute inset-0 bg-gradient-to-t from-royal/75 via-transparent to-transparent flex flex-col justify-end p-4 text-center text-white">
               <p class="text-[10px] uppercase tracking-widest opacity-90">WE'RE GETTING MARRIED</p>
               <p class="font-script text-4xl text-sunYellow drop-shadow">Save the Date</p>
@@ -338,15 +338,13 @@
     </div>
   </section>
 
-  <!-- =========================================================================
-       DẢI PHIM CUỘN PRE-WEDDING (CỐ ĐỊNH TỪ THƯ MỤC images/ - DỄ CHỈNH TRÊN GITHUB)
-       ========================================================================= -->
+  <!-- DẢI PHIM CUỘN PRE-WEDDING (TỰ ĐỘNG LẤY TỪ GITHUB ToUyen132/triuyenandbeyond) -->
   <section class="py-6 bg-royal/95 border-y-4 border-sunYellow overflow-hidden shadow-lg">
     <div class="max-w-6xl mx-auto px-4 mb-3 flex flex-wrap items-center justify-between gap-2 text-white text-xs">
       <span class="font-extrabold tracking-wider uppercase text-sunYellow text-sm">
         🎞️ ALBUM CƯỚI (PRE-WEDDING ĐỨC TRÍ &amp; TỐ UYÊN)
       </span>
-      <span class="text-[11px] text-skyPastel italic">Chạm vào ảnh bất kỳ để xem kích thước lớn</span>
+      <span class="text-[11px] text-skyPastel italic">Chạm vào ảnh bất kỳ để phóng to</span>
     </div>
     <div id="marqueeTrack" class="animate-marquee gap-5 px-4"></div>
   </section>
@@ -455,7 +453,7 @@
           <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
             <div>
               <h4 class="font-extrabold text-lg text-royal flex items-center gap-2">
-                📸 Album Hình Tiệc Nhà Gái (07.11) <span id="count-nhagai" class="text-xs px-2.5 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">4 ảnh</span>
+                📸 Album Hình Tiệc Nhà Gái (07.11) <span id="count-nhagai" class="text-xs px-2.5 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">6 ảnh</span>
               </h4>
               <p class="text-xs text-royal/70">Rê chuột vào ảnh để đổi hình (✏️) hoặc xóa (✕)</p>
             </div>
@@ -464,7 +462,7 @@
               <input type="file" accept="image/*" multiple class="hidden" onchange="handleBatchUpload(event, 'nhagai')" />
             </label>
           </div>
-          <div id="grid-nhagai" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+          <div id="grid-nhagai" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
         </div>
       </div>
     </div>
@@ -499,7 +497,7 @@
           <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
             <div>
               <h4 class="font-extrabold text-lg text-royal flex items-center gap-2">
-                🏮 Album Hình Lễ Gia Tiên (14.11) <span id="count-giatien" class="text-xs px-2.5 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">4 ảnh</span>
+                🏮 Album Hình Lễ Gia Tiên (14.11) <span id="count-giatien" class="text-xs px-2.5 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">6 ảnh</span>
               </h4>
               <p class="text-xs text-royal/70">Rê chuột vào ảnh để đổi hình (✏️) hoặc xóa (✕)</p>
             </div>
@@ -508,7 +506,7 @@
               <input type="file" accept="image/*" multiple class="hidden" onchange="handleBatchUpload(event, 'giatien')" />
             </label>
           </div>
-          <div id="grid-giatien" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+          <div id="grid-giatien" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
         </div>
       </div>
     </div>
@@ -544,7 +542,7 @@
           <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
             <div>
               <h4 class="font-extrabold text-lg text-royal flex items-center gap-2">
-                🥂 Album Hình Tiệc Nhà Trai (21.11) <span id="count-nhatrai" class="text-xs px-2.5 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">4 ảnh</span>
+                🥂 Album Hình Tiệc Nhà Trai (21.11) <span id="count-nhatrai" class="text-xs px-2.5 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">6 ảnh</span>
               </h4>
               <p class="text-xs text-royal/70">Rê chuột vào ảnh để đổi hình (✏️) hoặc xóa (✕)</p>
             </div>
@@ -553,7 +551,7 @@
               <input type="file" accept="image/*" multiple class="hidden" onchange="handleBatchUpload(event, 'nhatrai')" />
             </label>
           </div>
-          <div id="grid-nhatrai" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+          <div id="grid-nhatrai" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
         </div>
       </div>
     </div>
@@ -578,10 +576,10 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-8 items-center">
         <div class="lg:col-span-7 flex flex-wrap gap-2">
-          <button onclick="setAlbumFilter('all')" id="filter-all" class="px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold bg-sunYellow text-royal shadow-sm transition">Tất cả (<span id="badge-all">12</span>)</button>
-          <button onclick="setAlbumFilter('nhagai')" id="filter-nhagai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🌸 Nhà Gái (<span id="badge-nhagai">4</span>)</button>
-          <button onclick="setAlbumFilter('giatien')" id="filter-giatien" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🏮 Gia Tiên (<span id="badge-giatien">4</span>)</button>
-          <button onclick="setAlbumFilter('nhatrai')" id="filter-nhatrai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🥂 Nhà Trai (<span id="badge-nhatrai">4</span>)</button>
+          <button onclick="setAlbumFilter('all')" id="filter-all" class="px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold bg-sunYellow text-royal shadow-sm transition">Tất cả (<span id="badge-all">18</span>)</button>
+          <button onclick="setAlbumFilter('nhagai')" id="filter-nhagai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🌸 Nhà Gái (<span id="badge-nhagai">6</span>)</button>
+          <button onclick="setAlbumFilter('giatien')" id="filter-giatien" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🏮 Gia Tiên (<span id="badge-giatien">6</span>)</button>
+          <button onclick="setAlbumFilter('nhatrai')" id="filter-nhatrai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🥂 Nhà Trai (<span id="badge-nhatrai">6</span>)</button>
         </div>
 
         <div class="lg:col-span-5 flex items-center justify-end gap-2">
@@ -675,7 +673,7 @@
     <div class="flex justify-center mb-3">
       <img 
         src="Đức Trí & Tố Uyên Wedding Logo.png" 
-        onerror="if(this.src.indexOf('images/logo.png')===-1){this.src='images/logo.png';}else{this.src='logo.png';}" 
+        onerror="resolveSmartImage(this, 'Đức Trí & Tố Uyên Wedding Logo.png')" 
         ondblclick="document.getElementById('logoFileInput').click()"
         alt="Đức Trí & Tố Uyên - AND BEYOND" 
         class="brand-logo-img wedding-logo-img h-16 sm:h-20 w-auto object-contain cursor-pointer hover:scale-105 transition duration-300" 
@@ -688,6 +686,32 @@
 
   <!-- JAVASCRIPT -->
   <script>
+    // =========================================================================
+    // TRÌNH TẢI ẢNH THÔNG MINH:
+    // Tự động tìm ở thư mục hiện tại -> thư mục images/ -> Kho GitHub ToUyen132/triuyenandbeyond
+    // =========================================================================
+    const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/ToUyen132/triuyenandbeyond/main/';
+
+    function resolveSmartImage(imgEl, rawFileName) {
+      const cleanName = rawFileName.replace(/^images\//, '');
+      const upperExt = cleanName.replace(/\.jpg$/i, '.JPG');
+      const step = parseInt(imgEl.dataset.fallbackStep || '0', 10);
+
+      const candidates = [
+        `images/${cleanName}`,
+        `${GITHUB_RAW_BASE}${encodeURIComponent(cleanName)}`,
+        `${GITHUB_RAW_BASE}images/${encodeURIComponent(cleanName)}`,
+        upperExt,
+        `images/${upperExt}`,
+        `${GITHUB_RAW_BASE}${encodeURIComponent(upperExt)}`
+      ];
+
+      if (step < candidates.length) {
+        imgEl.dataset.fallbackStep = String(step + 1);
+        imgEl.src = candidates[step];
+      }
+    }
+
     function changeLogoImage(event) {
       const file = event.target.files?.[0];
       if (!file) return;
@@ -743,55 +767,50 @@
     });
 
     // =========================================================================
-    // 2. CẤU HÌNH CUỘN PHIM PRE-WEDDING GỌN GÀNG TRONG THƯ MỤC images/
-    // Bạn chỉ cần bỏ ảnh vào thư mục images/ (VD: images/KBEA059.jpg hoặc images/pre1.jpg)
+    // 2. DANH SÁCH ĐẦY ĐỦ ẢNH CUỘN PHIM PRE-WEDDING (GỒM CẢ CÁC MÃ HÌNH MỚI NHẤT)
     // =========================================================================
     const filmstripPhotos = [
-      { file: 'KBEA030.jpg', altFile: 'pre1.jpg', title: 'Save the Date - Đức Trí & Tố Uyên' },
-      { file: 'KBEA059.jpg', altFile: 'pre2.jpg', title: 'Đức Trí & Tố Uyên bên cặp gấu len handmade' },
-      { file: 'KBEA051.jpg', altFile: 'pre3.jpg', title: 'Vườn hoa vàng rực rỡ & cặp gấu đôi' },
-      { file: 'KBEA097.jpg', altFile: 'pre4.jpg', title: 'Khoảnh khắc tinh nghịch cùng gấu len' },
-      { file: 'KBEA0155.jpg', altFile: 'pre5.jpg', title: 'Ngọt ngào bên bó cẩm tú cầu xanh' },
-      { file: 'KBEA0201.jpg', altFile: 'pre6.jpg', title: 'Chú rể Đức Trí lịch lãm' },
-      { file: 'NOTEA115.jpg', altFile: 'pre7.jpg', title: 'Nâng ly rượu vẽ chibi cô dâu chú rể' },
-      { file: 'NOTEA11.jpg', altFile: 'pre8.jpg', title: 'Nụ hôn lên tay cô dâu đầy trân trọng' },
-      { file: 'NOTEA71.jpg', altFile: 'pre9.jpg', title: 'Khiêu vũ dưới ánh đèn cùng bó hoa len' },
-      { file: 'NOTEA48.jpg', altFile: 'pre10.jpg', title: 'Khoảnh khắc lãng mạn ngọt ngào' }
+      { file: 'KBEA030.jpg', title: 'Save the Date - Đức Trí & Tố Uyên' },
+      { file: 'KBEA020.jpg', title: 'Nâng ly chúc mừng hạnh phúc' },
+      { file: 'KBEA059.jpg', title: 'Đức Trí & Tố Uyên bên cặp gấu len handmade' },
+      { file: 'KBEA051.jpg', title: 'Vườn hoa vàng rực rỡ & cặp gấu đôi' },
+      { file: 'KBEA097.jpg', title: 'Khoảnh khắc tinh nghịch cùng gấu len' },
+      { file: 'KBEA075.jpg', title: 'Khoảnh khắc ngọt ngào' },
+      { file: 'KBEA085.jpg', title: 'Nụ cười rạng rỡ' },
+      { file: 'KBEA0113.jpg', title: 'Hạnh phúc bên nhau' },
+      { file: 'KBEA0155.jpg', title: 'Ngọt ngào bên bó cẩm tú cầu xanh' },
+      { file: 'KBEA0160.jpg', title: 'Trao nhẫn cưới bên hoa cẩm tú cầu' },
+      { file: 'KBEA0165.jpg', title: 'Khoe nhẫn cưới rạng ngời' },
+      { file: 'KBEA0168.jpg', title: 'Sánh đôi giữa vườn hoa vàng' },
+      { file: 'KBEA0174.jpg', title: 'Khoảnh khắc dưới tấm voan cưới' },
+      { file: 'KBEA0207.jpg', title: 'Pre-Wedding Đức Trí & Tố Uyên' },
+      { file: 'KBEA0201.jpg', title: 'Chú rể Đức Trí lịch lãm' },
+      { file: 'NOTEA18.jpg', title: 'Khiêu vũ lãng mạn' },
+      { file: 'NOTEA36.jpg', title: 'Ánh mắt trao nhau ngọt ngào' },
+      { file: 'NOTEA71.jpg', title: 'Khiêu vũ cùng bó hoa len' },
+      { file: 'NOTEA115.jpg', title: 'Nâng ly rượu vẽ chibi cô dâu chú rể' },
+      { file: 'NOTEA11.jpg', title: 'Nụ hôn lên tay cô dâu đầy trân trọng' },
+      { file: 'NOTEA48.jpg', title: 'Khoảnh khắc lãng mạn ngọt ngào' }
     ];
-
-    // Tự động thử tìm trong images/<tên_gốc> -> <tên_gốc> -> images/pre1.jpg
-    function handlePreWeddingImgError(imgEl, rawFile, altFile) {
-      const step = parseInt(imgEl.dataset.tryStep || '0', 10);
-      if (step === 0) {
-        imgEl.dataset.tryStep = '1';
-        imgEl.src = rawFile; // Thử tìm ngay cùng cấp với index.html
-      } else if (step === 1 && altFile) {
-        imgEl.dataset.tryStep = '2';
-        imgEl.src = 'images/' + altFile; // Thử tìm theo tên pre1.jpg, pre2.jpg trong images/
-      }
-    }
 
     function renderFilmstrip() {
       const marqueeEl = document.getElementById('marqueeTrack');
       const doubled = [...filmstripPhotos, ...filmstripPhotos];
-      marqueeEl.innerHTML = doubled.map((item) => {
-        const primaryPath = `images/${item.file}`;
-        return `
-          <div onclick="openSimplePreview(this.querySelector('img').src, '${item.title}', 'Pre-Wedding')" class="cursor-pointer w-56 h-40 rounded-2xl overflow-hidden border-2 border-white shrink-0 relative group shadow-lg bg-skySoft">
-            <img 
-              src="${primaryPath}" 
-              onerror="handlePreWeddingImgError(this, '${item.file}', '${item.altFile}')" 
-              alt="${item.title}" 
-              class="w-full h-full object-cover object-top group-hover:scale-110 transition duration-300" 
-              loading="lazy" 
-            />
-          </div>
-        `;
-      }).join('');
+      marqueeEl.innerHTML = doubled.map((item) => `
+        <div onclick="openSimplePreview(this.querySelector('img').src, '${item.title}', 'Pre-Wedding')" class="cursor-pointer w-56 h-44 rounded-2xl overflow-hidden border-2 border-white shrink-0 relative group shadow-lg bg-skySoft">
+          <img 
+            src="${item.file}" 
+            onerror="resolveSmartImage(this, '${item.file}')" 
+            alt="${item.title}" 
+            class="w-full h-full object-cover object-top group-hover:scale-110 transition duration-300" 
+            loading="lazy" 
+          />
+        </div>
+      `).join('');
     }
 
     // =========================================================================
-    // 3. KHO ẢNH SỰ KIỆN 3 NGÀY TIỆC (GIỮ NGUYÊN)
+    // 3. KHO ẢNH SỰ KIỆN 3 NGÀY TIỆC (CẬP NHẬT ĐẦY ĐỦ CÁC MÃ HÌNH MỚI)
     // =========================================================================
     const eventLabels = {
       nhagai: 'Tiệc Nhà Gái 07.11',
@@ -800,20 +819,29 @@
     };
 
     let photos = [
-      { id: 1, cat: 'nhagai', url: 'images/KBEA059.jpg', fallback: 'KBEA059.jpg', title: 'Kỷ niệm Tiệc Nhà Gái 01' },
-      { id: 2, cat: 'nhagai', url: 'images/KBEA051.jpg', fallback: 'KBEA051.jpg', title: 'Kỷ niệm Tiệc Nhà Gái 02' },
-      { id: 3, cat: 'nhagai', url: 'images/KBEA097.jpg', fallback: 'KBEA097.jpg', title: 'Kỷ niệm Tiệc Nhà Gái 03' },
-      { id: 4, cat: 'nhagai', url: 'images/KBEA0155.jpg', fallback: 'KBEA0155.jpg', title: 'Kỷ niệm Tiệc Nhà Gái 04' },
+      // Mục Nhà Gái 07.11
+      { id: 1, cat: 'nhagai', url: 'KBEA020.jpg', title: 'Nâng ly hạnh phúc 07.11' },
+      { id: 2, cat: 'nhagai', url: 'KBEA059.jpg', title: 'Bên cặp gấu len handmade' },
+      { id: 3, cat: 'nhagai', url: 'KBEA051.jpg', title: 'Vườn hoa vàng rực rỡ' },
+      { id: 4, cat: 'nhagai', url: 'KBEA097.jpg', title: 'Khoảnh khắc đáng yêu' },
+      { id: 5, cat: 'nhagai', url: 'KBEA075.jpg', title: 'Kỷ niệm Tiệc Nhà Gái' },
+      { id: 6, cat: 'nhagai', url: 'KBEA085.jpg', title: 'Nụ cười ngày vui' },
 
-      { id: 5, cat: 'giatien', url: 'images/NOTEA115.jpg', fallback: 'NOTEA115.jpg', title: 'Lễ Gia Tiên 01' },
-      { id: 6, cat: 'giatien', url: 'images/NOTEA11.jpg', fallback: 'NOTEA11.jpg', title: 'Lễ Gia Tiên 02' },
-      { id: 7, cat: 'giatien', url: 'images/NOTEA71.jpg', fallback: 'NOTEA71.jpg', title: 'Lễ Gia Tiên 03' },
-      { id: 8, cat: 'giatien', url: 'images/NOTEA48.jpg', fallback: 'NOTEA48.jpg', title: 'Lễ Gia Tiên 04' },
+      // Mục Lễ Gia Tiên 14.11
+      { id: 7, cat: 'giatien', url: 'KBEA0155.jpg', title: 'Bên hoa cẩm tú cầu xanh' },
+      { id: 8, cat: 'giatien', url: 'KBEA0160.jpg', title: 'Trao nhẫn cưới' },
+      { id: 9, cat: 'giatien', url: 'KBEA0165.jpg', title: 'Chung đôi ngày 14.11' },
+      { id: 10, cat: 'giatien', url: 'KBEA0168.jpg', title: 'Hạnh phúc viên mãn' },
+      { id: 11, cat: 'giatien', url: 'KBEA0174.jpg', title: 'Dưới lớp voan cưới' },
+      { id: 12, cat: 'giatien', url: 'KBEA0207.jpg', title: 'Sánh bước bên nhau' },
 
-      { id: 9, cat: 'nhatrai', url: 'images/KBEA030.jpg', fallback: 'KBEA030.jpg', title: 'Tiệc Nhà Trai 01' },
-      { id: 10, cat: 'nhatrai', url: 'images/KBEA0201.jpg', fallback: 'KBEA0201.jpg', title: 'Tiệc Nhà Trai 02' },
-      { id: 11, cat: 'nhatrai', url: 'images/KBEA059.jpg', fallback: 'KBEA059.jpg', title: 'Tiệc Nhà Trai 03' },
-      { id: 12, cat: 'nhatrai', url: 'images/NOTEA115.jpg', fallback: 'NOTEA115.jpg', title: 'Tiệc Nhà Trai 04' }
+      // Mục Nhà Trai 21.11
+      { id: 13, cat: 'nhatrai', url: 'KBEA030.jpg', title: 'Chuyến bay hạnh phúc 21.11' },
+      { id: 14, cat: 'nhatrai', url: 'KBEA0113.jpg', title: 'Khoảnh khắc ngọt ngào' },
+      { id: 15, cat: 'nhatrai', url: 'NOTEA18.jpg', title: 'Khiêu vũ lãng mạn' },
+      { id: 16, cat: 'nhatrai', url: 'NOTEA36.jpg', title: 'Ánh mắt yêu thương' },
+      { id: 17, cat: 'nhatrai', url: 'NOTEA71.jpg', title: 'Bên bó hoa len rực rỡ' },
+      { id: 18, cat: 'nhatrai', url: 'NOTEA115.jpg', title: 'Nâng ly chúc mừng' }
     ];
 
     let currentFilter = 'all';
@@ -854,8 +882,8 @@
 
         const gridEl = document.getElementById(`grid-${cat}`);
         gridEl.innerHTML = list.map((item) => `
-          <div class="group cursor-pointer relative rounded-xl overflow-hidden aspect-square bg-skySoft border border-skyPastel shadow-sm">
-            <img onclick="openSimplePreview(this.src, '${item.title}', '${eventLabels[item.cat]}')" src="${item.url}" onerror="if(this.src.indexOf('${item.fallback}')===-1){this.src='${item.fallback}';}" alt="${item.title}" class="w-full h-full object-cover object-top group-hover:scale-110 transition duration-300" />
+          <div class="group cursor-pointer relative rounded-xl overflow-hidden aspect-[3/4] bg-skySoft border border-skyPastel shadow-sm">
+            <img onclick="openSimplePreview(this.src, '${item.title}', '${eventLabels[item.cat]}')" src="${item.url}" onerror="resolveSmartImage(this, '${item.url}')" alt="${item.title}" class="w-full h-full object-cover object-top group-hover:scale-110 transition duration-300" />
             <div class="absolute top-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
               <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-royal text-sunYellow font-bold text-xs flex items-center justify-center shadow-md hover:scale-110 transition" title="Đổi ảnh">✏️</button>
               <button onclick="deletePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-rose-600 text-white font-bold text-xs flex items-center justify-center shadow-md hover:scale-110 transition" title="Xóa ảnh">✕</button>
@@ -884,8 +912,8 @@
                 <button onclick="deletePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-rose-600 text-white font-bold text-xs flex items-center justify-center shadow-md" title="Xóa ảnh">✕</button>
               </div>
               <div class="washi-tape w-16 h-4 mx-auto -mt-5 mb-2 rounded-sm"></div>
-              <div onclick="openSimplePreview(this.querySelector('img').src, '${item.title}', '${eventLabels[item.cat]}')" class="aspect-[4/4] rounded-xl overflow-hidden bg-skySoft cursor-pointer">
-                <img src="${item.url}" onerror="if(this.src.indexOf('${item.fallback}')===-1){this.src='${item.fallback}';}" alt="${item.title}" class="w-full h-full object-cover object-top group-hover:scale-105 transition" />
+              <div onclick="openSimplePreview(this.querySelector('img').src, '${item.title}', '${eventLabels[item.cat]}')" class="aspect-[3/4] rounded-xl overflow-hidden bg-skySoft cursor-pointer">
+                <img src="${item.url}" onerror="resolveSmartImage(this, '${item.url}')" alt="${item.title}" class="w-full h-full object-cover object-top group-hover:scale-105 transition" />
               </div>
               <div class="mt-2.5 flex items-center justify-between gap-1">
                 <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-skySoft text-royal">${eventLabels[item.cat]}</span>
@@ -903,18 +931,18 @@
               <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-royal text-sunYellow font-bold text-xs flex items-center justify-center shadow-md">✏️</button>
               <button onclick="deletePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-rose-600 text-white font-bold text-xs flex items-center justify-center shadow-md">✕</button>
             </div>
-            <img onclick="openSimplePreview(this.src, '${item.title}', '${eventLabels[item.cat]}')" src="${item.url}" onerror="if(this.src.indexOf('${item.fallback}')===-1){this.src='${item.fallback}';}" alt="${item.title}" class="w-full aspect-[3/4] object-cover object-top cursor-pointer group-hover:scale-105 transition" />
+            <img onclick="openSimplePreview(this.src, '${item.title}', '${eventLabels[item.cat]}')" src="${item.url}" onerror="resolveSmartImage(this, '${item.url}')" alt="${item.title}" class="w-full aspect-[3/4] object-cover object-top cursor-pointer group-hover:scale-105 transition" />
           </div>
         `).join('');
       } else {
         megaGrid.className = 'grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2.5';
         megaGrid.innerHTML = filtered.map((item) => `
-          <div class="group cursor-pointer relative aspect-square rounded-xl overflow-hidden border border-skyPastel bg-skySoft">
+          <div class="group cursor-pointer relative aspect-[3/4] rounded-xl overflow-hidden border border-skyPastel bg-skySoft">
             <div class="absolute top-1 right-1 z-20 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
               <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-6 h-6 rounded-full bg-royal text-sunYellow font-bold text-[9px] flex items-center justify-center shadow">✏️</button>
               <button onclick="deletePhoto(event, ${item.id})" class="w-6 h-6 rounded-full bg-rose-600 text-white font-bold text-[9px] flex items-center justify-center shadow">✕</button>
             </div>
-            <img onclick="openSimplePreview(this.src, '${item.title}', '${eventLabels[item.cat]}')" src="${item.url}" onerror="if(this.src.indexOf('${item.fallback}')===-1){this.src='${item.fallback}';}" alt="${item.title}" class="w-full h-full object-cover object-top group-hover:scale-110 transition" />
+            <img onclick="openSimplePreview(this.src, '${item.title}', '${eventLabels[item.cat]}')" src="${item.url}" onerror="resolveSmartImage(this, '${item.url}')" alt="${item.title}" class="w-full h-full object-cover object-top group-hover:scale-110 transition" />
           </div>
         `).join('');
       }
@@ -927,7 +955,6 @@
           id: Date.now() + idx,
           cat: category,
           url: URL.createObjectURL(file),
-          fallback: '',
           title: file.name.replace(/\.[^/.]+$/, '') || 'Ảnh kỷ niệm'
         });
       });
