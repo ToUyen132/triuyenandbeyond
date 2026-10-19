@@ -62,7 +62,6 @@
       transform: rotate(-1.5deg);
       z-index: -1;
     }
-    /* Thanh cuộn gọn đẹp cho lưới ảnh المục 1, 2, 3 */
     .compact-scroll::-webkit-scrollbar {
       width: 6px;
     }
@@ -174,13 +173,11 @@
     </div>
   </header>
 
-  <!-- =========================================================================
-       PHẦN 1: NHIỆM VỤ HỆ THỐNG Ở TRÊN (ĐÃ BỎ CÁC BƯỚC) + HÌNH CƯỚI Ở DƯỚI (ĐÃ BỎ CHỮ TRONG HÌNH)
-       ========================================================================= -->
+  <!-- PHẦN 1: NHIỆM VỤ HỆ THỐNG Ở TRÊN + HÌNH CƯỚI Ở DƯỚI -->
   <section id="top" class="relative py-10 px-4">
     <div class="max-w-2xl mx-auto flex flex-col items-center space-y-8">
       
-      <!-- Khối 1: Nhiệm Vụ Hệ Thống (Đã bỏ các bước) -->
+      <!-- Khối 1: Nhiệm Vụ Hệ Thống -->
       <div class="w-full bg-white/95 rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-skyPastel relative overflow-hidden text-center">
         <div class="washi-tape w-32 h-7 mx-auto -mt-10 mb-3 rotate-[-2deg] rounded-sm"></div>
 
@@ -194,7 +191,7 @@
         </h2>
         <p class="mt-4 text-xs sm:text-base font-bold text-royal leading-relaxed max-w-lg mx-auto">
           Hôm nay, bạn phải trở thành một thợ săn ảnh!<br/>
-          Nhiệm vụ của bạn là bắn tỉa thật nhiều ảnh đẹp của buổi tiệc này.
+          Công việc của bạn là bắn tỉa thật nhiều ảnh đẹp của buổi tiệc này.
         </p>
 
         <div class="mt-5">
@@ -203,7 +200,7 @@
         </div>
       </div>
 
-      <!-- Khối 2: Hình Cô Dâu Chú Rể Xếp Ngay Bên Dưới (Đã bỏ toàn bộ chữ đè trên hình) -->
+      <!-- Khối 2: Hình Cô Dâu Chú Rể -->
       <div class="w-full max-w-sm rounded-3xl overflow-hidden aspect-[3/4] bg-white shadow-2xl border-4 border-white">
         <img 
           id="heroCoverImg" 
@@ -218,7 +215,7 @@
   </section>
 
   <!-- =========================================================================
-       PHẦN 2: 3 MỤC NGÀY CƯỚI XẾP DẠNG LƯỚI CÓ THỂ CUỘN GỌN (COMPACT SCROLLABLE GRID)
+       PHẦN 2: 3 MỤC NGÀY CƯỚI CỰC GỌN GÀNG (LỄ VU QUY • GIA TIÊN • LỄ TÂN HÔN)
        ========================================================================= -->
   <section id="three-events-section" class="py-8 px-4 max-w-6xl mx-auto scroll-mt-16">
     <div class="text-center mb-8 bg-white/85 border-2 border-sunYellow rounded-3xl p-5 sm:p-6 shadow-md max-w-4xl mx-auto">
@@ -230,17 +227,15 @@
       </p>
     </div>
 
-    <!-- LƯỚI 3 CỘT GỌN GÀNG CHO MỤC 01, 02, 03 (CÓ THANH CUỘN GỌN BÊN TRONG) -->
+    <!-- LƯỚI 3 CỘT GỌN GÀNG: LỄ VU QUY - GIA TIÊN - LỄ TÂN HÔN -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
       
-      <!-- MỤC 1: NHÀ GÁI (07.11) -->
+      <!-- CỘT 1: LỄ VU QUY (07.11) -->
       <div id="event-nhagai" class="bg-white rounded-3xl p-5 shadow-xl border-2 border-skyPastel flex flex-col justify-between">
         <div class="text-center pb-4 border-b border-dashed border-skyPastel">
-          <span class="inline-block px-3 py-0.5 rounded-full bg-skySoft text-royal text-[11px] font-extrabold mb-2">MỤC 01 • TIỆC NHÀ GÁI</span>
-          <h3 class="text-sm font-semibold text-royal uppercase">
-            TIỆC CƯỚI NHÀ GÁI TỔ CHỨC<br/>VÀO LÚC <strong class="font-extrabold">17:30 - THỨ BẢY</strong>
+          <h3 class="font-serif text-2xl sm:text-3xl font-bold text-royal tracking-wide uppercase">
+            Lễ Vu Quy
           </h3>
-          <p class="text-[11px] font-bold text-amber-600 mt-0.5"> </p>
           <div class="my-3 flex items-center justify-center gap-3">
             <div class="flex-1 border-y border-royal py-1.5 text-xs font-medium text-royal">THÁNG 11</div>
             <div class="font-serif text-5xl text-royal leading-none">07</div>
@@ -252,26 +247,23 @@
         <div class="pt-4 flex-1 flex flex-col">
           <div class="flex items-center justify-between gap-2 mb-3">
             <h4 class="font-extrabold text-xs sm:text-sm text-royal flex items-center gap-1.5">
-              📸 Nhà Gái <span id="count-nhagai" class="text-[10px] px-2 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">0 mục</span>
+              📸 Lễ Vu Quy <span id="count-nhagai" class="text-[10px] px-2 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">0 mục</span>
             </h4>
             <label class="px-3 py-1.5 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-[11px] cursor-pointer shadow transition">
               ➕ Thêm Hình / Video
               <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, 'nhagai')" />
             </label>
           </div>
-          <!-- Lưới ảnh cuộn gọn (max-h-56 overflow-y-auto) -->
           <div id="grid-nhagai" class="compact-scroll max-h-56 overflow-y-auto pr-1 grid grid-cols-3 gap-2"></div>
         </div>
       </div>
 
-      <!-- MỤC 2: LỄ GIA TIÊN (14.11) -->
+      <!-- CỘT 2: GIA TIÊN (14.11) -->
       <div id="event-giatien" class="bg-[#F2F6FF] rounded-3xl p-5 shadow-xl border-2 border-amber-300 flex flex-col justify-between">
         <div class="text-center pb-4 border-b border-dashed border-amber-300">
-          <span class="inline-block px-3 py-0.5 rounded-full bg-sunYellow text-royal text-[11px] font-extrabold mb-2">MỤC 02 • LỄ GIA TIÊN &amp; VU QUY</span>
-          <h3 class="text-sm font-semibold text-royal uppercase">
-            LỄ GIA TIÊN TỔ CHỨC<br/>VÀO LÚC <strong class="font-extrabold"> THỨ BẢY</strong>
+          <h3 class="font-serif text-2xl sm:text-3xl font-bold text-royal tracking-wide uppercase">
+            Gia Tiên
           </h3>
-          <p class="text-[11px] font-bold text-amber-700 mt-0.5"> </p>
           <div class="my-3 flex items-center justify-center gap-3">
             <div class="flex-1 border-y border-royal py-1.5 text-xs font-medium text-royal">THÁNG 11</div>
             <div class="font-serif text-5xl text-royal leading-none">14</div>
@@ -290,19 +282,16 @@
               <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, 'giatien')" />
             </label>
           </div>
-          <!-- Lưới ảnh cuộn gọn (max-h-56 overflow-y-auto) -->
           <div id="grid-giatien" class="compact-scroll max-h-56 overflow-y-auto pr-1 grid grid-cols-3 gap-2"></div>
         </div>
       </div>
 
-      <!-- MỤC 3: NHÀ TRAI (21.11) -->
+      <!-- CỘT 3: LỄ TÂN HÔN (21.11) -->
       <div id="event-nhatrai" class="bg-white rounded-3xl p-5 shadow-xl border-2 border-skyPastel flex flex-col justify-between">
         <div class="text-center pb-4 border-b border-dashed border-skyPastel">
-          <span class="inline-block px-3 py-0.5 rounded-full bg-skySoft text-royal text-[11px] font-extrabold mb-2">MỤC 03 • TIỆC NHÀ TRAI</span>
-          <h3 class="text-sm font-semibold text-royal uppercase">
-            TIỆC CƯỚI NHÀ TRAI TỔ CHỨC<br/>VÀO LÚC <strong class="font-extrabold">18:00 - THỨ BẢY</strong>
+          <h3 class="font-serif text-2xl sm:text-3xl font-bold text-royal tracking-wide uppercase">
+            Lễ Tân Hôn
           </h3>
-          <p class="text-[11px] font-bold text-amber-600 mt-0.5"> </p>
           <div class="my-3 flex items-center justify-center gap-3">
             <div class="flex-1 border-y border-royal py-1.5 text-xs font-medium text-royal">THÁNG 11</div>
             <div class="font-serif text-5xl text-royal leading-none">21</div>
@@ -314,14 +303,13 @@
         <div class="pt-4 flex-1 flex flex-col">
           <div class="flex items-center justify-between gap-2 mb-3">
             <h4 class="font-extrabold text-xs sm:text-sm text-royal flex items-center gap-1.5">
-              🥂 Nhà Trai <span id="count-nhatrai" class="text-[10px] px-2 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">0 mục</span>
+              🥂 Lễ Tân Hôn <span id="count-nhatrai" class="text-[10px] px-2 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">0 mục</span>
             </h4>
             <label class="px-3 py-1.5 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-[11px] cursor-pointer shadow transition">
               ➕ Thêm Hình / Video
               <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, 'nhatrai')" />
             </label>
           </div>
-          <!-- Lưới ảnh cuộn gọn (max-h-56 overflow-y-auto) -->
           <div id="grid-nhatrai" class="compact-scroll max-h-56 overflow-y-auto pr-1 grid grid-cols-3 gap-2"></div>
         </div>
       </div>
@@ -349,16 +337,16 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-6 items-center">
         <div class="lg:col-span-7 flex flex-wrap gap-2">
           <button onclick="setAlbumFilter('all')" id="filter-all" class="px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold bg-sunYellow text-royal shadow-sm transition">Tất cả (<span id="badge-all">0</span>)</button>
-          <button onclick="setAlbumFilter('nhagai')" id="filter-nhagai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🌸 Nhà Gái (<span id="badge-nhagai">0</span>)</button>
+          <button onclick="setAlbumFilter('nhagai')" id="filter-nhagai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🌸 Lễ Vu Quy (<span id="badge-nhagai">0</span>)</button>
           <button onclick="setAlbumFilter('giatien')" id="filter-giatien" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🏮 Gia Tiên (<span id="badge-giatien">0</span>)</button>
-          <button onclick="setAlbumFilter('nhatrai')" id="filter-nhatrai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🥂 Nhà Trai (<span id="badge-nhatrai">0</span>)</button>
+          <button onclick="setAlbumFilter('nhatrai')" id="filter-nhatrai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🥂 Lễ Tân Hôn (<span id="badge-nhatrai">0</span>)</button>
         </div>
 
         <div class="lg:col-span-5 flex items-center justify-end gap-2">
           <select id="uploadCategorySelect" class="px-3 py-2.5 rounded-xl bg-white border-2 border-skyPastel text-royal font-bold text-xs focus:outline-none">
-            <option value="nhagai">Bỏ vào: Nhà Gái (07.11)</option>
+            <option value="nhagai">Bỏ vào: Lễ Vu Quy (07.11)</option>
             <option value="giatien">Bỏ vào: Gia Tiên (14.11)</option>
-            <option value="nhatrai">Bỏ vào: Nhà Trai (21.11)</option>
+            <option value="nhatrai">Bỏ vào: Lễ Tân Hôn (21.11)</option>
           </select>
           <label class="px-4 py-2.5 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-xs cursor-pointer shadow-md transition shrink-0">
             ➕ Thêm hình / video ngay
@@ -367,7 +355,6 @@
         </div>
       </div>
 
-      <!-- Khung Kho Ảnh cũng hỗ trợ cuộn gọn khi có rất nhiều hình -->
       <div id="megaGalleryGrid" class="compact-scroll max-h-[420px] overflow-y-auto pr-1 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2.5"></div>
     </div>
   </section>
@@ -383,7 +370,7 @@
     <div id="marqueeTrack" class="animate-marquee gap-5 px-4"></div>
   </section>
 
-  <!-- PHẦN 5: TRÒ CHƠI THẢ MÁY BAY GỬI LỜI CHÚC (ĐÃ BỎ CÁC BƯỚC 1, 2, 3) -->
+  <!-- PHẦN 5: TRÒ CHƠI THẢ MÁY BAY GỬI LỜI CHÚC -->
   <section class="py-12 px-4 max-w-4xl mx-auto">
     <div class="bg-white/95 rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-skyPastel relative">
       <div class="washi-tape w-36 h-8 mx-auto -mt-10 mb-4 rotate-1 rounded-sm"></div>
@@ -401,9 +388,9 @@
           <h4 class="font-extrabold text-sm sm:text-base text-royal flex items-center gap-2">✈️ Phóng Máy Bay Lời Chúc Online</h4>
           <input id="guestName" type="text" required placeholder="Tên của bạn..." class="w-full px-3.5 py-2 rounded-xl border border-skyPastel text-sm focus:outline-none focus:border-royal" />
           <select id="guestEvent" class="w-full px-3.5 py-2 rounded-xl border border-skyPastel text-xs font-bold text-royal focus:outline-none">
-            <option value="Tiệc Nhà Gái 07.11">Tiệc Nhà Gái 07.11</option>
-            <option value="Lễ Gia Tiên 14.11">Lễ Gia Tiên 14.11</option>
-            <option value="Tiệc Nhà Trai 21.11">Tiệc Nhà Trai 21.11</option>
+            <option value="Lễ Vu Quy 07.11">Lễ Vu Quy 07.11</option>
+            <option value="Gia Tiên 14.11">Gia Tiên 14.11</option>
+            <option value="Lễ Tân Hôn 21.11">Lễ Tân Hôn 21.11</option>
           </select>
           <textarea id="guestWish" rows="3" required placeholder="Viết lời chúc gửi đến Đức Trí & Tố Uyên..." class="w-full px-3.5 py-2 rounded-xl border border-skyPastel text-sm focus:outline-none focus:border-royal"></textarea>
           <button type="submit" class="w-full py-2.5 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-sm shadow transition">🚀 Phóng Máy Bay Ngay</button>
@@ -412,7 +399,7 @@
         <div id="wishSkyList" class="md:col-span-6 space-y-2.5 max-h-64 overflow-y-auto compact-scroll pr-1">
           <div class="bg-skySoft/50 p-3.5 rounded-2xl text-xs shadow-sm border border-skyPastel">
             <div class="flex justify-between font-bold text-royal">
-              <span>✈️ Minh Anh</span><span class="text-[10px] text-amber-600">Tiệc Nhà Gái 07.11</span>
+              <span>✈️ Minh Anh</span><span class="text-[10px] text-amber-600">Lễ Vu Quy 07.11</span>
             </div>
             <p class="text-slate-600 mt-1">Chúc chuyến bay TU013 của Trí &amp; Uyên mãi hạnh phúc viên mãn!</p>
           </div>
@@ -451,7 +438,7 @@
       />
     </div>
     <p class="font-bold text-royal text-xs sm:text-sm">Hãng Hàng Không Tình Yêu TUAIRLINE • Số Hiệu Chuyến Bay TU013</p>
-    <p class="mt-1">07.11.2026 (Nhà Gái) • 14.11.2026 (Gia Tiên) • 21.11.2026 (Nhà Trai)</p>
+    <p class="mt-1">07.11.2026 (Lễ Vu Quy) • 14.11.2026 (Gia Tiên) • 21.11.2026 (Lễ Tân Hôn)</p>
   </footer>
 
   <!-- JAVASCRIPT -->
@@ -568,11 +555,11 @@
       `).join('');
     }
 
-    // 3. QUẢN LÝ HÌNH ẢNH & VIDEO CỦA 3 MỤC SỰ KIỆN (LƯỚI CUỘN GỌN)
+    // 3. QUẢN LÝ HÌNH ẢNH & VIDEO CỦA 3 MỤC SỰ KIỆN (LỄ VU QUY - GIA TIÊN - LỄ TÂN HÔN)
     const eventLabels = {
-      nhagai: 'Tiệc Nhà Gái 07.11',
-      giatien: 'Lễ Gia Tiên 14.11',
-      nhatrai: 'Tiệc Nhà Trai 21.11'
+      nhagai: 'Lễ Vu Quy 07.11',
+      giatien: 'Gia Tiên 14.11',
+      nhatrai: 'Lễ Tân Hôn 21.11'
     };
 
     let photos = [];
