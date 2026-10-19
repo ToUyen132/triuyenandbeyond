@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chuyến Bay Hạnh Phúc TU013 | Đức Trí & Tố Uyên - Tháng 11.2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            royal: '#0A2578',
+            royalLight: '#1E40AF',
+            skyPastel: '#CDE2F5',
+            skySoft: '#EBF5FF',
+            sunYellow: '#FFD13B',
+            sunWarm: '#F59E0B',
+            creamPaper: '#FAF6EE',
+          },
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+            script: ['"Dancing Script"', 'cursive'],
+            serif: ['"Playfair Display"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: linear-gradient(180deg, #CFE8FF 0%, #EBF5FF 35%, #FAF6EE 70%, #D8EEFF 100%);
+      color: #0A2578;
+      overflow-x: hidden;
+    }
+    .washi-tape {
+      background: rgba(255, 214, 68, 0.88);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      backdrop-filter: blur(2px);
+    }
+    .wedding-logo-img {
+      mix-blend-mode: multiply;
+      filter: contrast(1.08);
+    }
+    .brush-highlight {
+      position: relative;
+      display: inline-block;
+      z-index: 1;
+    }
+    .brush-highlight::after {
+      content: "";
+      position: absolute;
+      left: -8px;
+      right: -8px;
+      bottom: 4px;
+      height: 18px;
+      background: linear-gradient(90deg, rgba(255,209,59,0.75) 0%, rgba(255,218,95,0.95) 50%, rgba(255,209,59,0.7) 100%);
+      border-radius: 999px;
+      transform: rotate(-1.5deg);
+      z-index: -1;
+    }
+    /* Thanh cuộn gọn đẹp cho lưới ảnh المục 1, 2, 3 */
+    .compact-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .compact-scroll::-webkit-scrollbar-track {
+      background: #EBF5FF;
+      border-radius: 999px;
+    }
+    .compact-scroll::-webkit-scrollbar-thumb {
+      background: #0A2578;
+      border-radius: 999px;
+    }
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(2deg); }
+    }
+    .animate-float {
+      animation: floatSlow 4s ease-in-out infinite;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
+      display: flex;
+      width: max-content;
+      animation: marquee 50s linear infinite;
+    }
+    .animate-marquee:hover {
+      animation-play-state: paused;
+    }
+    .polaroid-item {
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .polaroid-item:hover {
+      transform: translateY(-6px) rotate(0deg) scale(1.02) !important;
+      z-index: 20;
+    }
+    @keyframes spinVinyl {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .vinyl-spin {
+      animation: spinVinyl 5s linear infinite;
+    }
+    .vinyl-paused {
+      animation-play-state: paused;
+    }
+    @keyframes eqBar {
+      0%, 100% { height: 4px; }
+      50% { height: 14px; }
+    }
+    .eq-bar-1 { animation: eqBar 0.7s ease-in-out infinite; }
+    .eq-bar-2 { animation: eqBar 0.5s ease-in-out infinite 0.2s; }
+    .eq-bar-3 { animation: eqBar 0.8s ease-in-out infinite 0.4s; }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-sunYellow selection:text-royal">
+
+  <!-- Input ẩn để đổi file Logo nếu nhấp đúp vào Logo -->
+  <input type="file" id="logoFileInput" accept="image/*" class="hidden" onchange="changeLogoImage(event)" />
+
+  <!-- TRÌNH PHÁT NHẠC NỀN CỐ ĐỊNH: THẾ GIỚI CỦA ANH -->
+  <audio id="bgMusic" src="the-gioi-cua-anh.mp3" onerror="if(!this.dataset.git){this.dataset.git='1';this.src='https://raw.githubusercontent.com/ToUyen132/triuyenandbeyond/main/the-gioi-cua-anh.mp3';}" loop preload="auto"></audio>
+
+  <div onclick="toggleMusic()" class="fixed bottom-4 right-4 z-50 flex items-center gap-2.5 bg-white/95 backdrop-blur-md p-2 pr-4 rounded-full shadow-2xl border-2 border-royal cursor-pointer hover:scale-105 transition" title="Bật / Tắt nhạc nền">
+    <div class="relative w-11 h-11 rounded-full bg-royal text-sunYellow flex items-center justify-center shadow-md">
+      <div id="vinylDisc" class="w-9 h-9 rounded-full border-2 border-dashed border-sunYellow/80 flex items-center justify-center vinyl-spin vinyl-paused">
+        <span class="text-sm">🎵</span>
+      </div>
+      <span id="musicStatusDot" class="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-amber-400 border-2 border-white"></span>
+    </div>
+
+    <div class="text-left">
+      <div class="flex items-center gap-1.5">
+        <span class="text-[10px] font-extrabold uppercase tracking-wider text-royalLight">NHẠC NỀN TU013</span>
+        <div id="musicEq" class="hidden items-end gap-0.5 h-3.5">
+          <span class="w-0.5 bg-amber-500 rounded-full eq-bar-1"></span>
+          <span class="w-0.5 bg-royal rounded-full eq-bar-2"></span>
+          <span class="w-0.5 bg-amber-500 rounded-full eq-bar-3"></span>
+        </div>
+      </div>
+      <p class="text-xs font-extrabold text-royal leading-tight">Thế Giới Của Anh 💙</p>
+      <p id="musicHintText" class="text-[10px] text-slate-500 font-medium">Chạm để phát nhạc</p>
+    </div>
+  </div>
+
+  <!-- VỊ TRÍ LOGO SỐ 1: THANH ĐIỀU HƯỚNG ĐẦU TRANG -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-2 border-skyPastel shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-3">
+      
+      <a href="#top" ondblclick="document.getElementById('logoFileInput').click()" class="block group" title="Đức Trí & Tố Uyên - And Beyond">
+        <img 
+          src="Đức Trí & Tố Uyên Wedding Logo.png" 
+          onerror="resolveSmartImage(this, 'Đức Trí & Tố Uyên Wedding Logo.png')" 
+          alt="Đức Trí & Tố Uyên - AND BEYOND" 
+          class="brand-logo-img wedding-logo-img h-11 sm:h-14 w-auto object-contain group-hover:scale-105 transition duration-300" 
+        />
+      </a>
+
+      <!-- MENU: WEDDING DAY & ALBUM -->
+      <nav class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm font-extrabold">
+        <a href="#three-events-section" class="px-4 py-2 rounded-full bg-skySoft hover:bg-sunYellow text-royal shadow-sm transition flex items-center gap-1.5">
+          💍 Wedding Day
+        </a>
+        <a href="#prewedding-album-section" class="px-4 py-2 rounded-full bg-royal text-sunYellow shadow-md hover:bg-royalLight transition flex items-center gap-1.5">
+          📸 Album
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       PHẦN 1: NHIỆM VỤ HỆ THỐNG Ở TRÊN (ĐÃ BỎ CÁC BƯỚC) + HÌNH CƯỚI Ở DƯỚI (ĐÃ BỎ CHỮ TRONG HÌNH)
+       ========================================================================= -->
+  <section id="top" class="relative py-10 px-4">
+    <div class="max-w-2xl mx-auto flex flex-col items-center space-y-8">
+      
+      <!-- Khối 1: Nhiệm Vụ Hệ Thống (Đã bỏ các bước) -->
+      <div class="w-full bg-white/95 rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-skyPastel relative overflow-hidden text-center">
+        <div class="washi-tape w-32 h-7 mx-auto -mt-10 mb-3 rotate-[-2deg] rounded-sm"></div>
+
+        <div class="flex items-center justify-between px-2">
+          <span class="text-amber-400 text-xl font-bold">✨</span>
+          <span class="text-3xl animate-float" title="Camera">📷</span>
+        </div>
+
+        <h2 class="font-script text-5xl sm:text-6xl font-bold text-royal brush-highlight px-2 mt-1">
+          Nhiệm vụ hệ thống
+        </h2>
+        <p class="mt-4 text-xs sm:text-base font-bold text-royal leading-relaxed max-w-lg mx-auto">
+          Hôm nay, bạn phải trở thành một thợ săn ảnh!<br/>
+          Công việc của bạn là bắn tỉa thật nhiều ảnh đẹp của buổi tiệc này.
+        </p>
+
+        <div class="mt-5">
+          <span class="font-script text-3xl sm:text-4xl font-bold text-royal">Bắt đầu thôi! 💛💙</span>
+          <p class="text-xs font-bold text-royalLight italic mt-0.5">Let's capture beautiful moments!</p>
+        </div>
+      </div>
+
+      <!-- Khối 2: Hình Cô Dâu Chú Rể Xếp Ngay Bên Dưới (Đã bỏ toàn bộ chữ đè trên hình) -->
+      <div class="w-full max-w-sm rounded-3xl overflow-hidden aspect-[3/4] bg-white shadow-2xl border-4 border-white">
+        <img 
+          id="heroCoverImg" 
+          src="KBEA030.jpg" 
+          onerror="resolveSmartImage(this, 'KBEA030.jpg')" 
+          alt="Đức Trí & Tố Uyên" 
+          class="w-full h-full object-cover object-top" 
+        />
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PHẦN 2: 3 MỤC NGÀY CƯỚI XẾP DẠNG LƯỚI CÓ THỂ CUỘN GỌN (COMPACT SCROLLABLE GRID)
+       ========================================================================= -->
+  <section id="three-events-section" class="py-8 px-4 max-w-6xl mx-auto scroll-mt-16">
+    <div class="text-center mb-8 bg-white/85 border-2 border-sunYellow rounded-3xl p-5 sm:p-6 shadow-md max-w-4xl mx-auto">
+      <span class="px-4 py-1 rounded-full bg-sunYellow text-royal font-extrabold text-xs uppercase tracking-widest">
+        WEDDING DAY • THÁNG 11.2026
+      </span>
+      <p class="text-sm sm:text-lg md:text-xl font-extrabold text-royal mt-3 leading-relaxed">
+        Khách mời tham dự tiệc hãy nhấn nút <span class="inline-block px-3 py-1 rounded-xl bg-royal text-sunYellow text-xs sm:text-sm mx-1 shadow-sm">"➕ Thêm Hình / Video"</span> ở từng ngày để chia sẻ khoảnh khắc cưới cùng tụi mình nhé!
+      </p>
+    </div>
+
+    <!-- LƯỚI 3 CỘT GỌN GÀNG CHO MỤC 01, 02, 03 (CÓ THANH CUỘN GỌN BÊN TRONG) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+      
+      <!-- MỤC 1: NHÀ GÁI (07.11) -->
+      <div id="event-nhagai" class="bg-white rounded-3xl p-5 shadow-xl border-2 border-skyPastel flex flex-col justify-between">
+        <div class="text-center pb-4 border-b border-dashed border-skyPastel">
+          <span class="inline-block px-3 py-0.5 rounded-full bg-skySoft text-royal text-[11px] font-extrabold mb-2">MỤC 01 • TIỆC NHÀ GÁI</span>
+          <h3 class="text-sm font-semibold text-royal uppercase">
+            TIỆC CƯỚI NHÀ GÁI TỔ CHỨC<br/>VÀO LÚC <strong class="font-extrabold">17:30 - THỨ BẢY</strong>
+          </h3>
+          <p class="text-[11px] font-bold text-amber-600 mt-0.5">(Đón khách: 17h30 • Khai tiệc: 18h30)</p>
+          <div class="my-3 flex items-center justify-center gap-3">
+            <div class="flex-1 border-y border-royal py-1.5 text-xs font-medium text-royal">THÁNG 11</div>
+            <div class="font-serif text-5xl text-royal leading-none">07</div>
+            <div class="flex-1 border-y border-royal py-1.5 text-xs font-medium text-royal">NĂM 2026</div>
+          </div>
+          <p class="italic text-[11px] text-royal/80">(Nhằm ngày 29 tháng 09 năm Bính Ngọ)</p>
+        </div>
+
+        <div class="pt-4 flex-1 flex flex-col">
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <h4 class="font-extrabold text-xs sm:text-sm text-royal flex items-center gap-1.5">
+              📸 Nhà Gái <span id="count-nhagai" class="text-[10px] px-2 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">0 mục</span>
+            </h4>
+            <label class="px-3 py-1.5 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-[11px] cursor-pointer shadow transition">
+              ➕ Thêm Hình / Video
+              <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, 'nhagai')" />
+            </label>
+          </div>
+          <!-- Lưới ảnh cuộn gọn (max-h-56 overflow-y-auto) -->
+          <div id="grid-nhagai" class="compact-scroll max-h-56 overflow-y-auto pr-1 grid grid-cols-3 gap-2"></div>
+        </div>
+      </div>
+
+      <!-- MỤC 2: LỄ GIA TIÊN (14.11) -->
+      <div id="event-giatien" class="bg-[#F2F6FF] rounded-3xl p-5 shadow-xl border-2 border-amber-300 flex flex-col justify-between">
+        <div class="text-center pb-4 border-b border-dashed border-amber-300">
+          <span class="inline-block px-3 py-0.5 rounded-full bg-sunYellow text-royal text-[11px] font-extrabold mb-2">MỤC 02 • LỄ GIA TIÊN &amp; VU QUY</span>
+          <h3 class="text-sm font-semibold text-royal uppercase">
+            LỄ GIA TIÊN TỔ CHỨC<br/>VÀO LÚC <strong class="font-extrabold">09:00 - THỨ BẢY</strong>
+          </h3>
+          <p class="text-[11px] font-bold text-amber-700 mt-0.5">(Thời gian: Từ 09h00 đến 16h00)</p>
+          <div class="my-3 flex items-center justify-center gap-3">
+            <div class="flex-1 border-y border-royal py-1.5 text-xs font-medium text-royal">THÁNG 11</div>
+            <div class="font-serif text-5xl text-royal leading-none">14</div>
+            <div class="flex-1 border-y border-royal py-1.5 text-xs font-medium text-royal">NĂM 2026</div>
+          </div>
+          <p class="italic text-[11px] text-royal/80">(Nhằm ngày 06 tháng 10 năm Bính Ngọ)</p>
+        </div>
+
+        <div class="pt-4 flex-1 flex flex-col">
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <h4 class="font-extrabold text-xs sm:text-sm text-royal flex items-center gap-1.5">
+              🏮 Gia Tiên <span id="count-giatien" class="text-[10px] px-2 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">0 mục</span>
+            </h4>
+            <label class="px-3 py-1.5 rounded-xl bg-sunYellow hover:bg-amber-400 text-royal font-extrabold text-[11px] cursor-pointer shadow transition">
+              ➕ Thêm Hình / Video
+              <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, 'giatien')" />
+            </label>
+          </div>
+          <!-- Lưới ảnh cuộn gọn (max-h-56 overflow-y-auto) -->
+          <div id="grid-giatien" class="compact-scroll max-h-56 overflow-y-auto pr-1 grid grid-cols-3 gap-2"></div>
+        </div>
+      </div>
+
+      <!-- MỤC 3: NHÀ TRAI (21.11) -->
+      <div id="event-nhatrai" class="bg-white rounded-3xl p-5 shadow-xl border-2 border-skyPastel flex flex-col justify-between">
+        <div class="text-center pb-4 border-b border-dashed border-skyPastel">
+          <span class="inline-block px-3 py-0.5 rounded-full bg-skySoft text-royal text-[11px] font-extrabold mb-2">MỤC 03 • TIỆC NHÀ TRAI</span>
+          <h3 class="text-sm font-semibold text-royal uppercase">
+            TIỆC CƯỚI NHÀ TRAI TỔ CHỨC<br/>VÀO LÚC <strong class="font-extrabold">18:00 - THỨ BẢY</strong>
+          </h3>
+          <p class="text-[11px] font-bold text-amber-600 mt-0.5">(Đón khách: 18h00 • Khai tiệc: 19h00)</p>
+          <div class="my-3 flex items-center justify-center gap-3">
+            <div class="flex-1 border-y border-royal py-1.5 text-xs font-medium text-royal">THÁNG 11</div>
+            <div class="font-serif text-5xl text-royal leading-none">21</div>
+            <div class="flex-1 border-y border-royal py-1.5 text-xs font-medium text-royal">NĂM 2026</div>
+          </div>
+          <p class="italic text-[11px] text-royal/80">(Nhằm ngày 13 tháng 10 năm Bính Ngọ)</p>
+        </div>
+
+        <div class="pt-4 flex-1 flex flex-col">
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <h4 class="font-extrabold text-xs sm:text-sm text-royal flex items-center gap-1.5">
+              🥂 Nhà Trai <span id="count-nhatrai" class="text-[10px] px-2 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">0 mục</span>
+            </h4>
+            <label class="px-3 py-1.5 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-[11px] cursor-pointer shadow transition">
+              ➕ Thêm Hình / Video
+              <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, 'nhatrai')" />
+            </label>
+          </div>
+          <!-- Lưới ảnh cuộn gọn (max-h-56 overflow-y-auto) -->
+          <div id="grid-nhatrai" class="compact-scroll max-h-56 overflow-y-auto pr-1 grid grid-cols-3 gap-2"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PHẦN 3: KHO ẢNH & VIDEO CHUYẾN BAY HẠNH PHÚC -->
+  <section id="mega-album" class="py-10 px-4 bg-white/75 border-y-2 border-skyPastel scroll-mt-16">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+        <div>
+          <span class="px-4 py-1.5 rounded-full bg-royal text-sunYellow font-extrabold text-xs sm:text-sm uppercase tracking-widest shadow">
+            ✈️ KHO ẢNH CHUYẾN BAY HẠNH PHÚC
+          </span>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 bg-skySoft p-1.5 rounded-2xl border border-skyPastel">
+          <button onclick="setGalleryLayout('compact')" id="layout-compact" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-royal text-sunYellow shadow transition">🔍 Thu Gọn</button>
+          <button onclick="setGalleryLayout('polaroid')" id="layout-polaroid" class="px-3.5 py-2 rounded-xl text-xs font-bold text-royal hover:bg-white transition">📌 Polaroid</button>
+          <button onclick="setGalleryLayout('masonry')" id="layout-masonry" class="px-3.5 py-2 rounded-xl text-xs font-bold text-royal hover:bg-white transition">🧱 Lưới</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-6 items-center">
+        <div class="lg:col-span-7 flex flex-wrap gap-2">
+          <button onclick="setAlbumFilter('all')" id="filter-all" class="px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold bg-sunYellow text-royal shadow-sm transition">Tất cả (<span id="badge-all">0</span>)</button>
+          <button onclick="setAlbumFilter('nhagai')" id="filter-nhagai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🌸 Nhà Gái (<span id="badge-nhagai">0</span>)</button>
+          <button onclick="setAlbumFilter('giatien')" id="filter-giatien" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🏮 Gia Tiên (<span id="badge-giatien">0</span>)</button>
+          <button onclick="setAlbumFilter('nhatrai')" id="filter-nhatrai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🥂 Nhà Trai (<span id="badge-nhatrai">0</span>)</button>
+        </div>
+
+        <div class="lg:col-span-5 flex items-center justify-end gap-2">
+          <select id="uploadCategorySelect" class="px-3 py-2.5 rounded-xl bg-white border-2 border-skyPastel text-royal font-bold text-xs focus:outline-none">
+            <option value="nhagai">Bỏ vào: Nhà Gái (07.11)</option>
+            <option value="giatien">Bỏ vào: Gia Tiên (14.11)</option>
+            <option value="nhatrai">Bỏ vào: Nhà Trai (21.11)</option>
+          </select>
+          <label class="px-4 py-2.5 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-xs cursor-pointer shadow-md transition shrink-0">
+            ➕ Thêm hình / video ngay
+            <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleMegaUpload(event)" />
+          </label>
+        </div>
+      </div>
+
+      <!-- Khung Kho Ảnh cũng hỗ trợ cuộn gọn khi có rất nhiều hình -->
+      <div id="megaGalleryGrid" class="compact-scroll max-h-[420px] overflow-y-auto pr-1 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2.5"></div>
+    </div>
+  </section>
+
+  <!-- PHẦN 4: ALBUM CƯỚI PRE-WEDDING -->
+  <section id="prewedding-album-section" class="py-7 bg-royal/95 border-y-4 border-sunYellow overflow-hidden shadow-lg scroll-mt-16">
+    <div class="max-w-6xl mx-auto px-4 mb-3 flex flex-wrap items-center justify-between gap-2 text-white text-xs">
+      <span class="font-extrabold tracking-wider uppercase text-sunYellow text-sm">
+        🎞️ ALBUM CƯỚI (PRE-WEDDING ĐỨC TRÍ &amp; TỐ UYÊN)
+      </span>
+      <span class="text-[11px] text-skyPastel italic">Chạm vào ảnh bất kỳ để phóng to</span>
+    </div>
+    <div id="marqueeTrack" class="animate-marquee gap-5 px-4"></div>
+  </section>
+
+  <!-- PHẦN 5: TRÒ CHƠI THẢ MÁY BAY GỬI LỜI CHÚC (ĐÃ BỎ CÁC BƯỚC 1, 2, 3) -->
+  <section class="py-12 px-4 max-w-4xl mx-auto">
+    <div class="bg-white/95 rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-skyPastel relative">
+      <div class="washi-tape w-36 h-8 mx-auto -mt-10 mb-4 rotate-1 rounded-sm"></div>
+      
+      <div class="text-center mb-6">
+        <span class="px-3 py-1 rounded-full bg-skySoft text-royal font-extrabold text-xs uppercase">HOẠT ĐỘNG TƯƠNG TÁC ĐẶC BIỆT</span>
+        <h3 class="font-script text-4xl sm:text-5xl text-royal mt-2">Thả máy bay - Gửi lời chúc</h3>
+        <p class="text-xs sm:text-sm font-bold text-royal/80 mt-1">
+          Cùng nhau đi khắp thế gian trên chuyến bay mang số hiệu <strong>TU013</strong> của hãng hàng không tình yêu <strong>TUAIRLINE</strong>!
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+        <form onsubmit="sendWishPlane(event)" class="md:col-span-6 bg-skySoft/80 rounded-2xl p-5 border-2 border-skyPastel space-y-3">
+          <h4 class="font-extrabold text-sm sm:text-base text-royal flex items-center gap-2">✈️ Phóng Máy Bay Lời Chúc Online</h4>
+          <input id="guestName" type="text" required placeholder="Tên của bạn..." class="w-full px-3.5 py-2 rounded-xl border border-skyPastel text-sm focus:outline-none focus:border-royal" />
+          <select id="guestEvent" class="w-full px-3.5 py-2 rounded-xl border border-skyPastel text-xs font-bold text-royal focus:outline-none">
+            <option value="Tiệc Nhà Gái 07.11">Tiệc Nhà Gái 07.11</option>
+            <option value="Lễ Gia Tiên 14.11">Lễ Gia Tiên 14.11</option>
+            <option value="Tiệc Nhà Trai 21.11">Tiệc Nhà Trai 21.11</option>
+          </select>
+          <textarea id="guestWish" rows="3" required placeholder="Viết lời chúc gửi đến Đức Trí & Tố Uyên..." class="w-full px-3.5 py-2 rounded-xl border border-skyPastel text-sm focus:outline-none focus:border-royal"></textarea>
+          <button type="submit" class="w-full py-2.5 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-sm shadow transition">🚀 Phóng Máy Bay Ngay</button>
+        </form>
+
+        <div id="wishSkyList" class="md:col-span-6 space-y-2.5 max-h-64 overflow-y-auto compact-scroll pr-1">
+          <div class="bg-skySoft/50 p-3.5 rounded-2xl text-xs shadow-sm border border-skyPastel">
+            <div class="flex justify-between font-bold text-royal">
+              <span>✈️ Minh Anh</span><span class="text-[10px] text-amber-600">Tiệc Nhà Gái 07.11</span>
+            </div>
+            <p class="text-slate-600 mt-1">Chúc chuyến bay TU013 của Trí &amp; Uyên mãi hạnh phúc viên mãn!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL LIGHTBOX XEM ẢNH & VIDEO LỚN -->
+  <div id="lightboxModal" class="fixed inset-0 z-50 bg-royal/95 backdrop-blur-md hidden flex-col justify-between p-4 text-white">
+    <div class="flex items-center justify-between max-w-6xl w-full mx-auto py-2">
+      <div>
+        <span id="lightboxBadge" class="px-3 py-1 rounded-full bg-sunYellow text-royal font-extrabold text-xs">Album</span>
+        <span id="lightboxCaption" class="ml-2 text-sm font-semibold text-skyPastel">Khoảnh khắc</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="closeLightbox()" class="w-9 h-9 rounded-full bg-white/20 hover:bg-rose-500 text-lg font-bold flex items-center justify-center transition">✕</button>
+      </div>
+    </div>
+    <div class="relative flex-1 flex items-center justify-center max-w-5xl w-full mx-auto my-2 overflow-hidden">
+      <img id="lightboxImg" src="" alt="Preview" class="max-h-[82vh] max-w-full object-contain rounded-2xl shadow-2xl border-4 border-white" />
+      <video id="lightboxVideo" src="" controls playsinline class="hidden max-h-[82vh] max-w-full rounded-2xl shadow-2xl border-4 border-white bg-black"></video>
+    </div>
+  </div>
+
+  <!-- VỊ TRÍ LOGO SỐ 2: CHÂN TRANG FOOTER -->
+  <footer class="py-10 pb-24 text-center text-xs text-royal/80 border-t border-skyPastel bg-white/75">
+    <div class="flex justify-center mb-3">
+      <img 
+        src="Đức Trí & Tố Uyên Wedding Logo.png" 
+        onerror="resolveSmartImage(this, 'Đức Trí & Tố Uyên Wedding Logo.png')" 
+        ondblclick="document.getElementById('logoFileInput').click()"
+        alt="Đức Trí & Tố Uyên - AND BEYOND" 
+        class="brand-logo-img wedding-logo-img h-16 sm:h-20 w-auto object-contain cursor-pointer hover:scale-105 transition duration-300" 
+        title="Nhấp đúp nếu muốn đổi file ảnh Logo"
+      />
+    </div>
+    <p class="font-bold text-royal text-xs sm:text-sm">Hãng Hàng Không Tình Yêu TUAIRLINE • Số Hiệu Chuyến Bay TU013</p>
+    <p class="mt-1">07.11.2026 (Nhà Gái) • 14.11.2026 (Gia Tiên) • 21.11.2026 (Nhà Trai)</p>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/ToUyen132/triuyenandbeyond/main/';
+
+    function resolveSmartImage(imgEl, rawFileName) {
+      const cleanName = rawFileName.replace(/^images\//, '');
+      const upperExt = cleanName.replace(/\.jpg$/i, '.JPG');
+      const step = parseInt(imgEl.dataset.fallbackStep || '0', 10);
+
+      const candidates = [
+        `images/${cleanName}`,
+        `${GITHUB_RAW_BASE}${encodeURIComponent(cleanName)}`,
+        `${GITHUB_RAW_BASE}images/${encodeURIComponent(cleanName)}`,
+        upperExt,
+        `images/${upperExt}`,
+        `${GITHUB_RAW_BASE}${encodeURIComponent(upperExt)}`
+      ];
+
+      if (step < candidates.length) {
+        imgEl.dataset.fallbackStep = String(step + 1);
+        imgEl.src = candidates[step];
+      }
+    }
+
+    function changeLogoImage(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      const newLogoUrl = URL.createObjectURL(file);
+      document.querySelectorAll('.brand-logo-img').forEach(img => {
+        img.src = newLogoUrl;
+      });
+    }
+
+    // 1. Nhạc nền
+    const bgMusic = document.getElementById('bgMusic');
+    const vinylDisc = document.getElementById('vinylDisc');
+    const musicStatusDot = document.getElementById('musicStatusDot');
+    const musicHintText = document.getElementById('musicHintText');
+    const musicEq = document.getElementById('musicEq');
+
+    function updateMusicUI(playing) {
+      if (playing) {
+        vinylDisc.classList.remove('vinyl-paused');
+        musicStatusDot.className = 'absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-white animate-ping';
+        musicHintText.textContent = 'Đang phát nhạc nền...';
+        musicEq.classList.remove('hidden');
+        musicEq.classList.add('flex');
+      } else {
+        vinylDisc.classList.add('vinyl-paused');
+        musicStatusDot.className = 'absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-amber-400 border-2 border-white';
+        musicHintText.textContent = 'Chạm để phát nhạc';
+        musicEq.classList.add('hidden');
+        musicEq.classList.remove('flex');
+      }
+    }
+
+    function toggleMusic() {
+      if (bgMusic.paused) {
+        bgMusic.play().then(() => updateMusicUI(true)).catch(() => updateMusicUI(false));
+      } else {
+        bgMusic.pause();
+        updateMusicUI(false);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      bgMusic.volume = 0.8;
+      bgMusic.play().then(() => updateMusicUI(true)).catch(() => {
+        const unlockAudio = () => {
+          if (bgMusic.paused) bgMusic.play().then(() => updateMusicUI(true)).catch(() => {});
+          document.removeEventListener('click', unlockAudio);
+          document.removeEventListener('touchstart', unlockAudio);
+        };
+        document.addEventListener('click', unlockAudio, { once: true });
+        document.addEventListener('touchstart', unlockAudio, { once: true });
+      });
+    });
+
+    // 2. DẢI PHIM CUỘN PRE-WEDDING
+    const filmstripPhotos = [
+      { file: 'KBEA030.jpg', title: 'Save the Date - Đức Trí & Tố Uyên' },
+      { file: 'KBEA020.jpg', title: 'Nâng ly chúc mừng hạnh phúc' },
+      { file: 'KBEA059.jpg', title: 'Đức Trí & Tố Uyên bên cặp gấu len handmade' },
+      { file: 'KBEA051.jpg', title: 'Vườn hoa vàng rực rỡ & cặp gấu đôi' },
+      { file: 'KBEA075.jpg', title: 'Khoảnh khắc ngọt ngào' },
+      { file: 'KBEA085.jpg', title: 'Nụ cười rạng rỡ' },
+      { file: 'KBEA0113.jpg', title: 'Hạnh phúc bên nhau' },
+      { file: 'KBEA0155.jpg', title: 'Ngọt ngào bên bó cẩm tú cầu xanh' },
+      { file: 'KBEA0160.jpg', title: 'Trao nhẫn cưới bên hoa cẩm tú cầu' },
+      { file: 'KBEA0165.jpg', title: 'Khoe nhẫn cưới rạng ngời' },
+      { file: 'KBEA0168.jpg', title: 'Sánh đôi giữa vườn hoa vàng' },
+      { file: 'KBEA0174.jpg', title: 'Khoảnh khắc dưới tấm voan cưới' },
+      { file: 'KBEA0207.jpg', title: 'Pre-Wedding Đức Trí & Tố Uyên' },
+      { file: 'NOTEA18.jpg', title: 'Khiêu vũ lãng mạn' },
+      { file: 'NOTEA36.jpg', title: 'Ánh mắt trao nhau ngọt ngào' },
+      { file: 'NOTEA71.jpg', title: 'Khiêu vũ cùng bó hoa len' }
+    ];
+
+    function renderFilmstrip() {
+      const marqueeEl = document.getElementById('marqueeTrack');
+      const doubled = [...filmstripPhotos, ...filmstripPhotos];
+      marqueeEl.innerHTML = doubled.map((item) => `
+        <div onclick="openSimplePreview(this.querySelector('img').src, '${item.title}', 'Pre-Wedding', 'image')" class="cursor-pointer w-56 h-44 rounded-2xl overflow-hidden border-2 border-white shrink-0 relative group shadow-lg bg-skySoft">
+          <img 
+            src="${item.file}" 
+            onerror="resolveSmartImage(this, '${item.file}')" 
+            alt="${item.title}" 
+            class="w-full h-full object-cover object-top group-hover:scale-110 transition duration-300" 
+            loading="lazy" 
+          />
+        </div>
+      `).join('');
+    }
+
+    // 3. QUẢN LÝ HÌNH ẢNH & VIDEO CỦA 3 MỤC SỰ KIỆN (LƯỚI CUỘN GỌN)
+    const eventLabels = {
+      nhagai: 'Tiệc Nhà Gái 07.11',
+      giatien: 'Lễ Gia Tiên 14.11',
+      nhatrai: 'Tiệc Nhà Trai 21.11'
+    };
+
+    let photos = [];
+    let currentFilter = 'all';
+    let currentLayout = 'compact';
+
+    function renderMediaElement(item, extraClass) {
+      if (item.type === 'video') {
+        return `
+          <div class="w-full h-full relative bg-black">
+            <video src="${item.url}" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause()" class="${extraClass}"></video>
+            <span class="absolute bottom-1 left-1 px-1.5 py-0.5 rounded bg-black/70 text-sunYellow font-extrabold text-[8px] flex items-center gap-0.5 pointer-events-none">
+              ▶ Video
+            </span>
+          </div>
+        `;
+      }
+      return `<img src="${item.url}" alt="${item.title}" class="${extraClass}" />`;
+    }
+
+    function deletePhoto(event, id) {
+      event.stopPropagation();
+      if (confirm('Bạn muốn xóa mục này khỏi album?')) {
+        photos = photos.filter(p => p.id !== id);
+        renderAllGalleries();
+      }
+    }
+
+    function triggerReplacePhoto(event, id) {
+      event.stopPropagation();
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*,video/*';
+      input.onchange = (e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+          const target = photos.find(p => p.id === id);
+          if (target) {
+            target.url = URL.createObjectURL(file);
+            target.type = file.type.startsWith('video/') ? 'video' : 'image';
+            target.title = file.name.replace(/\.[^/.]+$/, '');
+            renderAllGalleries();
+          }
+        }
+      };
+      input.click();
+    }
+
+    function renderAllGalleries() {
+      ['nhagai', 'giatien', 'nhatrai'].forEach(cat => {
+        const list = photos.filter(p => p.cat === cat);
+        document.getElementById(`count-${cat}`).textContent = `${list.length} mục`;
+        document.getElementById(`badge-${cat}`).textContent = list.length;
+
+        const gridEl = document.getElementById(`grid-${cat}`);
+        if (list.length === 0) {
+          gridEl.innerHTML = `
+            <label class="col-span-full cursor-pointer border-2 border-dashed border-skyPastel hover:border-royal bg-skySoft/50 hover:bg-skySoft rounded-2xl py-6 px-3 text-center flex flex-col items-center justify-center transition group">
+              <span class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-xl mb-2 group-hover:scale-110 transition">📸</span>
+              <span class="px-4 py-1.5 rounded-full bg-sunYellow text-royal font-extrabold text-xs shadow-sm group-hover:bg-amber-400 transition">➕ Thêm hình / video ngay</span>
+              <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, '${cat}')" />
+            </label>
+          `;
+        } else {
+          gridEl.innerHTML = list.map((item) => `
+            <div onclick="openSimplePreview('${item.url}', '${item.title}', '${eventLabels[item.cat]}', '${item.type}')" class="group cursor-pointer relative rounded-xl overflow-hidden aspect-square bg-skySoft border border-skyPastel shadow-sm">
+              ${renderMediaElement(item, 'w-full h-full object-cover object-top group-hover:scale-110 transition duration-300')}
+              <div class="absolute top-1 right-1 z-20 flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition">
+                <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-5 h-5 rounded-full bg-royal text-sunYellow font-bold text-[9px] flex items-center justify-center shadow" title="Đổi">✏️</button>
+                <button onclick="deletePhoto(event, ${item.id})" class="w-5 h-5 rounded-full bg-rose-600 text-white font-bold text-[9px] flex items-center justify-center shadow" title="Xóa">✕</button>
+              </div>
+            </div>
+          `).join('') + `
+            <label class="cursor-pointer rounded-xl aspect-square border-2 border-dashed border-skyPastel hover:border-royal bg-skySoft/60 hover:bg-sunYellow/30 flex flex-col items-center justify-center text-center p-1 transition">
+              <span class="text-base">➕</span>
+              <span class="text-[9px] font-extrabold text-royal mt-0.5">Thêm</span>
+              <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, '${cat}')" />
+            </label>
+          `;
+        }
+      });
+
+      document.getElementById('badge-all').textContent = photos.length;
+      renderMegaGallery();
+      renderFilmstrip();
+    }
+
+    function renderMegaGallery() {
+      const megaGrid = document.getElementById('megaGalleryGrid');
+      const filtered = currentFilter === 'all' ? photos : photos.filter(p => p.cat === currentFilter);
+
+      if (filtered.length === 0) {
+        megaGrid.className = 'grid grid-cols-1';
+        megaGrid.innerHTML = `
+          <label class="cursor-pointer border-2 border-dashed border-skyPastel bg-skySoft/40 hover:bg-skySoft/70 rounded-3xl py-8 px-4 text-center flex flex-col items-center justify-center transition group">
+            <span class="text-3xl mb-2 group-hover:scale-110 transition">✈️</span>
+            <span class="px-5 py-2 rounded-full bg-sunYellow text-royal font-extrabold text-xs sm:text-sm shadow-sm">➕ Thêm hình / video ngay</span>
+            <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleMegaUpload(event)" />
+          </label>
+        `;
+        return;
+      }
+
+      if (currentLayout === 'polaroid') {
+        megaGrid.className = 'compact-scroll max-h-[460px] overflow-y-auto pr-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6';
+        megaGrid.innerHTML = filtered.map((item, idx) => {
+          const rot = idx % 2 === 0 ? 'rotate-[-1deg]' : 'rotate-[1deg]';
+          return `
+            <div class="polaroid-item group bg-white p-3 pb-4 rounded-2xl shadow-md border border-skyPastel relative ${rot}">
+              <div class="absolute top-2 right-2 z-20 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition">
+                <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-royal text-sunYellow font-bold text-xs flex items-center justify-center shadow-md" title="Đổi">✏️</button>
+                <button onclick="deletePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-rose-600 text-white font-bold text-xs flex items-center justify-center shadow-md" title="Xóa">✕</button>
+              </div>
+              <div class="washi-tape w-16 h-4 mx-auto -mt-5 mb-2 rounded-sm"></div>
+              <div onclick="openSimplePreview('${item.url}', '${item.title}', '${eventLabels[item.cat]}', '${item.type}')" class="aspect-[3/4] rounded-xl overflow-hidden bg-skySoft cursor-pointer">
+                ${renderMediaElement(item, 'w-full h-full object-cover object-top group-hover:scale-105 transition')}
+              </div>
+              <div class="mt-2.5 flex items-center justify-between gap-1">
+                <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-skySoft text-royal">${eventLabels[item.cat]}</span>
+                <span class="text-xs">${item.type === 'video' ? '🎬' : '✈️'}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } else if (currentLayout === 'masonry') {
+        megaGrid.className = 'compact-scroll max-h-[460px] overflow-y-auto pr-1 columns-2 sm:columns-3 md:columns-4 gap-4 space-y-4';
+        megaGrid.innerHTML = filtered.map((item) => `
+          <div onclick="openSimplePreview('${item.url}', '${item.title}', '${eventLabels[item.cat]}', '${item.type}')" class="break-inside-avoid group relative rounded-2xl overflow-hidden shadow-md border-2 border-white bg-skySoft cursor-pointer">
+            <div class="absolute top-2 right-2 z-20 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition">
+              <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-royal text-sunYellow font-bold text-xs flex items-center justify-center shadow-md">✏️</button>
+              <button onclick="deletePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-rose-600 text-white font-bold text-xs flex items-center justify-center shadow-md">✕</button>
+            </div>
+            ${renderMediaElement(item, 'w-full aspect-[3/4] object-cover object-top group-hover:scale-105 transition')}
+          </div>
+        `).join('');
+      } else {
+        megaGrid.className = 'compact-scroll max-h-[420px] overflow-y-auto pr-1 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2.5';
+        megaGrid.innerHTML = filtered.map((item) => `
+          <div onclick="openSimplePreview('${item.url}', '${item.title}', '${eventLabels[item.cat]}', '${item.type}')" class="group cursor-pointer relative aspect-square rounded-xl overflow-hidden border border-skyPastel bg-skySoft">
+            <div class="absolute top-1 right-1 z-20 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
+              <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-6 h-6 rounded-full bg-royal text-sunYellow font-bold text-[9px] flex items-center justify-center shadow">✏️</button>
+              <button onclick="deletePhoto(event, ${item.id})" class="w-6 h-6 rounded-full bg-rose-600 text-white font-bold text-[9px] flex items-center justify-center shadow">✕</button>
+            </div>
+            ${renderMediaElement(item, 'w-full h-full object-cover object-top group-hover:scale-110 transition')}
+          </div>
+        `).join('');
+      }
+    }
+
+    function handleBatchUpload(event, category) {
+      const files = Array.from(event.target.files || []);
+      files.forEach((file, idx) => {
+        const isVideo = file.type.startsWith('video/');
+        photos.unshift({
+          id: Date.now() + idx,
+          cat: category,
+          type: isVideo ? 'video' : 'image',
+          url: URL.createObjectURL(file),
+          title: file.name.replace(/\.[^/.]+$/, '') || (isVideo ? 'Video kỷ niệm' : 'Khoảnh khắc khách mời')
+        });
+      });
+      renderAllGalleries();
+      event.target.value = '';
+    }
+
+    function handleMegaUpload(event) {
+      const cat = document.getElementById('uploadCategorySelect').value;
+      handleBatchUpload(event, cat);
+    }
+
+    function setAlbumFilter(filter) {
+      currentFilter = filter;
+      ['all', 'nhagai', 'giatien', 'nhatrai'].forEach(k => {
+        const btn = document.getElementById(`filter-${k}`);
+        btn.className = k === filter 
+          ? 'px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold bg-sunYellow text-royal shadow-sm transition' 
+          : 'px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition';
+      });
+      renderMegaGallery();
+    }
+
+    function setGalleryLayout(layout) {
+      currentLayout = layout;
+      ['polaroid', 'masonry', 'compact'].forEach(k => {
+        const btn = document.getElementById(`layout-${k}`);
+        btn.className = k === layout 
+          ? 'px-3.5 py-2 rounded-xl text-xs font-extrabold bg-royal text-sunYellow shadow transition' 
+          : 'px-3.5 py-2 rounded-xl text-xs font-bold text-royal hover:bg-white transition';
+      });
+      renderMegaGallery();
+    }
+
+    function openSimplePreview(url, title, badge, type = 'image') {
+      const modal = document.getElementById('lightboxModal');
+      const imgEl = document.getElementById('lightboxImg');
+      const videoEl = document.getElementById('lightboxVideo');
+
+      document.getElementById('lightboxCaption').textContent = title;
+      document.getElementById('lightboxBadge').textContent = badge;
+
+      if (type === 'video') {
+        imgEl.classList.add('hidden');
+        imgEl.src = '';
+        videoEl.classList.remove('hidden');
+        videoEl.src = url;
+        videoEl.play().catch(() => {});
+      } else {
+        videoEl.pause();
+        videoEl.classList.add('hidden');
+        videoEl.src = '';
+        imgEl.classList.remove('hidden');
+        imgEl.src = url;
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightboxModal');
+      const videoEl = document.getElementById('lightboxVideo');
+      videoEl.pause();
+      videoEl.src = '';
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function sendWishPlane(e) {
+      e.preventDefault();
+      const name = document.getElementById('guestName').value.trim();
+      const ev = document.getElementById('guestEvent').value;
+      const wish = document.getElementById('guestWish').value.trim();
+      if (!name || !wish) return;
+
+      const list = document.getElementById('wishSkyList');
+      const card = document.createElement('div');
+      card.className = 'bg-skySoft/50 p-3.5 rounded-2xl text-xs shadow-sm border border-sunYellow';
+      card.innerHTML = `
+        <div class="flex justify-between font-bold text-royal">
+          <span>✈️ ${name}</span><span class="text-[10px] text-amber-600">${ev}</span>
+        </div>
+        <p class="text-slate-600 mt-1">${wish}</p>
+      `;
+      list.prepend(card);
+      e.target.reset();
+    }
+
+    renderAllGalleries();
+  </script>
+</body>
+</html>
