@@ -2,7 +2,7 @@
 <html lang="vi" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Chuyến Bay Hạnh Phúc TU013 | Đức Trí & Tố Uyên - Tháng 11.2026</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,15 +35,17 @@
       background: linear-gradient(180deg, #CFE8FF 0%, #EBF5FF 35%, #FAF6EE 70%, #D8EEFF 100%);
       color: #0A2578;
       overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
     }
     .washi-tape {
       background: rgba(255, 214, 68, 0.88);
       box-shadow: 0 2px 6px rgba(0,0,0,0.08);
       backdrop-filter: blur(2px);
     }
+    /* Làm trong suốt nền trắng của file Logo Tri&Uyen.jpg */
     .wedding-logo-img {
       mix-blend-mode: multiply;
-      filter: contrast(1.08);
+      filter: contrast(1.1);
     }
     .brush-highlight {
       position: relative;
@@ -53,17 +55,17 @@
     .brush-highlight::after {
       content: "";
       position: absolute;
-      left: -8px;
-      right: -8px;
-      bottom: 4px;
-      height: 18px;
+      left: -6px;
+      right: -6px;
+      bottom: 2px;
+      height: 14px;
       background: linear-gradient(90deg, rgba(255,209,59,0.75) 0%, rgba(255,218,95,0.95) 50%, rgba(255,209,59,0.7) 100%);
       border-radius: 999px;
       transform: rotate(-1.5deg);
       z-index: -1;
     }
     .compact-scroll::-webkit-scrollbar {
-      width: 6px;
+      width: 5px;
     }
     .compact-scroll::-webkit-scrollbar-track {
       background: #EBF5FF;
@@ -75,7 +77,7 @@
     }
     @keyframes floatSlow {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-8px) rotate(2deg); }
+      50% { transform: translateY(-6px) rotate(2deg); }
     }
     .animate-float {
       animation: floatSlow 4s ease-in-out infinite;
@@ -87,17 +89,10 @@
     .animate-marquee {
       display: flex;
       width: max-content;
-      animation: marquee 50s linear infinite;
+      animation: marquee 45s linear infinite;
     }
     .animate-marquee:hover {
       animation-play-state: paused;
-    }
-    .polaroid-item {
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-    .polaroid-item:hover {
-      transform: translateY(-6px) rotate(0deg) scale(1.02) !important;
-      z-index: 20;
     }
     @keyframes spinVinyl {
       from { transform: rotate(0deg); }
@@ -111,7 +106,7 @@
     }
     @keyframes eqBar {
       0%, 100% { height: 4px; }
-      50% { height: 14px; }
+      50% { height: 12px; }
     }
     .eq-bar-1 { animation: eqBar 0.7s ease-in-out infinite; }
     .eq-bar-2 { animation: eqBar 0.5s ease-in-out infinite 0.2s; }
@@ -123,85 +118,89 @@
   <!-- Input ẩn để đổi file Logo nếu nhấp đúp vào Logo -->
   <input type="file" id="logoFileInput" accept="image/*" class="hidden" onchange="changeLogoImage(event)" />
 
-  <!-- TRÌNH PHÁT NHẠC NỀN CỐ ĐỊNH: THẾ GIỚI CỦA ANH -->
+  <!-- TRÌNH PHÁT NHẠC NỀN CỐ ĐỊNH (GỌN GÀNG TRÊN ĐIỆN THOẠI) -->
   <audio id="bgMusic" src="the-gioi-cua-anh.mp3" onerror="if(!this.dataset.git){this.dataset.git='1';this.src='https://raw.githubusercontent.com/ToUyen132/triuyenandbeyond/main/the-gioi-cua-anh.mp3';}" loop preload="auto"></audio>
 
-  <div onclick="toggleMusic()" class="fixed bottom-4 right-4 z-50 flex items-center gap-2.5 bg-white/95 backdrop-blur-md p-2 pr-4 rounded-full shadow-2xl border-2 border-royal cursor-pointer hover:scale-105 transition" title="Bật / Tắt nhạc nền">
-    <div class="relative w-11 h-11 rounded-full bg-royal text-sunYellow flex items-center justify-center shadow-md">
-      <div id="vinylDisc" class="w-9 h-9 rounded-full border-2 border-dashed border-sunYellow/80 flex items-center justify-center vinyl-spin vinyl-paused">
-        <span class="text-sm">🎵</span>
+  <div onclick="toggleMusic()" class="fixed bottom-3 right-3 z-50 flex items-center gap-2 bg-white/95 backdrop-blur-md p-1.5 pr-3 rounded-full shadow-xl border-2 border-royal cursor-pointer active:scale-95 transition" title="Bật / Tắt nhạc nền">
+    <div class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-royal text-sunYellow flex items-center justify-center shadow-md">
+      <div id="vinylDisc" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-dashed border-sunYellow/80 flex items-center justify-center vinyl-spin vinyl-paused">
+        <span class="text-xs">🎵</span>
       </div>
-      <span id="musicStatusDot" class="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-amber-400 border-2 border-white"></span>
+      <span id="musicStatusDot" class="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-amber-400 border-2 border-white"></span>
     </div>
 
     <div class="text-left">
-      <div class="flex items-center gap-1.5">
-        <span class="text-[10px] font-extrabold uppercase tracking-wider text-royalLight">NHẠC NỀN TU013</span>
-        <div id="musicEq" class="hidden items-end gap-0.5 h-3.5">
+      <div class="flex items-center gap-1">
+        <span class="text-[9px] font-extrabold uppercase tracking-wider text-royalLight">TU013</span>
+        <div id="musicEq" class="hidden items-end gap-0.5 h-3">
           <span class="w-0.5 bg-amber-500 rounded-full eq-bar-1"></span>
           <span class="w-0.5 bg-royal rounded-full eq-bar-2"></span>
           <span class="w-0.5 bg-amber-500 rounded-full eq-bar-3"></span>
         </div>
       </div>
-      <p class="text-xs font-extrabold text-royal leading-tight">Thế Giới Của Anh 💙</p>
-      <p id="musicHintText" class="text-[10px] text-slate-500 font-medium">Chạm để phát nhạc</p>
+      <p class="text-[11px] font-extrabold text-royal leading-tight">Thế Giới Của Anh 💙</p>
+      <p id="musicHintText" class="text-[9px] text-slate-500 font-medium">Chạm phát nhạc</p>
     </div>
   </div>
 
-  <!-- VỊ TRÍ LOGO SỐ 1: THANH ĐIỀU HƯỚNG ĐẦU TRANG -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-2 border-skyPastel shadow-sm">
-    <div class="max-w-6xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-3">
+  <!-- =========================================================================
+       VỊ TRÍ LOGO SỐ 1: HEADER ĐẦU TRANG (CHUẨN SIZE ĐIỆN THOẠI - Logo Tri&Uyen.jpg)
+       ========================================================================= -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-skyPastel shadow-sm">
+    <div class="max-w-xl lg:max-w-5xl mx-auto px-3 py-2 flex items-center justify-between gap-2">
       
-      <a href="#top" ondblclick="document.getElementById('logoFileInput').click()" class="block group" title="Đức Trí & Tố Uyên - And Beyond">
+      <a href="#top" ondblclick="document.getElementById('logoFileInput').click()" class="block shrink-0" title="Đức Trí & Tố Uyên - And Beyond">
         <img 
-          src="Đức Trí & Tố Uyên Wedding Logo.png" 
-          onerror="resolveSmartImage(this, 'Đức Trí & Tố Uyên Wedding Logo.png')" 
+          src="Logo%20Tri%26Uyen.jpg" 
+          onerror="resolveSmartLogo(this)" 
           alt="Đức Trí & Tố Uyên - AND BEYOND" 
-          class="brand-logo-img wedding-logo-img h-11 sm:h-14 w-auto object-contain group-hover:scale-105 transition duration-300" 
+          class="brand-logo-img wedding-logo-img h-9 sm:h-12 w-auto max-w-[165px] sm:max-w-[220px] object-contain" 
         />
       </a>
 
-      <!-- MENU: WEDDING DAY & ALBUM -->
-      <nav class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm font-extrabold">
-        <a href="#three-events-section" class="px-4 py-2 rounded-full bg-skySoft hover:bg-sunYellow text-royal shadow-sm transition flex items-center gap-1.5">
+      <!-- MENU GỌN TRÊN ĐIỆN THOẠI -->
+      <nav class="flex items-center gap-1.5 sm:gap-2.5 text-[11px] sm:text-xs font-extrabold shrink-0">
+        <a href="#three-events-section" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-skySoft active:bg-sunYellow text-royal shadow-sm transition flex items-center gap-1">
           💍 Wedding Day
         </a>
-        <a href="#prewedding-album-section" class="px-4 py-2 rounded-full bg-royal text-sunYellow shadow-md hover:bg-royalLight transition flex items-center gap-1.5">
+        <a href="#prewedding-album-section" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-royal text-sunYellow shadow-sm active:bg-royalLight transition flex items-center gap-1">
           📸 Album
         </a>
       </nav>
     </div>
   </header>
 
-  <!-- PHẦN 1: NHIỆM VỤ HỆ THỐNG Ở TRÊN + HÌNH CƯỚI Ở DƯỚI -->
-  <section id="top" class="relative py-10 px-4">
-    <div class="max-w-2xl mx-auto flex flex-col items-center space-y-8">
+  <!-- =========================================================================
+       PHẦN 1: NHIỆM VỤ HỆ THỐNG Ở TRÊN + HÌNH CƯỚI Ở DƯỚI (TỐI ƯU MOBILE)
+       ========================================================================= -->
+  <section id="top" class="relative pt-6 pb-6 px-3.5 sm:px-4">
+    <div class="max-w-md mx-auto flex flex-col items-center space-y-5">
       
       <!-- Khối 1: Nhiệm Vụ Hệ Thống -->
-      <div class="w-full bg-white/95 rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-skyPastel relative overflow-hidden text-center">
-        <div class="washi-tape w-32 h-7 mx-auto -mt-10 mb-3 rotate-[-2deg] rounded-sm"></div>
+      <div class="w-full bg-white/95 rounded-3xl p-5 sm:p-7 shadow-lg border-2 border-skyPastel relative overflow-hidden text-center">
+        <div class="washi-tape w-24 h-5 mx-auto -mt-7 mb-2 rotate-[-2deg] rounded-sm"></div>
 
-        <div class="flex items-center justify-between px-2">
-          <span class="text-amber-400 text-xl font-bold">✨</span>
-          <span class="text-3xl animate-float" title="Camera">📷</span>
+        <div class="flex items-center justify-between px-1">
+          <span class="text-amber-400 text-lg font-bold">✨</span>
+          <span class="text-2xl animate-float" title="Camera">📷</span>
         </div>
 
-        <h2 class="font-script text-5xl sm:text-6xl font-bold text-royal brush-highlight px-2 mt-1">
+        <h2 class="font-script text-4xl sm:text-5xl font-bold text-royal brush-highlight px-2 mt-0.5">
           Nhiệm vụ hệ thống
         </h2>
-        <p class="mt-4 text-xs sm:text-base font-bold text-royal leading-relaxed max-w-lg mx-auto">
+        <p class="mt-3 text-xs sm:text-sm font-bold text-royal leading-relaxed">
           Hôm nay, bạn phải trở thành một thợ săn ảnh!<br/>
           Công việc của bạn là bắn tỉa thật nhiều ảnh đẹp của buổi tiệc này.
         </p>
 
-        <div class="mt-5">
-          <span class="font-script text-3xl sm:text-4xl font-bold text-royal">Bắt đầu thôi! 💛💙</span>
-          <p class="text-xs font-bold text-royalLight italic mt-0.5">Let's capture beautiful moments!</p>
+        <div class="mt-3.5 pt-3 border-t border-dashed border-skyPastel">
+          <span class="font-script text-2xl sm:text-3xl font-bold text-royal">Bắt đầu thôi! 💛💙</span>
+          <p class="text-[11px] font-bold text-royalLight italic">Let's capture beautiful moments!</p>
         </div>
       </div>
 
-      <!-- Khối 2: Hình Cô Dâu Chú Rể -->
-      <div class="w-full max-w-sm rounded-3xl overflow-hidden aspect-[3/4] bg-white shadow-2xl border-4 border-white">
+      <!-- Khối 2: Hình Cô Dâu Chú Rể (Chuẩn tỷ lệ màn hình điện thoại) -->
+      <div class="w-full rounded-3xl overflow-hidden aspect-[3/4] bg-white shadow-xl border-4 border-white">
         <img 
           id="heroCoverImg" 
           src="KBEA030.jpg" 
@@ -215,102 +214,102 @@
   </section>
 
   <!-- =========================================================================
-       PHẦN 2: 3 MỤC NGÀY CƯỚI CỰC GỌN GÀNG (LỄ VU QUY • GIA TIÊN • LỄ TÂN HÔN)
+       PHẦN 2: 3 MỤC NGÀY CƯỚI (LỄ VU QUY • GIA TIÊN • LỄ TÂN HÔN) CHUẨN MOBILE
        ========================================================================= -->
-  <section id="three-events-section" class="py-8 px-4 max-w-6xl mx-auto scroll-mt-16">
-    <div class="text-center mb-8 bg-white/85 border-2 border-sunYellow rounded-3xl p-5 sm:p-6 shadow-md max-w-4xl mx-auto">
-      <span class="px-4 py-1 rounded-full bg-sunYellow text-royal font-extrabold text-xs uppercase tracking-widest">
+  <section id="three-events-section" class="py-5 px-3.5 sm:px-4 max-w-md lg:max-w-5xl mx-auto scroll-mt-14">
+    <div class="text-center mb-5 bg-white/90 border-2 border-sunYellow rounded-2xl p-4 sm:p-5 shadow-sm">
+      <span class="px-3 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold text-[10px] uppercase tracking-widest">
         WEDDING DAY • THÁNG 11.2026
       </span>
-      <p class="text-sm sm:text-lg md:text-xl font-extrabold text-royal mt-3 leading-relaxed">
-        Khách mời tham dự tiệc hãy nhấn nút <span class="inline-block px-3 py-1 rounded-xl bg-royal text-sunYellow text-xs sm:text-sm mx-1 shadow-sm">"➕ Thêm Hình / Video"</span> ở từng ngày để chia sẻ khoảnh khắc cưới cùng tụi mình nhé!
+      <p class="text-xs sm:text-base font-extrabold text-royal mt-2 leading-relaxed">
+        Khách mời tham dự tiệc hãy nhấn nút <span class="inline-block px-2.5 py-0.5 rounded-lg bg-royal text-sunYellow text-[11px] sm:text-xs mx-0.5 shadow-sm">"➕ Thêm Hình / Video"</span> ở từng ngày để chia sẻ khoảnh khắc cưới cùng tụi mình nhé!
       </p>
     </div>
 
-    <!-- LƯỚI 3 CỘT GỌN GÀNG: LỄ VU QUY - GIA TIÊN - LỄ TÂN HÔN -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+    <!-- LƯỚI 3 MỤC: Trên điện thoại xếp dọc gọn gàng, trên máy tính xếp 3 cột -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 items-stretch">
       
       <!-- CỘT 1: LỄ VU QUY (07.11) -->
-      <div id="event-nhagai" class="bg-white rounded-3xl p-5 shadow-xl border-2 border-skyPastel flex flex-col justify-between">
-        <div class="text-center pb-4 border-b border-dashed border-skyPastel">
-          <h3 class="font-serif text-2xl sm:text-3xl font-bold text-royal tracking-wide uppercase">
+      <div id="event-nhagai" class="bg-white rounded-3xl p-4 sm:p-5 shadow-lg border-2 border-skyPastel flex flex-col justify-between">
+        <div class="text-center pb-3 border-b border-dashed border-skyPastel">
+          <h3 class="font-serif text-xl sm:text-2xl font-bold text-royal tracking-wide uppercase">
             Lễ Vu Quy
           </h3>
-          <div class="my-3 flex items-center justify-center gap-3">
-            <div class="flex-1 border-y border-royal py-1.5 text-xs font-medium text-royal">THÁNG 11</div>
-            <div class="font-serif text-5xl text-royal leading-none">07</div>
-            <div class="flex-1 border-y border-royal py-1.5 text-xs font-medium text-royal">NĂM 2026</div>
+          <div class="my-2 flex items-center justify-center gap-3">
+            <div class="flex-1 border-y border-royal py-1 text-[11px] font-semibold text-royal">THÁNG 11</div>
+            <div class="font-serif text-4xl sm:text-5xl text-royal leading-none">07</div>
+            <div class="flex-1 border-y border-royal py-1 text-[11px] font-semibold text-royal">NĂM 2026</div>
           </div>
           <p class="italic text-[11px] text-royal/80">(Nhằm ngày 29 tháng 09 năm Bính Ngọ)</p>
         </div>
 
-        <div class="pt-4 flex-1 flex flex-col">
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <h4 class="font-extrabold text-xs sm:text-sm text-royal flex items-center gap-1.5">
+        <div class="pt-3 flex-1 flex flex-col">
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <h4 class="font-extrabold text-xs text-royal flex items-center gap-1">
               📸 Lễ Vu Quy <span id="count-nhagai" class="text-[10px] px-2 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">0 mục</span>
             </h4>
-            <label class="px-3 py-1.5 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-[11px] cursor-pointer shadow transition">
+            <label class="px-3 py-1.5 rounded-xl bg-royal active:bg-royalLight text-sunYellow font-extrabold text-[11px] cursor-pointer shadow transition">
               ➕ Thêm Hình / Video
               <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, 'nhagai')" />
             </label>
           </div>
-          <div id="grid-nhagai" class="compact-scroll max-h-56 overflow-y-auto pr-1 grid grid-cols-3 gap-2"></div>
+          <div id="grid-nhagai" class="compact-scroll max-h-48 overflow-y-auto pr-1 grid grid-cols-3 gap-2"></div>
         </div>
       </div>
 
       <!-- CỘT 2: GIA TIÊN (14.11) -->
-      <div id="event-giatien" class="bg-[#F2F6FF] rounded-3xl p-5 shadow-xl border-2 border-amber-300 flex flex-col justify-between">
-        <div class="text-center pb-4 border-b border-dashed border-amber-300">
-          <h3 class="font-serif text-2xl sm:text-3xl font-bold text-royal tracking-wide uppercase">
+      <div id="event-giatien" class="bg-[#F2F6FF] rounded-3xl p-4 sm:p-5 shadow-lg border-2 border-amber-300 flex flex-col justify-between">
+        <div class="text-center pb-3 border-b border-dashed border-amber-300">
+          <h3 class="font-serif text-xl sm:text-2xl font-bold text-royal tracking-wide uppercase">
             Gia Tiên
           </h3>
-          <div class="my-3 flex items-center justify-center gap-3">
-            <div class="flex-1 border-y border-royal py-1.5 text-xs font-medium text-royal">THÁNG 11</div>
-            <div class="font-serif text-5xl text-royal leading-none">14</div>
-            <div class="flex-1 border-y border-royal py-1.5 text-xs font-medium text-royal">NĂM 2026</div>
+          <div class="my-2 flex items-center justify-center gap-3">
+            <div class="flex-1 border-y border-royal py-1 text-[11px] font-semibold text-royal">THÁNG 11</div>
+            <div class="font-serif text-4xl sm:text-5xl text-royal leading-none">14</div>
+            <div class="flex-1 border-y border-royal py-1 text-[11px] font-semibold text-royal">NĂM 2026</div>
           </div>
           <p class="italic text-[11px] text-royal/80">(Nhằm ngày 06 tháng 10 năm Bính Ngọ)</p>
         </div>
 
-        <div class="pt-4 flex-1 flex flex-col">
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <h4 class="font-extrabold text-xs sm:text-sm text-royal flex items-center gap-1.5">
+        <div class="pt-3 flex-1 flex flex-col">
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <h4 class="font-extrabold text-xs text-royal flex items-center gap-1">
               🏮 Gia Tiên <span id="count-giatien" class="text-[10px] px-2 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">0 mục</span>
             </h4>
-            <label class="px-3 py-1.5 rounded-xl bg-sunYellow hover:bg-amber-400 text-royal font-extrabold text-[11px] cursor-pointer shadow transition">
+            <label class="px-3 py-1.5 rounded-xl bg-sunYellow active:bg-amber-400 text-royal font-extrabold text-[11px] cursor-pointer shadow transition">
               ➕ Thêm Hình / Video
               <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, 'giatien')" />
             </label>
           </div>
-          <div id="grid-giatien" class="compact-scroll max-h-56 overflow-y-auto pr-1 grid grid-cols-3 gap-2"></div>
+          <div id="grid-giatien" class="compact-scroll max-h-48 overflow-y-auto pr-1 grid grid-cols-3 gap-2"></div>
         </div>
       </div>
 
       <!-- CỘT 3: LỄ TÂN HÔN (21.11) -->
-      <div id="event-nhatrai" class="bg-white rounded-3xl p-5 shadow-xl border-2 border-skyPastel flex flex-col justify-between">
-        <div class="text-center pb-4 border-b border-dashed border-skyPastel">
-          <h3 class="font-serif text-2xl sm:text-3xl font-bold text-royal tracking-wide uppercase">
+      <div id="event-nhatrai" class="bg-white rounded-3xl p-4 sm:p-5 shadow-lg border-2 border-skyPastel flex flex-col justify-between">
+        <div class="text-center pb-3 border-b border-dashed border-skyPastel">
+          <h3 class="font-serif text-xl sm:text-2xl font-bold text-royal tracking-wide uppercase">
             Lễ Tân Hôn
           </h3>
-          <div class="my-3 flex items-center justify-center gap-3">
-            <div class="flex-1 border-y border-royal py-1.5 text-xs font-medium text-royal">THÁNG 11</div>
-            <div class="font-serif text-5xl text-royal leading-none">21</div>
-            <div class="flex-1 border-y border-royal py-1.5 text-xs font-medium text-royal">NĂM 2026</div>
+          <div class="my-2 flex items-center justify-center gap-3">
+            <div class="flex-1 border-y border-royal py-1 text-[11px] font-semibold text-royal">THÁNG 11</div>
+            <div class="font-serif text-4xl sm:text-5xl text-royal leading-none">21</div>
+            <div class="flex-1 border-y border-royal py-1 text-[11px] font-semibold text-royal">NĂM 2026</div>
           </div>
           <p class="italic text-[11px] text-royal/80">(Nhằm ngày 13 tháng 10 năm Bính Ngọ)</p>
         </div>
 
-        <div class="pt-4 flex-1 flex flex-col">
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <h4 class="font-extrabold text-xs sm:text-sm text-royal flex items-center gap-1.5">
+        <div class="pt-3 flex-1 flex flex-col">
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <h4 class="font-extrabold text-xs text-royal flex items-center gap-1">
               🥂 Lễ Tân Hôn <span id="count-nhatrai" class="text-[10px] px-2 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold">0 mục</span>
             </h4>
-            <label class="px-3 py-1.5 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-[11px] cursor-pointer shadow transition">
+            <label class="px-3 py-1.5 rounded-xl bg-royal active:bg-royalLight text-sunYellow font-extrabold text-[11px] cursor-pointer shadow transition">
               ➕ Thêm Hình / Video
               <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, 'nhatrai')" />
             </label>
           </div>
-          <div id="grid-nhatrai" class="compact-scroll max-h-56 overflow-y-auto pr-1 grid grid-cols-3 gap-2"></div>
+          <div id="grid-nhatrai" class="compact-scroll max-h-48 overflow-y-auto pr-1 grid grid-cols-3 gap-2"></div>
         </div>
       </div>
 
@@ -318,86 +317,83 @@
   </section>
 
   <!-- PHẦN 3: KHO ẢNH & VIDEO CHUYẾN BAY HẠNH PHÚC -->
-  <section id="mega-album" class="py-10 px-4 bg-white/75 border-y-2 border-skyPastel scroll-mt-16">
-    <div class="max-w-6xl mx-auto">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <div>
-          <span class="px-4 py-1.5 rounded-full bg-royal text-sunYellow font-extrabold text-xs sm:text-sm uppercase tracking-widest shadow">
-            ✈️ KHO ẢNH CHUYẾN BAY HẠNH PHÚC
-          </span>
-        </div>
+  <section id="mega-album" class="py-8 px-3.5 sm:px-4 bg-white/75 border-y-2 border-skyPastel scroll-mt-14">
+    <div class="max-w-md lg:max-w-5xl mx-auto">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+        <span class="px-3.5 py-1.5 rounded-full bg-royal text-sunYellow font-extrabold text-[11px] sm:text-xs uppercase tracking-wider shadow">
+          ✈️ KHO ẢNH CHUYẾN BAY HẠNH PHÚC
+        </span>
 
-        <div class="flex flex-wrap items-center gap-2 bg-skySoft p-1.5 rounded-2xl border border-skyPastel">
-          <button onclick="setGalleryLayout('compact')" id="layout-compact" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-royal text-sunYellow shadow transition">🔍 Thu Gọn</button>
-          <button onclick="setGalleryLayout('polaroid')" id="layout-polaroid" class="px-3.5 py-2 rounded-xl text-xs font-bold text-royal hover:bg-white transition">📌 Polaroid</button>
-          <button onclick="setGalleryLayout('masonry')" id="layout-masonry" class="px-3.5 py-2 rounded-xl text-xs font-bold text-royal hover:bg-white transition">🧱 Lưới</button>
+        <div class="flex items-center gap-1 bg-skySoft p-1 rounded-xl border border-skyPastel">
+          <button onclick="setGalleryLayout('compact')" id="layout-compact" class="px-2.5 py-1.5 rounded-lg text-[11px] font-extrabold bg-royal text-sunYellow shadow transition">🔍 Thu Gọn</button>
+          <button onclick="setGalleryLayout('polaroid')" id="layout-polaroid" class="px-2.5 py-1.5 rounded-lg text-[11px] font-bold text-royal transition">📌 Polaroid</button>
+          <button onclick="setGalleryLayout('masonry')" id="layout-masonry" class="px-2.5 py-1.5 rounded-lg text-[11px] font-bold text-royal transition">🧱 Lưới</button>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-6 items-center">
-        <div class="lg:col-span-7 flex flex-wrap gap-2">
-          <button onclick="setAlbumFilter('all')" id="filter-all" class="px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold bg-sunYellow text-royal shadow-sm transition">Tất cả (<span id="badge-all">0</span>)</button>
-          <button onclick="setAlbumFilter('nhagai')" id="filter-nhagai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🌸 Lễ Vu Quy (<span id="badge-nhagai">0</span>)</button>
-          <button onclick="setAlbumFilter('giatien')" id="filter-giatien" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🏮 Gia Tiên (<span id="badge-giatien">0</span>)</button>
-          <button onclick="setAlbumFilter('nhatrai')" id="filter-nhatrai" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition">🥂 Lễ Tân Hôn (<span id="badge-nhatrai">0</span>)</button>
-        </div>
-
-        <div class="lg:col-span-5 flex items-center justify-end gap-2">
-          <select id="uploadCategorySelect" class="px-3 py-2.5 rounded-xl bg-white border-2 border-skyPastel text-royal font-bold text-xs focus:outline-none">
-            <option value="nhagai">Bỏ vào: Lễ Vu Quy (07.11)</option>
-            <option value="giatien">Bỏ vào: Gia Tiên (14.11)</option>
-            <option value="nhatrai">Bỏ vào: Lễ Tân Hôn (21.11)</option>
-          </select>
-          <label class="px-4 py-2.5 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-xs cursor-pointer shadow-md transition shrink-0">
-            ➕ Thêm hình / video ngay
-            <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleMegaUpload(event)" />
-          </label>
-        </div>
+      <!-- Bộ lọc trên điện thoại -->
+      <div class="flex flex-wrap gap-1.5 mb-3">
+        <button onclick="setAlbumFilter('all')" id="filter-all" class="px-3 py-1.5 rounded-full text-[11px] font-extrabold bg-sunYellow text-royal shadow-sm transition">Tất cả (<span id="badge-all">0</span>)</button>
+        <button onclick="setAlbumFilter('nhagai')" id="filter-nhagai" class="px-3 py-1.5 rounded-full text-[11px] font-bold bg-white text-royal border border-skyPastel transition">🌸 Lễ Vu Quy (<span id="badge-nhagai">0</span>)</button>
+        <button onclick="setAlbumFilter('giatien')" id="filter-giatien" class="px-3 py-1.5 rounded-full text-[11px] font-bold bg-white text-royal border border-skyPastel transition">🏮 Gia Tiên (<span id="badge-giatien">0</span>)</button>
+        <button onclick="setAlbumFilter('nhatrai')" id="filter-nhatrai" class="px-3 py-1.5 rounded-full text-[11px] font-bold bg-white text-royal border border-skyPastel transition">🥂 Lễ Tân Hôn (<span id="badge-nhatrai">0</span>)</button>
       </div>
 
-      <div id="megaGalleryGrid" class="compact-scroll max-h-[420px] overflow-y-auto pr-1 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2.5"></div>
+      <div class="flex items-center gap-2 mb-4">
+        <select id="uploadCategorySelect" class="flex-1 px-3 py-2 rounded-xl bg-white border-2 border-skyPastel text-royal font-bold text-xs focus:outline-none">
+          <option value="nhagai">Bỏ vào: Lễ Vu Quy (07.11)</option>
+          <option value="giatien">Bỏ vào: Gia Tiên (14.11)</option>
+          <option value="nhatrai">Bỏ vào: Lễ Tân Hôn (21.11)</option>
+        </select>
+        <label class="px-3.5 py-2 rounded-xl bg-royal active:bg-royalLight text-sunYellow font-extrabold text-xs cursor-pointer shadow-md transition shrink-0">
+          ➕ Thêm hình / video
+          <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleMegaUpload(event)" />
+        </label>
+      </div>
+
+      <div id="megaGalleryGrid" class="compact-scroll max-h-80 overflow-y-auto pr-1 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2"></div>
     </div>
   </section>
 
   <!-- PHẦN 4: ALBUM CƯỚI PRE-WEDDING -->
-  <section id="prewedding-album-section" class="py-7 bg-royal/95 border-y-4 border-sunYellow overflow-hidden shadow-lg scroll-mt-16">
-    <div class="max-w-6xl mx-auto px-4 mb-3 flex flex-wrap items-center justify-between gap-2 text-white text-xs">
-      <span class="font-extrabold tracking-wider uppercase text-sunYellow text-sm">
-        🎞️ ALBUM CƯỚI (PRE-WEDDING ĐỨC TRÍ &amp; TỐ UYÊN)
+  <section id="prewedding-album-section" class="py-6 bg-royal/95 border-y-4 border-sunYellow overflow-hidden shadow-lg scroll-mt-14">
+    <div class="max-w-md lg:max-w-5xl mx-auto px-3.5 mb-2.5 flex items-center justify-between gap-2 text-white">
+      <span class="font-extrabold tracking-wider uppercase text-sunYellow text-xs sm:text-sm">
+        🎞️ ALBUM CƯỚI (PRE-WEDDING)
       </span>
-      <span class="text-[11px] text-skyPastel italic">Chạm vào ảnh bất kỳ để phóng to</span>
+      <span class="text-[10px] text-skyPastel italic">Chạm vào ảnh để phóng to</span>
     </div>
-    <div id="marqueeTrack" class="animate-marquee gap-5 px-4"></div>
+    <div id="marqueeTrack" class="animate-marquee gap-3.5 px-3"></div>
   </section>
 
   <!-- PHẦN 5: TRÒ CHƠI THẢ MÁY BAY GỬI LỜI CHÚC -->
-  <section class="py-12 px-4 max-w-4xl mx-auto">
-    <div class="bg-white/95 rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-skyPastel relative">
-      <div class="washi-tape w-36 h-8 mx-auto -mt-10 mb-4 rotate-1 rounded-sm"></div>
+  <section class="py-8 px-3.5 sm:px-4 max-w-md lg:max-w-4xl mx-auto">
+    <div class="bg-white/95 rounded-3xl p-5 sm:p-7 shadow-lg border-2 border-skyPastel relative">
+      <div class="washi-tape w-28 h-6 mx-auto -mt-8 mb-3 rotate-1 rounded-sm"></div>
       
-      <div class="text-center mb-6">
-        <span class="px-3 py-1 rounded-full bg-skySoft text-royal font-extrabold text-xs uppercase">HOẠT ĐỘNG TƯƠNG TÁC ĐẶC BIỆT</span>
-        <h3 class="font-script text-4xl sm:text-5xl text-royal mt-2">Thả máy bay - Gửi lời chúc</h3>
-        <p class="text-xs sm:text-sm font-bold text-royal/80 mt-1">
-          Cùng nhau đi khắp thế gian trên chuyến bay mang số hiệu <strong>TU013</strong> của hãng hàng không tình yêu <strong>TUAIRLINE</strong>!
+      <div class="text-center mb-5">
+        <span class="px-3 py-0.5 rounded-full bg-skySoft text-royal font-extrabold text-[10px] uppercase">HOẠT ĐỘNG TƯƠNG TÁC</span>
+        <h3 class="font-script text-3xl sm:text-4xl text-royal mt-1.5">Thả máy bay - Gửi lời chúc</h3>
+        <p class="text-xs font-bold text-royal/80 mt-1">
+          Cùng nhau đi khắp thế gian trên chuyến bay <strong>TU013</strong> của hãng hàng không tình yêu <strong>TUAIRLINE</strong>!
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-        <form onsubmit="sendWishPlane(event)" class="md:col-span-6 bg-skySoft/80 rounded-2xl p-5 border-2 border-skyPastel space-y-3">
-          <h4 class="font-extrabold text-sm sm:text-base text-royal flex items-center gap-2">✈️ Phóng Máy Bay Lời Chúc Online</h4>
-          <input id="guestName" type="text" required placeholder="Tên của bạn..." class="w-full px-3.5 py-2 rounded-xl border border-skyPastel text-sm focus:outline-none focus:border-royal" />
-          <select id="guestEvent" class="w-full px-3.5 py-2 rounded-xl border border-skyPastel text-xs font-bold text-royal focus:outline-none">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+        <form onsubmit="sendWishPlane(event)" class="md:col-span-6 bg-skySoft/80 rounded-2xl p-4 border border-skyPastel space-y-2.5">
+          <h4 class="font-extrabold text-xs sm:text-sm text-royal flex items-center gap-1.5">✈️ Phóng Máy Bay Lời Chúc Online</h4>
+          <input id="guestName" type="text" required placeholder="Tên của bạn..." class="w-full px-3 py-2 rounded-xl border border-skyPastel text-xs focus:outline-none focus:border-royal" />
+          <select id="guestEvent" class="w-full px-3 py-2 rounded-xl border border-skyPastel text-xs font-bold text-royal focus:outline-none">
             <option value="Lễ Vu Quy 07.11">Lễ Vu Quy 07.11</option>
             <option value="Gia Tiên 14.11">Gia Tiên 14.11</option>
             <option value="Lễ Tân Hôn 21.11">Lễ Tân Hôn 21.11</option>
           </select>
-          <textarea id="guestWish" rows="3" required placeholder="Viết lời chúc gửi đến Đức Trí & Tố Uyên..." class="w-full px-3.5 py-2 rounded-xl border border-skyPastel text-sm focus:outline-none focus:border-royal"></textarea>
-          <button type="submit" class="w-full py-2.5 rounded-xl bg-royal hover:bg-royalLight text-sunYellow font-extrabold text-sm shadow transition">🚀 Phóng Máy Bay Ngay</button>
+          <textarea id="guestWish" rows="3" required placeholder="Viết lời chúc gửi đến Đức Trí & Tố Uyên..." class="w-full px-3 py-2 rounded-xl border border-skyPastel text-xs focus:outline-none focus:border-royal"></textarea>
+          <button type="submit" class="w-full py-2.5 rounded-xl bg-royal active:bg-royalLight text-sunYellow font-extrabold text-xs shadow transition">🚀 Phóng Máy Bay Ngay</button>
         </form>
 
-        <div id="wishSkyList" class="md:col-span-6 space-y-2.5 max-h-64 overflow-y-auto compact-scroll pr-1">
-          <div class="bg-skySoft/50 p-3.5 rounded-2xl text-xs shadow-sm border border-skyPastel">
+        <div id="wishSkyList" class="md:col-span-6 space-y-2 max-h-52 overflow-y-auto compact-scroll pr-1">
+          <div class="bg-skySoft/50 p-3 rounded-2xl text-xs shadow-sm border border-skyPastel">
             <div class="flex justify-between font-bold text-royal">
               <span>✈️ Minh Anh</span><span class="text-[10px] text-amber-600">Lễ Vu Quy 07.11</span>
             </div>
@@ -409,41 +405,61 @@
   </section>
 
   <!-- MODAL LIGHTBOX XEM ẢNH & VIDEO LỚN -->
-  <div id="lightboxModal" class="fixed inset-0 z-50 bg-royal/95 backdrop-blur-md hidden flex-col justify-between p-4 text-white">
+  <div id="lightboxModal" class="fixed inset-0 z-50 bg-royal/95 backdrop-blur-md hidden flex-col justify-between p-3 sm:p-4 text-white">
     <div class="flex items-center justify-between max-w-6xl w-full mx-auto py-2">
-      <div>
-        <span id="lightboxBadge" class="px-3 py-1 rounded-full bg-sunYellow text-royal font-extrabold text-xs">Album</span>
-        <span id="lightboxCaption" class="ml-2 text-sm font-semibold text-skyPastel">Khoảnh khắc</span>
+      <div class="truncate pr-2">
+        <span id="lightboxBadge" class="px-2.5 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold text-[11px]">Album</span>
+        <span id="lightboxCaption" class="ml-1.5 text-xs font-semibold text-skyPastel">Khoảnh khắc</span>
       </div>
-      <div class="flex items-center gap-2">
-        <button onclick="closeLightbox()" class="w-9 h-9 rounded-full bg-white/20 hover:bg-rose-500 text-lg font-bold flex items-center justify-center transition">✕</button>
-      </div>
+      <button onclick="closeLightbox()" class="w-8 h-8 rounded-full bg-white/20 active:bg-rose-500 text-base font-bold flex items-center justify-center shrink-0">✕</button>
     </div>
-    <div class="relative flex-1 flex items-center justify-center max-w-5xl w-full mx-auto my-2 overflow-hidden">
-      <img id="lightboxImg" src="" alt="Preview" class="max-h-[82vh] max-w-full object-contain rounded-2xl shadow-2xl border-4 border-white" />
-      <video id="lightboxVideo" src="" controls playsinline class="hidden max-h-[82vh] max-w-full rounded-2xl shadow-2xl border-4 border-white bg-black"></video>
+    <div class="relative flex-1 flex items-center justify-center max-w-5xl w-full mx-auto my-1 overflow-hidden">
+      <img id="lightboxImg" src="" alt="Preview" class="max-h-[80vh] max-w-full object-contain rounded-xl shadow-2xl border-2 border-white" />
+      <video id="lightboxVideo" src="" controls playsinline class="hidden max-h-[80vh] max-w-full rounded-xl shadow-2xl border-2 border-white bg-black"></video>
     </div>
   </div>
 
-  <!-- VỊ TRÍ LOGO SỐ 2: CHÂN TRANG FOOTER -->
-  <footer class="py-10 pb-24 text-center text-xs text-royal/80 border-t border-skyPastel bg-white/75">
-    <div class="flex justify-center mb-3">
+  <!-- =========================================================================
+       VỊ TRÍ LOGO SỐ 2: CHÂN TRANG FOOTER (CHUẨN SIZE ĐIỆN THOẠI - Logo Tri&Uyen.jpg)
+       ========================================================================= -->
+  <footer class="py-8 pb-20 text-center text-xs text-royal/80 border-t border-skyPastel bg-white/80 px-4">
+    <div class="flex justify-center mb-2.5">
       <img 
-        src="Đức Trí & Tố Uyên Wedding Logo.png" 
-        onerror="resolveSmartImage(this, 'Đức Trí & Tố Uyên Wedding Logo.png')" 
+        src="Logo%20Tri%26Uyen.jpg" 
+        onerror="resolveSmartLogo(this)" 
         ondblclick="document.getElementById('logoFileInput').click()"
         alt="Đức Trí & Tố Uyên - AND BEYOND" 
-        class="brand-logo-img wedding-logo-img h-16 sm:h-20 w-auto object-contain cursor-pointer hover:scale-105 transition duration-300" 
-        title="Nhấp đúp nếu muốn đổi file ảnh Logo"
+        class="brand-logo-img wedding-logo-img h-12 sm:h-16 w-auto max-w-[220px] sm:max-w-[280px] object-contain cursor-pointer" 
       />
     </div>
-    <p class="font-bold text-royal text-xs sm:text-sm">Hãng Hàng Không Tình Yêu TUAIRLINE • Số Hiệu Chuyến Bay TU013</p>
-    <p class="mt-1">07.11.2026 (Lễ Vu Quy) • 14.11.2026 (Gia Tiên) • 21.11.2026 (Lễ Tân Hôn)</p>
+    <p class="font-bold text-royal text-[11px] sm:text-xs">Hãng Hàng Không Tình Yêu TUAIRLINE • Chuyến Bay TU013</p>
+    <p class="mt-0.5 text-[11px]">07.11.2026 (Lễ Vu Quy) • 14.11.2026 (Gia Tiên) • 21.11.2026 (Lễ Tân Hôn)</p>
   </footer>
 
   <!-- JAVASCRIPT -->
   <script>
     const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/ToUyen132/triuyenandbeyond/main/';
+
+    // Hàm tự động tìm chính xác file "Logo Tri&Uyen.jpg" ở cả máy tính lẫn GitHub (xử lý ký tự đặc biệt &)
+    function resolveSmartLogo(imgEl) {
+      const step = parseInt(imgEl.dataset.logoStep || '0', 10);
+      const logoCandidates = [
+        'Logo Tri&Uyen.jpg',
+        'images/Logo%20Tri%26Uyen.jpg',
+        'images/Logo Tri&Uyen.jpg',
+        `${GITHUB_RAW_BASE}Logo%20Tri%26Uyen.jpg`,
+        `${GITHUB_RAW_BASE}images/Logo%20Tri%26Uyen.jpg`,
+        'Logo%20Tri%26Uyen.png',
+        `${GITHUB_RAW_BASE}Logo%20Tri%26Uyen.png`,
+        `${GITHUB_RAW_BASE}${encodeURIComponent('Đức Trí & Tố Uyên Wedding Logo.png')}`,
+        `${GITHUB_RAW_BASE}${encodeURIComponent('Mobile website - Final (1).jpg')}`
+      ];
+
+      if (step < logoCandidates.length) {
+        imgEl.dataset.logoStep = String(step + 1);
+        imgEl.src = logoCandidates[step];
+      }
+    }
 
     function resolveSmartImage(imgEl, rawFileName) {
       const cleanName = rawFileName.replace(/^images\//, '');
@@ -484,14 +500,14 @@
     function updateMusicUI(playing) {
       if (playing) {
         vinylDisc.classList.remove('vinyl-paused');
-        musicStatusDot.className = 'absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-white animate-ping';
-        musicHintText.textContent = 'Đang phát nhạc nền...';
+        musicStatusDot.className = 'absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-white animate-ping';
+        musicHintText.textContent = 'Đang phát nhạc...';
         musicEq.classList.remove('hidden');
         musicEq.classList.add('flex');
       } else {
         vinylDisc.classList.add('vinyl-paused');
-        musicStatusDot.className = 'absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-amber-400 border-2 border-white';
-        musicHintText.textContent = 'Chạm để phát nhạc';
+        musicStatusDot.className = 'absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-amber-400 border-2 border-white';
+        musicHintText.textContent = 'Chạm phát nhạc';
         musicEq.classList.add('hidden');
         musicEq.classList.remove('flex');
       }
@@ -519,7 +535,7 @@
       });
     });
 
-    // 2. DẢI PHIM CUỘN PRE-WEDDING
+    // 2. DẢI PHIM CUỘN PRE-WEDDING (TỐI ƯU KÍCH CỠ ĐIỆN THOẠI)
     const filmstripPhotos = [
       { file: 'KBEA030.jpg', title: 'Save the Date - Đức Trí & Tố Uyên' },
       { file: 'KBEA020.jpg', title: 'Nâng ly chúc mừng hạnh phúc' },
@@ -543,19 +559,19 @@
       const marqueeEl = document.getElementById('marqueeTrack');
       const doubled = [...filmstripPhotos, ...filmstripPhotos];
       marqueeEl.innerHTML = doubled.map((item) => `
-        <div onclick="openSimplePreview(this.querySelector('img').src, '${item.title}', 'Pre-Wedding', 'image')" class="cursor-pointer w-56 h-44 rounded-2xl overflow-hidden border-2 border-white shrink-0 relative group shadow-lg bg-skySoft">
+        <div onclick="openSimplePreview(this.querySelector('img').src, '${item.title}', 'Pre-Wedding', 'image')" class="cursor-pointer w-40 h-32 sm:w-52 sm:h-40 rounded-2xl overflow-hidden border-2 border-white shrink-0 relative group shadow-md bg-skySoft">
           <img 
             src="${item.file}" 
             onerror="resolveSmartImage(this, '${item.file}')" 
             alt="${item.title}" 
-            class="w-full h-full object-cover object-top group-hover:scale-110 transition duration-300" 
+            class="w-full h-full object-cover object-top" 
             loading="lazy" 
           />
         </div>
       `).join('');
     }
 
-    // 3. QUẢN LÝ HÌNH ẢNH & VIDEO CỦA 3 MỤC SỰ KIỆN (LỄ VU QUY - GIA TIÊN - LỄ TÂN HÔN)
+    // 3. QUẢN LÝ HÌNH ẢNH & VIDEO CỦA 3 MỤC SỰ KIỆN
     const eventLabels = {
       nhagai: 'Lễ Vu Quy 07.11',
       giatien: 'Gia Tiên 14.11',
@@ -570,7 +586,7 @@
       if (item.type === 'video') {
         return `
           <div class="w-full h-full relative bg-black">
-            <video src="${item.url}" muted loop playsinline onmouseover="this.play()" onmouseout="this.pause()" class="${extraClass}"></video>
+            <video src="${item.url}" muted loop playsinline class="${extraClass}"></video>
             <span class="absolute bottom-1 left-1 px-1.5 py-0.5 rounded bg-black/70 text-sunYellow font-extrabold text-[8px] flex items-center gap-0.5 pointer-events-none">
               ▶ Video
             </span>
@@ -617,23 +633,23 @@
         const gridEl = document.getElementById(`grid-${cat}`);
         if (list.length === 0) {
           gridEl.innerHTML = `
-            <label class="col-span-full cursor-pointer border-2 border-dashed border-skyPastel hover:border-royal bg-skySoft/50 hover:bg-skySoft rounded-2xl py-6 px-3 text-center flex flex-col items-center justify-center transition group">
-              <span class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-xl mb-2 group-hover:scale-110 transition">📸</span>
-              <span class="px-4 py-1.5 rounded-full bg-sunYellow text-royal font-extrabold text-xs shadow-sm group-hover:bg-amber-400 transition">➕ Thêm hình / video ngay</span>
+            <label class="col-span-full cursor-pointer border-2 border-dashed border-skyPastel active:border-royal bg-skySoft/50 rounded-2xl py-5 px-3 text-center flex flex-col items-center justify-center transition">
+              <span class="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-lg mb-1.5">📸</span>
+              <span class="px-4 py-1.5 rounded-full bg-sunYellow text-royal font-extrabold text-xs shadow-sm">➕ Thêm hình / video ngay</span>
               <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, '${cat}')" />
             </label>
           `;
         } else {
           gridEl.innerHTML = list.map((item) => `
             <div onclick="openSimplePreview('${item.url}', '${item.title}', '${eventLabels[item.cat]}', '${item.type}')" class="group cursor-pointer relative rounded-xl overflow-hidden aspect-square bg-skySoft border border-skyPastel shadow-sm">
-              ${renderMediaElement(item, 'w-full h-full object-cover object-top group-hover:scale-110 transition duration-300')}
-              <div class="absolute top-1 right-1 z-20 flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition">
-                <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-5 h-5 rounded-full bg-royal text-sunYellow font-bold text-[9px] flex items-center justify-center shadow" title="Đổi">✏️</button>
-                <button onclick="deletePhoto(event, ${item.id})" class="w-5 h-5 rounded-full bg-rose-600 text-white font-bold text-[9px] flex items-center justify-center shadow" title="Xóa">✕</button>
+              ${renderMediaElement(item, 'w-full h-full object-cover object-top')}
+              <div class="absolute top-1 right-1 z-20 flex items-center gap-0.5">
+                <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-5 h-5 rounded-full bg-royal/90 text-sunYellow font-bold text-[9px] flex items-center justify-center shadow" title="Đổi">✏️</button>
+                <button onclick="deletePhoto(event, ${item.id})" class="w-5 h-5 rounded-full bg-rose-600/90 text-white font-bold text-[9px] flex items-center justify-center shadow" title="Xóa">✕</button>
               </div>
             </div>
           `).join('') + `
-            <label class="cursor-pointer rounded-xl aspect-square border-2 border-dashed border-skyPastel hover:border-royal bg-skySoft/60 hover:bg-sunYellow/30 flex flex-col items-center justify-center text-center p-1 transition">
+            <label class="cursor-pointer rounded-xl aspect-square border-2 border-dashed border-skyPastel bg-skySoft/60 flex flex-col items-center justify-center text-center p-1">
               <span class="text-base">➕</span>
               <span class="text-[9px] font-extrabold text-royal mt-0.5">Thêm</span>
               <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, '${cat}')" />
@@ -654,9 +670,9 @@
       if (filtered.length === 0) {
         megaGrid.className = 'grid grid-cols-1';
         megaGrid.innerHTML = `
-          <label class="cursor-pointer border-2 border-dashed border-skyPastel bg-skySoft/40 hover:bg-skySoft/70 rounded-3xl py-8 px-4 text-center flex flex-col items-center justify-center transition group">
-            <span class="text-3xl mb-2 group-hover:scale-110 transition">✈️</span>
-            <span class="px-5 py-2 rounded-full bg-sunYellow text-royal font-extrabold text-xs sm:text-sm shadow-sm">➕ Thêm hình / video ngay</span>
+          <label class="cursor-pointer border-2 border-dashed border-skyPastel bg-skySoft/40 rounded-2xl py-6 px-4 text-center flex flex-col items-center justify-center transition">
+            <span class="text-2xl mb-1.5">✈️</span>
+            <span class="px-4 py-1.5 rounded-full bg-sunYellow text-royal font-extrabold text-xs shadow-sm">➕ Thêm hình / video ngay</span>
             <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleMegaUpload(event)" />
           </label>
         `;
@@ -664,46 +680,46 @@
       }
 
       if (currentLayout === 'polaroid') {
-        megaGrid.className = 'compact-scroll max-h-[460px] overflow-y-auto pr-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6';
+        megaGrid.className = 'compact-scroll max-h-96 overflow-y-auto pr-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5';
         megaGrid.innerHTML = filtered.map((item, idx) => {
           const rot = idx % 2 === 0 ? 'rotate-[-1deg]' : 'rotate-[1deg]';
           return `
-            <div class="polaroid-item group bg-white p-3 pb-4 rounded-2xl shadow-md border border-skyPastel relative ${rot}">
-              <div class="absolute top-2 right-2 z-20 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition">
-                <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-royal text-sunYellow font-bold text-xs flex items-center justify-center shadow-md" title="Đổi">✏️</button>
-                <button onclick="deletePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-rose-600 text-white font-bold text-xs flex items-center justify-center shadow-md" title="Xóa">✕</button>
+            <div class="polaroid-item group bg-white p-2.5 pb-3 rounded-2xl shadow-md border border-skyPastel relative ${rot}">
+              <div class="absolute top-1.5 right-1.5 z-20 flex items-center gap-1">
+                <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-6 h-6 rounded-full bg-royal/90 text-sunYellow font-bold text-[10px] flex items-center justify-center shadow">✏️</button>
+                <button onclick="deletePhoto(event, ${item.id})" class="w-6 h-6 rounded-full bg-rose-600/90 text-white font-bold text-[10px] flex items-center justify-center shadow">✕</button>
               </div>
-              <div class="washi-tape w-16 h-4 mx-auto -mt-5 mb-2 rounded-sm"></div>
+              <div class="washi-tape w-12 h-3.5 mx-auto -mt-4 mb-1.5 rounded-sm"></div>
               <div onclick="openSimplePreview('${item.url}', '${item.title}', '${eventLabels[item.cat]}', '${item.type}')" class="aspect-[3/4] rounded-xl overflow-hidden bg-skySoft cursor-pointer">
-                ${renderMediaElement(item, 'w-full h-full object-cover object-top group-hover:scale-105 transition')}
+                ${renderMediaElement(item, 'w-full h-full object-cover object-top')}
               </div>
-              <div class="mt-2.5 flex items-center justify-between gap-1">
-                <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-skySoft text-royal">${eventLabels[item.cat]}</span>
+              <div class="mt-2 flex items-center justify-between gap-1">
+                <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-skySoft text-royal">${eventLabels[item.cat]}</span>
                 <span class="text-xs">${item.type === 'video' ? '🎬' : '✈️'}</span>
               </div>
             </div>
           `;
         }).join('');
       } else if (currentLayout === 'masonry') {
-        megaGrid.className = 'compact-scroll max-h-[460px] overflow-y-auto pr-1 columns-2 sm:columns-3 md:columns-4 gap-4 space-y-4';
+        megaGrid.className = 'compact-scroll max-h-96 overflow-y-auto pr-1 columns-2 sm:columns-3 gap-3 space-y-3';
         megaGrid.innerHTML = filtered.map((item) => `
-          <div onclick="openSimplePreview('${item.url}', '${item.title}', '${eventLabels[item.cat]}', '${item.type}')" class="break-inside-avoid group relative rounded-2xl overflow-hidden shadow-md border-2 border-white bg-skySoft cursor-pointer">
-            <div class="absolute top-2 right-2 z-20 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition">
-              <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-royal text-sunYellow font-bold text-xs flex items-center justify-center shadow-md">✏️</button>
-              <button onclick="deletePhoto(event, ${item.id})" class="w-7 h-7 rounded-full bg-rose-600 text-white font-bold text-xs flex items-center justify-center shadow-md">✕</button>
+          <div onclick="openSimplePreview('${item.url}', '${item.title}', '${eventLabels[item.cat]}', '${item.type}')" class="break-inside-avoid group relative rounded-xl overflow-hidden shadow-md border border-white bg-skySoft cursor-pointer">
+            <div class="absolute top-1.5 right-1.5 z-20 flex items-center gap-1">
+              <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-6 h-6 rounded-full bg-royal/90 text-sunYellow font-bold text-[10px] flex items-center justify-center shadow">✏️</button>
+              <button onclick="deletePhoto(event, ${item.id})" class="w-6 h-6 rounded-full bg-rose-600/90 text-white font-bold text-[10px] flex items-center justify-center shadow">✕</button>
             </div>
-            ${renderMediaElement(item, 'w-full aspect-[3/4] object-cover object-top group-hover:scale-105 transition')}
+            ${renderMediaElement(item, 'w-full aspect-[3/4] object-cover object-top')}
           </div>
         `).join('');
       } else {
-        megaGrid.className = 'compact-scroll max-h-[420px] overflow-y-auto pr-1 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2.5';
+        megaGrid.className = 'compact-scroll max-h-80 overflow-y-auto pr-1 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2';
         megaGrid.innerHTML = filtered.map((item) => `
           <div onclick="openSimplePreview('${item.url}', '${item.title}', '${eventLabels[item.cat]}', '${item.type}')" class="group cursor-pointer relative aspect-square rounded-xl overflow-hidden border border-skyPastel bg-skySoft">
-            <div class="absolute top-1 right-1 z-20 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
-              <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-6 h-6 rounded-full bg-royal text-sunYellow font-bold text-[9px] flex items-center justify-center shadow">✏️</button>
-              <button onclick="deletePhoto(event, ${item.id})" class="w-6 h-6 rounded-full bg-rose-600 text-white font-bold text-[9px] flex items-center justify-center shadow">✕</button>
+            <div class="absolute top-1 right-1 z-20 flex items-center gap-0.5">
+              <button onclick="triggerReplacePhoto(event, ${item.id})" class="w-5 h-5 rounded-full bg-royal/90 text-sunYellow font-bold text-[9px] flex items-center justify-center shadow">✏️</button>
+              <button onclick="deletePhoto(event, ${item.id})" class="w-5 h-5 rounded-full bg-rose-600/90 text-white font-bold text-[9px] flex items-center justify-center shadow">✕</button>
             </div>
-            ${renderMediaElement(item, 'w-full h-full object-cover object-top group-hover:scale-110 transition')}
+            ${renderMediaElement(item, 'w-full h-full object-cover object-top')}
           </div>
         `).join('');
       }
@@ -735,8 +751,8 @@
       ['all', 'nhagai', 'giatien', 'nhatrai'].forEach(k => {
         const btn = document.getElementById(`filter-${k}`);
         btn.className = k === filter 
-          ? 'px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold bg-sunYellow text-royal shadow-sm transition' 
-          : 'px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-royal border border-skyPastel hover:bg-skySoft transition';
+          ? 'px-3 py-1.5 rounded-full text-[11px] font-extrabold bg-sunYellow text-royal shadow-sm transition' 
+          : 'px-3 py-1.5 rounded-full text-[11px] font-bold bg-white text-royal border border-skyPastel transition';
       });
       renderMegaGallery();
     }
@@ -746,8 +762,8 @@
       ['polaroid', 'masonry', 'compact'].forEach(k => {
         const btn = document.getElementById(`layout-${k}`);
         btn.className = k === layout 
-          ? 'px-3.5 py-2 rounded-xl text-xs font-extrabold bg-royal text-sunYellow shadow transition' 
-          : 'px-3.5 py-2 rounded-xl text-xs font-bold text-royal hover:bg-white transition';
+          ? 'px-2.5 py-1.5 rounded-lg text-[11px] font-extrabold bg-royal text-sunYellow shadow transition' 
+          : 'px-2.5 py-1.5 rounded-lg text-[11px] font-bold text-royal transition';
       });
       renderMegaGallery();
     }
@@ -796,7 +812,7 @@
 
       const list = document.getElementById('wishSkyList');
       const card = document.createElement('div');
-      card.className = 'bg-skySoft/50 p-3.5 rounded-2xl text-xs shadow-sm border border-sunYellow';
+      card.className = 'bg-skySoft/50 p-3 rounded-2xl text-xs shadow-sm border border-sunYellow';
       card.innerHTML = `
         <div class="flex justify-between font-bold text-royal">
           <span>✈️ ${name}</span><span class="text-[10px] text-amber-600">${ev}</span>
