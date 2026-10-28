@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Chuyến Bay Hạnh Phúc TU013 | Đức Trí & Tố Uyên - Tháng 11.2026</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Thư viện đám mây Supabase Realtime chịu tải cao cho ngày cưới -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
@@ -120,10 +122,10 @@
   <!-- Input ẩn để đổi file Logo nếu nhấp đúp vào Logo -->
   <input type="file" id="logoFileInput" accept="image/*" class="hidden" onchange="changeLogoImage(event)" />
 
-  <!-- Thông báo trạng thái tải ảnh lên Google Drive -->
+  <!-- Thông báo trạng thái tải ảnh lên Kho Chung -->
   <div id="uploadToast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 hidden bg-royal text-sunYellow px-4 py-2 rounded-full shadow-2xl border-2 border-sunYellow text-xs font-extrabold items-center gap-2">
     <span class="animate-spin">⏳</span>
-    <span id="uploadToastText">Đang lưu vào Google Drive...</span>
+    <span id="uploadToastText">Đang đồng bộ ảnh cho mọi người cùng xem...</span>
   </div>
 
   <!-- TRÌNH PHÁT NHẠC NỀN CỐ ĐỊNH -->
@@ -216,9 +218,7 @@
     </div>
   </section>
 
-  <!-- =========================================================================
-       PHẦN 2: 3 MỤC NGÀY CƯỚI LIÊN KẾT TRỰC TIẾP VỚI 3 THƯ MỤC GOOGLE DRIVE
-       ========================================================================= -->
+  <!-- PHẦN 2: 3 MỤC NGÀY CƯỚI -->
   <section id="three-events-section" class="py-5 px-3.5 sm:px-4 max-w-md lg:max-w-5xl mx-auto scroll-mt-14">
     <div class="text-center mb-5 bg-white/90 border-2 border-sunYellow rounded-2xl p-4 sm:p-5 shadow-sm">
       <span class="px-3 py-0.5 rounded-full bg-sunYellow text-royal font-extrabold text-[10px] uppercase tracking-widest">
@@ -227,6 +227,10 @@
       <p class="text-xs sm:text-base font-extrabold text-royal mt-2 leading-relaxed">
         Khách mời tham dự tiệc hãy nhấn nút <span class="inline-block px-2.5 py-0.5 rounded-lg bg-royal text-sunYellow text-[11px] sm:text-xs mx-0.5 shadow-sm">"➕ Thêm Hình / Video"</span> ở từng ngày để chia sẻ khoảnh khắc cưới cùng tụi mình nhé!
       </p>
+      <div id="cloudStatusBanner" class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-skySoft text-[11px] font-bold text-royal">
+        <span id="cloudStatusDot" class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+        <span id="cloudStatusText">Đám mây Realtime: Mọi khách mời đều thấy ảnh của nhau ngay lập tức</span>
+      </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 items-stretch">
@@ -250,15 +254,10 @@
             <h4 class="font-extrabold text-xs text-royal flex items-center gap-1">
               📸 Lễ Vu Quy
             </h4>
-            <div class="flex items-center gap-1">
-              <a id="drive-link-nhagai" href="#" target="_blank" class="px-2.5 py-1.5 rounded-xl bg-skySoft hover:bg-sunYellow text-royal font-extrabold text-[10px] border border-skyPastel transition" title="Mở thư mục Google Drive 07.11">
-                📂 Drive
-              </a>
-              <label class="px-2.5 py-1.5 rounded-xl bg-royal active:bg-royalLight text-sunYellow font-extrabold text-[11px] cursor-pointer shadow transition">
-                ➕ Thêm Hình / Video
-                <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, 'nhagai')" />
-              </label>
-            </div>
+            <label class="px-3 py-1.5 rounded-xl bg-royal active:bg-royalLight text-sunYellow font-extrabold text-[11px] cursor-pointer shadow transition">
+              ➕ Thêm Hình / Video
+              <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, 'nhagai')" />
+            </label>
           </div>
           <div id="grid-nhagai" class="compact-scroll max-h-48 overflow-y-auto pr-1 grid grid-cols-3 gap-2"></div>
         </div>
@@ -283,15 +282,10 @@
             <h4 class="font-extrabold text-xs text-royal flex items-center gap-1">
               🏮 Gia Tiên
             </h4>
-            <div class="flex items-center gap-1">
-              <a id="drive-link-giatien" href="#" target="_blank" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-sunYellow text-royal font-extrabold text-[10px] border border-amber-300 transition" title="Mở thư mục Google Drive 14.11">
-                📂 Drive
-              </a>
-              <label class="px-2.5 py-1.5 rounded-xl bg-sunYellow active:bg-amber-400 text-royal font-extrabold text-[11px] cursor-pointer shadow transition">
-                ➕ Thêm Hình / Video
-                <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, 'giatien')" />
-              </label>
-            </div>
+            <label class="px-3 py-1.5 rounded-xl bg-sunYellow active:bg-amber-400 text-royal font-extrabold text-[11px] cursor-pointer shadow transition">
+              ➕ Thêm Hình / Video
+              <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, 'giatien')" />
+            </label>
           </div>
           <div id="grid-giatien" class="compact-scroll max-h-48 overflow-y-auto pr-1 grid grid-cols-3 gap-2"></div>
         </div>
@@ -316,15 +310,10 @@
             <h4 class="font-extrabold text-xs text-royal flex items-center gap-1">
               🥂 Lễ Tân Hôn
             </h4>
-            <div class="flex items-center gap-1">
-              <a id="drive-link-nhatrai" href="#" target="_blank" class="px-2.5 py-1.5 rounded-xl bg-skySoft hover:bg-sunYellow text-royal font-extrabold text-[10px] border border-skyPastel transition" title="Mở thư mục Google Drive 21.11">
-                📂 Drive
-              </a>
-              <label class="px-2.5 py-1.5 rounded-xl bg-royal active:bg-royalLight text-sunYellow font-extrabold text-[11px] cursor-pointer shadow transition">
-                ➕ Thêm Hình / Video
-                <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, 'nhatrai')" />
-              </label>
-            </div>
+            <label class="px-3 py-1.5 rounded-xl bg-royal active:bg-royalLight text-sunYellow font-extrabold text-[11px] cursor-pointer shadow transition">
+              ➕ Thêm Hình / Video
+              <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleBatchUpload(event, 'nhatrai')" />
+            </label>
           </div>
           <div id="grid-nhatrai" class="compact-scroll max-h-48 overflow-y-auto pr-1 grid grid-cols-3 gap-2"></div>
         </div>
@@ -337,14 +326,9 @@
   <section id="mega-album" class="py-8 px-3.5 sm:px-4 bg-white/75 border-y-2 border-skyPastel scroll-mt-14">
     <div class="max-w-md lg:max-w-5xl mx-auto">
       <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-        <div class="flex items-center gap-2">
-          <span class="px-3.5 py-1.5 rounded-full bg-royal text-sunYellow font-extrabold text-[11px] sm:text-xs uppercase tracking-wider shadow">
-            ✈️ KHO ẢNH CHUYẾN BAY HẠNH PHÚC
-          </span>
-          <a id="drive-link-master" href="https://drive.google.com/drive/folders/18Pao4HgdtS1trJiM3Se8qsDgOK72WEew?usp=drive_link" target="_blank" class="px-3 py-1.5 rounded-full bg-sunYellow hover:bg-amber-400 text-royal font-extrabold text-[11px] shadow-sm transition flex items-center gap-1">
-            ☁️ Mở Google Drive Chung
-          </a>
-        </div>
+        <span class="px-3.5 py-1.5 rounded-full bg-royal text-sunYellow font-extrabold text-[11px] sm:text-xs uppercase tracking-wider shadow">
+          ✈️ KHO ẢNH CHUYẾN BAY HẠNH PHÚC
+        </span>
 
         <div class="flex items-center gap-1 bg-skySoft p-1 rounded-xl border border-skyPastel">
           <button onclick="setGalleryLayout('compact')" id="layout-compact" class="px-2.5 py-1.5 rounded-lg text-[11px] font-extrabold bg-royal text-sunYellow shadow transition">🔍 Thu Gọn</button>
@@ -467,29 +451,19 @@
     <p class="mt-0.5 text-[11px]">07.11.2026 (Lễ Vu Quy) • 14.11.2026 (Gia Tiên) • 21.11.2026 (Lễ Tân Hôn)</p>
   </footer>
 
-  <!-- JAVASCRIPT KẾT NỐI GOOGLE DRIVE & LƯỚT ẢNH -->
+  <!-- JAVASCRIPT ĐỒNG BỘ NHIỀU NGƯỜI CÙNG LÚC & NÉN ẢNH SIÊU TỐC -->
   <script>
     // =========================================================================
-    // 1. CẤU HÌNH LIÊN KẾT GOOGLE DRIVE CHỨA DATA CỦA BẠN
-    // - Dán link Web App Google Apps Script (Bước 1) vào GOOGLE_DRIVE_SCRIPT_URL
-    // - Bạn cũng có thể dán trực tiếp link từng thư mục con 07.11, 14.11, 21.11 vào dưới
+    // ĐÃ GẮN MÃ SUPABASE CHÍNH THỨC CỦA BẠN ĐỂ MỌI KHÁCH MỜI CÙNG XEM & UP ẢNH:
     // =========================================================================
-    const GOOGLE_DRIVE_SCRIPT_URL = ''; // Dán link https://script.google.com/macros/s/.../exec vào đây
+    const SUPABASE_URL = 'https://iivycnnuxnmoearnvuvj.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_vrU0N7jPusDwnmOnyd_FeA_2LtD5L-z';
 
-    const DRIVE_FOLDER_LINKS = {
-      master: 'https://drive.google.com/drive/folders/18Pao4HgdtS1trJiM3Se8qsDgOK72WEew?usp=drive_link',
-      nhagai: 'https://drive.google.com/drive/folders/18Pao4HgdtS1trJiM3Se8qsDgOK72WEew?usp=drive_link', // Link thư mục 07.11.2026
-      giatien: 'https://drive.google.com/drive/folders/18Pao4HgdtS1trJiM3Se8qsDgOK72WEew?usp=drive_link', // Link thư mục 14.11.2026
-      nhatrai: 'https://drive.google.com/drive/folders/18Pao4HgdtS1trJiM3Se8qsDgOK72WEew?usp=drive_link'  // Link thư mục 21.11.2026
-    };
+    const GOOGLE_DRIVE_SCRIPT_URL = '';
 
-    // Gắn link vào các nút Drive trên giao diện
-    window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('drive-link-master').href = DRIVE_FOLDER_LINKS.master;
-      document.getElementById('drive-link-nhagai').href = DRIVE_FOLDER_LINKS.nhagai;
-      document.getElementById('drive-link-giatien').href = DRIVE_FOLDER_LINKS.giatien;
-      document.getElementById('drive-link-nhatrai').href = DRIVE_FOLDER_LINKS.nhatrai;
-    });
+    const supabaseClient = (SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase)
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      : null;
 
     const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/ToUyen132/triuyenandbeyond/main/';
 
@@ -542,7 +516,7 @@
       });
     }
 
-    // 2. Nhạc nền
+    // 1. Nhạc nền
     const bgMusic = document.getElementById('bgMusic');
     const vinylDisc = document.getElementById('vinylDisc');
     const musicStatusDot = document.getElementById('musicStatusDot');
@@ -587,7 +561,7 @@
       });
     });
 
-    // 3. ALBUM CƯỚI PRE-WEDDING (LƯỚT QUA LƯỚT LẠI MƯỢT MÀ)
+    // 2. ALBUM CƯỚI PRE-WEDDING
     const filmstripPhotos = [
       { file: 'KBEA030.jpg', title: 'Save the Date - Đức Trí & Tố Uyên' },
       { file: 'KBEA020.jpg', title: 'Nâng ly chúc mừng hạnh phúc' },
@@ -631,7 +605,7 @@
     }
 
     // =========================================================================
-    // 4. ĐỒNG BỘ ẢNH/VIDEO VỚI 3 THƯ MỤC GOOGLE DRIVE + LƯU VĨNH VIỄN INDEXEDDB
+    // 3. HỆ THỐNG ĐỒNG BỘ NHIỀU NGƯỜI CÙNG LÚC & NÉN ẢNH TỐC ĐỘ CAO
     // =========================================================================
     const eventLabels = {
       nhagai: 'Lễ Vu Quy 07.11',
@@ -646,7 +620,7 @@
     let currentFilter = 'all';
     let currentLayout = 'compact';
 
-    const DB_NAME = 'TU013_Wedding_Drive_DB';
+    const DB_NAME = 'TU013_Wedding_Shared_DB';
     const STORE_PHOTOS = 'guest_media';
 
     function openLocalDB() {
@@ -706,39 +680,102 @@
       }
     }
 
-    // Tải danh sách hình từ 3 thư mục Google Drive của bạn
-    async function syncFromGoogleDrive() {
-      if (!GOOGLE_DRIVE_SCRIPT_URL) return;
-      try {
-        const res = await fetch(GOOGLE_DRIVE_SCRIPT_URL);
-        const data = await res.json();
-        if (data && data.status === 'ok' && Array.isArray(data.items)) {
-          photos = data.items;
-          renderAllGalleries();
+    // Tự động nén ảnh chụp từ điện thoại xuống chuẩn Full HD (1600px) để hàng trăm khách up siêu nhanh
+    function compressImageFile(file, maxWidth = 1600, quality = 0.82) {
+      return new Promise((resolve) => {
+        if (!file.type.startsWith('image/')) {
+          resolve(file);
+          return;
         }
-      } catch (err) {
-        console.warn('Đang dùng bộ nhớ đệm cục bộ:', err);
+        const img = new Image();
+        const objectUrl = URL.createObjectURL(file);
+        img.onload = () => {
+          URL.revokeObjectURL(objectUrl);
+          let width = img.width;
+          let height = img.height;
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob((blob) => {
+            if (blob) {
+              const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, '.jpg'), {
+                type: 'image/jpeg',
+                lastModified: Date.now()
+              });
+              resolve(compressedFile);
+            } else {
+              resolve(file);
+            }
+          }, 'image/jpeg', quality);
+        };
+        img.onerror = () => resolve(file);
+        img.src = objectUrl;
+      });
+    }
+
+    async function fetchAllFromSupabase() {
+      if (!supabaseClient) return;
+      const { data: cloudPhotos } = await supabaseClient
+        .from('wedding_media')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (cloudPhotos) {
+        photos = cloudPhotos.map(row => ({
+          id: row.id,
+          cat: row.category,
+          type: row.media_type || 'image',
+          url: row.url,
+          title: row.title || 'Khoảnh khắc khách mời'
+        }));
+        renderAllGalleries();
+      }
+
+      const { data: cloudWishes } = await supabaseClient
+        .from('wedding_wishes')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (cloudWishes && cloudWishes.length > 0) {
+        wishes = cloudWishes;
+        renderWishes();
       }
     }
 
     async function initSharedData() {
-      const localItems = await loadMediaFromLocalDB();
-      if (localItems.length > 0) {
-        photos = localItems;
-      }
+      const statusDot = document.getElementById('cloudStatusDot');
+      const statusText = document.getElementById('cloudStatusText');
 
-      const savedWishes = localStorage.getItem('tu013_wishes');
-      if (savedWishes) {
-        try { wishes = JSON.parse(savedWishes); } catch (e) {}
-      }
+      if (supabaseClient) {
+        statusDot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-ping';
+        statusText.textContent = 'Đám mây Realtime: Mọi khách mời đều thấy ảnh của nhau ngay lập tức';
+        await fetchAllFromSupabase();
 
-      renderAllGalleries();
-      renderWishes();
-
-      // Nếu đã gắn link Google Drive Script thì tự động lấy ảnh chung từ Drive mỗi 15 giây
-      if (GOOGLE_DRIVE_SCRIPT_URL) {
-        await syncFromGoogleDrive();
-        setInterval(syncFromGoogleDrive, 15000);
+        // Lắng nghe Realtime: Người A vừa up ảnh là máy người B hiện lên ngay
+        supabaseClient
+          .channel('public:wedding_live')
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'wedding_media' }, () => {
+            fetchAllFromSupabase();
+          })
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'wedding_wishes' }, () => {
+            fetchAllFromSupabase();
+          })
+          .subscribe();
+      } else {
+        const localItems = await loadMediaFromLocalDB();
+        if (localItems.length > 0) photos = localItems;
+        const savedWishes = localStorage.getItem('tu013_wishes');
+        if (savedWishes) {
+          try { wishes = JSON.parse(savedWishes); } catch (e) {}
+        }
+        renderAllGalleries();
+        renderWishes();
       }
     }
 
@@ -760,13 +797,8 @@
       event.stopPropagation();
       if (!confirm('Bạn muốn xóa mục này khỏi album?')) return;
 
-      if (GOOGLE_DRIVE_SCRIPT_URL) {
-        try {
-          await fetch(GOOGLE_DRIVE_SCRIPT_URL, {
-            method: 'POST',
-            body: JSON.stringify({ action: 'delete', fileId: id })
-          });
-        } catch (e) {}
+      if (supabaseClient) {
+        await supabaseClient.from('wedding_media').delete().eq('id', id);
       }
       await removeMediaFromLocalDB(id);
       photos = photos.filter(p => String(p.id) !== String(id));
@@ -779,35 +811,26 @@
       input.type = 'file';
       input.accept = 'image/*,video/*';
       input.onchange = async (e) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
+        const rawFile = e.target.files?.[0];
+        if (!rawFile) return;
         const target = photos.find(p => String(p.id) === String(id));
         if (!target) return;
 
-        showUploadToast('Đang cập nhật lên Google Drive...', true);
-        const isVideo = file.type.startsWith('video/');
-        const dataUrl = await fileToDataURL(file);
+        showUploadToast('Đang cập nhật hình/video...', true);
+        const isVideo = rawFile.type.startsWith('video/');
+        const file = isVideo ? rawFile : await compressImageFile(rawFile);
 
-        if (GOOGLE_DRIVE_SCRIPT_URL) {
-          try {
-            const base64Clean = dataUrl.split(',')[1];
-            const res = await fetch(GOOGLE_DRIVE_SCRIPT_URL, {
-              method: 'POST',
-              body: JSON.stringify({
-                cat: target.cat,
-                fileName: file.name,
-                mimeType: file.type,
-                base64: base64Clean
-              })
-            });
-            const out = await res.json();
-            if (out && out.item) {
-              target.url = out.item.url;
-              target.type = out.item.type;
-              target.id = out.item.id;
-            }
-          } catch (err) {}
+        if (supabaseClient) {
+          const ext = file.name.split('.').pop();
+          const filePath = `${target.cat}/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+          const { error: upErr } = await supabaseClient.storage.from('wedding-photos').upload(filePath, file);
+          if (!upErr) {
+            const { data: pubUrl } = supabaseClient.storage.from('wedding-photos').getPublicUrl(filePath);
+            target.url = pubUrl.publicUrl;
+            await supabaseClient.from('wedding_media').update({ url: target.url, media_type: isVideo ? 'video' : 'image' }).eq('id', id);
+          }
         } else {
+          const dataUrl = await fileToDataURL(file);
           target.url = dataUrl;
           target.type = isVideo ? 'video' : 'image';
           await saveMediaToLocalDB(target);
@@ -937,43 +960,45 @@
       });
     }
 
-    // Tải nhiều hình / video thẳng vào đúng thư mục Google Drive (07.11 / 14.11 / 21.11)
+    // Tải nhiều hình / video đồng thời & đồng bộ cho mọi khách mời
     async function handleBatchUpload(event, category) {
-      const files = Array.from(event.target.files || []);
-      if (!files.length) return;
+      const rawFiles = Array.from(event.target.files || []);
+      if (!rawFiles.length) return;
 
-      showUploadToast(`Đang lưu ${files.length} mục vào Google Drive (${eventLabels[category]})...`, true);
+      showUploadToast(`Đang tải ${rawFiles.length} mục lên để mọi người cùng xem...`, true);
 
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const isVideo = file.type.startsWith('video/');
-        const title = file.name.replace(/\.[^/.]+$/, '') || (isVideo ? 'Video kỷ niệm' : 'Khoảnh khắc khách mời');
-        const dataUrl = await fileToDataURL(file);
+      for (let i = 0; i < rawFiles.length; i++) {
+        const rawFile = rawFiles[i];
+        const isVideo = rawFile.type.startsWith('video/');
+        const file = isVideo ? rawFile : await compressImageFile(rawFile);
+        const title = rawFile.name.replace(/\.[^/.]+$/, '') || (isVideo ? 'Video kỷ niệm' : 'Khoảnh khắc khách mời');
 
-        if (GOOGLE_DRIVE_SCRIPT_URL) {
-          try {
-            const base64Clean = dataUrl.split(',')[1];
-            const res = await fetch(GOOGLE_DRIVE_SCRIPT_URL, {
-              method: 'POST',
-              body: JSON.stringify({
-                cat: category,
-                fileName: file.name,
-                mimeType: file.type,
-                base64: base64Clean
-              })
-            });
-            const out = await res.json();
-            if (out && out.status === 'ok' && out.item) {
-              photos.unshift(out.item);
-              await saveMediaToLocalDB(out.item);
+        if (supabaseClient) {
+          const ext = file.name.split('.').pop();
+          const filePath = `${category}/${Date.now()}_${i}_${Math.random().toString(36).slice(2)}.${ext}`;
+          const { error: upErr } = await supabaseClient.storage.from('wedding-photos').upload(filePath, file);
+          if (!upErr) {
+            const { data: pubData } = supabaseClient.storage.from('wedding-photos').getPublicUrl(filePath);
+            const { data: inserted } = await supabaseClient
+              .from('wedding_media')
+              .insert([{ category, media_type: isVideo ? 'video' : 'image', url: pubData.publicUrl, title }])
+              .select()
+              .single();
+
+            if (inserted) {
+              photos.unshift({
+                id: inserted.id,
+                cat: inserted.category,
+                type: inserted.media_type,
+                url: inserted.url,
+                title: inserted.title
+              });
               continue;
             }
-          } catch (err) {
-            console.warn('Lưu tạm vào bộ nhớ máy:', err);
           }
         }
 
-        // Lưu vĩnh viễn vào IndexedDB trên máy nếu chưa gắn Script URL
+        const dataUrl = await fileToDataURL(file);
         const newItem = {
           id: String(Date.now() + i),
           cat: category,
@@ -1017,7 +1042,7 @@
       renderMegaGallery();
     }
 
-    // 5. LIGHTBOX LƯỚT QUA LƯỚT LẠI (SWIPE TRÁI / PHẢI)
+    // 4. LIGHTBOX LƯỚT QUA LƯỚT LẠI
     let activeLightboxList = [];
     let activeLightboxIndex = 0;
 
@@ -1135,7 +1160,7 @@
       if (e.key === 'Escape') closeLightbox();
     });
 
-    // 6. LỜI CHÚC CHUNG
+    // 5. LỜI CHÚC CHUNG
     function renderWishes() {
       const list = document.getElementById('wishSkyList');
       list.innerHTML = wishes.map(w => `
@@ -1149,14 +1174,24 @@
       `).join('');
     }
 
-    function sendWishPlane(e) {
+    async function sendWishPlane(e) {
       e.preventDefault();
       const name = document.getElementById('guestName').value.trim();
       const message = document.getElementById('guestWish').value.trim();
       if (!name || !message) return;
 
-      wishes.unshift({ id: Date.now(), name, message });
-      localStorage.setItem('tu013_wishes', JSON.stringify(wishes));
+      if (supabaseClient) {
+        const { data } = await supabaseClient
+          .from('wedding_wishes')
+          .insert([{ name, message }])
+          .select()
+          .single();
+        if (data) wishes.unshift(data);
+      } else {
+        wishes.unshift({ id: Date.now(), name, message });
+        localStorage.setItem('tu013_wishes', JSON.stringify(wishes));
+      }
+
       renderWishes();
       e.target.reset();
     }
