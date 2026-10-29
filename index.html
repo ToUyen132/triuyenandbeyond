@@ -166,6 +166,7 @@
         />
       </a>
 
+      <!-- MENU ĐIỀU HƯỚNG VỚI 2 NÚT NGUYÊN BẢN -->
       <nav class="flex items-center gap-1.5 sm:gap-2.5 text-[11px] sm:text-xs font-extrabold shrink-0">
         <a href="#three-events-section" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-skySoft active:bg-sunYellow text-royal shadow-sm transition flex items-center gap-1">
           💍 Wedding Day
@@ -181,7 +182,6 @@
   <section id="top" class="relative pt-6 pb-6 px-3.5 sm:px-4">
     <div class="max-w-md mx-auto flex flex-col items-center space-y-5">
       
-      <!-- Khối 1: Nhiệm Vụ Hệ Thống -->
       <div class="w-full bg-white/95 rounded-3xl p-5 sm:p-7 shadow-lg border-2 border-skyPastel relative overflow-hidden text-center">
         <div class="washi-tape w-24 h-5 mx-auto -mt-7 mb-2 rotate-[-2deg] rounded-sm"></div>
 
@@ -204,7 +204,6 @@
         </div>
       </div>
 
-      <!-- Khối 2: Hình Cô Dâu Chú Rể -->
       <div onclick="openPreWeddingLightbox(0)" class="cursor-pointer w-full rounded-3xl overflow-hidden aspect-[3/4] bg-white shadow-xl border-4 border-white">
         <img 
           id="heroCoverImg" 
@@ -318,7 +317,7 @@
     </div>
   </section>
 
-  <!-- PHẦN 3: KHO ẢNH & VIDEO CHUYẾN BAY HẠNH PHÚC -->
+  <!-- PHẦN 3: KHO ẢNH CHUNG (LÀM MỜ NHẸ NÚT THÊM HÌNH & SELECT) -->
   <section id="mega-album" class="py-8 px-3.5 sm:px-4 bg-white/75 border-y-2 border-skyPastel scroll-mt-14">
     <div class="max-w-md lg:max-w-5xl mx-auto">
       <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
@@ -333,7 +332,6 @@
         </div>
       </div>
 
-      <!-- Bộ lọc -->
       <div class="flex flex-wrap gap-1.5 mb-3">
         <button onclick="setAlbumFilter('all')" id="filter-all" class="px-3 py-1.5 rounded-full text-[11px] font-extrabold bg-sunYellow text-royal shadow-sm transition">Tất cả (<span id="badge-all">0</span>)</button>
         <button onclick="setAlbumFilter('nhagai')" id="filter-nhagai" class="px-3 py-1.5 rounded-full text-[11px] font-bold bg-white text-royal border border-skyPastel transition">🌸 Lễ Vu Quy (<span id="badge-nhagai">0</span>)</button>
@@ -342,13 +340,15 @@
       </div>
 
       <div class="flex items-center gap-2 mb-4">
+        <!-- Đã làm mờ nhẹ ô select -->
         <select id="uploadCategorySelect" class="flex-1 px-3 py-2 rounded-xl bg-white border-2 border-skyPastel text-royal font-bold text-xs focus:outline-none opacity-60">
           <option value="nhagai">Lưu vào: Lễ Vu Quy (07.11)</option>
           <option value="giatien">Lưu vào: Gia Tiên (14.11)</option>
           <option value="nhatrai">Lưu vào: Lễ Tân Hôn (21.11)</option>
         </select>
-        <label class="px-3.5 py-2 rounded-xl bg-royal active:bg-royalLight text-sunYellow font-extrabold text-xs cursor-pointer shadow-md transition shrink-0">
-          ➕ Thêm hình / video ngay
+        <!-- Nút cũng được làm mờ nhẹ -->
+        <label class="px-3.5 py-2 rounded-xl bg-royal active:bg-royalLight text-sunYellow font-extrabold text-xs cursor-pointer shadow-md transition shrink-0 opacity-80 hover:opacity-100">
+          ➕ Thêm hình / video
           <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleMegaUpload(event)" />
         </label>
       </div>
@@ -357,7 +357,7 @@
     </div>
   </section>
 
-  <!-- PHẦN 4: ALBUM CƯỚI PRE-WEDDING (VUỐT / LƯỚT QUA LƯỚT LẠI MƯỢT MÀ) -->
+  <!-- PHẦN 4: ALBUM CƯỚI PRE-WEDDING -->
   <section id="prewedding-album-section" class="py-6 bg-royal/95 border-y-4 border-sunYellow shadow-lg scroll-mt-14 relative">
     <div class="max-w-md lg:max-w-5xl mx-auto px-3.5 mb-3 flex items-center justify-between gap-2 text-white">
       <div>
@@ -376,7 +376,7 @@
     <div id="preWeddingCarousel" class="flex items-center gap-3.5 overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 scroll-smooth"></div>
   </section>
 
-  <!-- PHẦN 5: GỬI LỜI CHÚC BẢO MẬT -->
+  <!-- PHẦN 5: GỬI LỜI CHÚC BẢO MẬT TÊN KHÁCH MỜI -->
   <section class="py-8 px-3.5 sm:px-4 max-w-md lg:max-w-4xl mx-auto">
     <div class="bg-white/95 rounded-3xl p-5 sm:p-7 shadow-lg border-2 border-skyPastel relative">
       <div class="washi-tape w-28 h-6 mx-auto -mt-8 mb-3 rotate-1 rounded-sm"></div>
@@ -398,8 +398,10 @@
         </form>
 
         <div class="md:col-span-6 flex flex-col justify-between space-y-3">
+          <!-- Bảng hiển thị lời chúc công khai nhưng đã che tên bảo mật -->
           <div id="wishSkyList" class="space-y-2 max-h-44 overflow-y-auto compact-scroll pr-1"></div>
 
+          <!-- Nút Admin Quản Trị & Tải Excel -->
           <div class="pt-2 border-t border-dashed border-skyPastel flex items-center justify-between">
             <span class="text-[10px] text-slate-400 italic">🔐 Khu vực riêng tư Cô Dâu & Chú Rể</span>
             <button onclick="openAdminModal()" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-[11px] shadow transition">
@@ -411,7 +413,7 @@
     </div>
   </section>
 
-  <!-- MODAL ĐĂNG NHẬP ADMIN -->
+  <!-- MODAL ĐĂNG NHẬP ADMIN XEM TOÀN BỘ LỜI CHÚC & TẢI EXCEL -->
   <div id="adminModal" class="fixed inset-0 z-50 bg-royal/90 backdrop-blur-md hidden items-center justify-center p-4">
     <div class="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl border-4 border-sunYellow relative">
       <button onclick="closeAdminModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-rose-500 hover:text-white font-bold flex items-center justify-center transition">✕</button>
@@ -419,6 +421,7 @@
       <div id="adminLoginArea">
         <h3 class="font-extrabold text-lg text-royal mb-2">🔐 Đăng Nhập Quản Trị Lời Chúc</h3>
         <p class="text-xs text-slate-500 mb-4">Nhập mật khẩu để xem tên đầy đủ của khách và tải file Excel tổng hợp.</p>
+        <!-- Ô nhập mật khẩu đã được làm mờ opacity-60 theo yêu cầu -->
         <input id="adminPassword" type="password" placeholder="Nhập mật khẩu (Mặc định: 2026)..." class="w-full px-3.5 py-2.5 rounded-xl border border-skyPastel text-xs mb-3 focus:outline-none focus:border-royal opacity-60" />
         <button onclick="verifyAdminPassword()" class="w-full py-2.5 rounded-xl bg-royal text-sunYellow font-extrabold text-xs shadow">Mở Khóa Hộp Thư</button>
       </div>
@@ -480,8 +483,11 @@
     <p class="mt-0.5 text-[11px]">07.11.2026 (Lễ Vu Quy) • 14.11.2026 (Gia Tiên) • 21.11.2026 (Lễ Tân Hôn)</p>
   </footer>
 
-  <!-- JAVASCRIPT XỬ LÝ -->
+  <!-- JAVASCRIPT XỬ LÝ ĐỒNG BỘ REALTIME & BẢO MẬT TÊN -->
   <script>
+    // =========================================================================
+    // THÔNG TIN SUPABASE CHÍNH THỨC CỦA BẠN:
+    // =========================================================================
     const SUPABASE_URL = 'https://iivycnnuxnmoearnvuvj.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_vrU0N7jPusDwnmOnyd_FeA_2LtD5L-z';
 
@@ -1092,7 +1098,7 @@
       if (e.key === 'Escape') closeLightbox();
     });
 
-    // 5. LỜI CHÚC
+    // 5. LỜI CHÚC (BẢO MẬT TÊN & XUẤT EXCEL CHO ADMIN)
     function maskName(fullName) {
       if (!fullName) return 'Khách ẩn danh';
       const parts = fullName.trim().split(' ');
@@ -1147,7 +1153,7 @@
         document.getElementById('adminDashboardArea').classList.remove('hidden');
         renderAdminWishTable();
       } else {
-        alert('Mật khẩu không đúng!');
+        alert('Mật khẩu không đúng! (Mật khẩu mặc định là: 2026)');
       }
     }
 
