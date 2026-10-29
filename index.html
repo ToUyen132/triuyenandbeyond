@@ -227,10 +227,6 @@
       <p class="text-xs sm:text-base font-extrabold text-royal mt-2 leading-relaxed">
         Khách mời tham dự tiệc hãy nhấn nút <span class="inline-block px-2.5 py-0.5 rounded-lg bg-royal text-sunYellow text-[11px] sm:text-xs mx-0.5 shadow-sm">"➕ Thêm Hình / Video"</span> ở từng ngày để chia sẻ khoảnh khắc cưới cùng tụi mình nhé!
       </p>
-      <div id="cloudStatusBanner" class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-skySoft text-[11px] font-bold text-royal">
-        <span id="cloudStatusDot" class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-        <span id="cloudStatusText">Đám mây Realtime: Mọi khách mời đều thấy ảnh của nhau ngay lập tức</span>
-      </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 items-stretch">
@@ -346,13 +342,13 @@
       </div>
 
       <div class="flex items-center gap-2 mb-4">
-        <select id="uploadCategorySelect" class="flex-1 px-3 py-2 rounded-xl bg-white border-2 border-skyPastel text-royal font-bold text-xs focus:outline-none">
+        <select id="uploadCategorySelect" class="flex-1 px-3 py-2 rounded-xl bg-white border-2 border-skyPastel text-royal font-bold text-xs focus:outline-none opacity-60">
           <option value="nhagai">Lưu vào: Lễ Vu Quy (07.11)</option>
           <option value="giatien">Lưu vào: Gia Tiên (14.11)</option>
           <option value="nhatrai">Lưu vào: Lễ Tân Hôn (21.11)</option>
         </select>
         <label class="px-3.5 py-2 rounded-xl bg-royal active:bg-royalLight text-sunYellow font-extrabold text-xs cursor-pointer shadow-md transition shrink-0">
-          ➕ Thêm hình / video
+          ➕ Thêm hình / video ngay
           <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleMegaUpload(event)" />
         </label>
       </div>
@@ -380,9 +376,7 @@
     <div id="preWeddingCarousel" class="flex items-center gap-3.5 overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 scroll-smooth"></div>
   </section>
 
-  <!-- =========================================================================
-       PHẦN 5: GỬI LỜI CHÚC BẢO MẬT (CHỈ HIỂN THỊ TÊN ĐÃ CHE & NÚT ADMIN TẢI EXCEL)
-       ========================================================================= -->
+  <!-- PHẦN 5: GỬI LỜI CHÚC BẢO MẬT -->
   <section class="py-8 px-3.5 sm:px-4 max-w-md lg:max-w-4xl mx-auto">
     <div class="bg-white/95 rounded-3xl p-5 sm:p-7 shadow-lg border-2 border-skyPastel relative">
       <div class="washi-tape w-28 h-6 mx-auto -mt-8 mb-3 rotate-1 rounded-sm"></div>
@@ -404,10 +398,8 @@
         </form>
 
         <div class="md:col-span-6 flex flex-col justify-between space-y-3">
-          <!-- Bảng hiển thị lời chúc công khai nhưng đã che tên bảo mật -->
           <div id="wishSkyList" class="space-y-2 max-h-44 overflow-y-auto compact-scroll pr-1"></div>
 
-          <!-- Nút Admin Quản Trị & Tải Excel -->
           <div class="pt-2 border-t border-dashed border-skyPastel flex items-center justify-between">
             <span class="text-[10px] text-slate-400 italic">🔐 Khu vực riêng tư Cô Dâu & Chú Rể</span>
             <button onclick="openAdminModal()" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-[11px] shadow transition">
@@ -419,7 +411,7 @@
     </div>
   </section>
 
-  <!-- MODAL ĐĂNG NHẬP ADMIN XEM TOÀN BỘ LỜI CHÚC & TẢI EXCEL -->
+  <!-- MODAL ĐĂNG NHẬP ADMIN -->
   <div id="adminModal" class="fixed inset-0 z-50 bg-royal/90 backdrop-blur-md hidden items-center justify-center p-4">
     <div class="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl border-4 border-sunYellow relative">
       <button onclick="closeAdminModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-rose-500 hover:text-white font-bold flex items-center justify-center transition">✕</button>
@@ -427,7 +419,7 @@
       <div id="adminLoginArea">
         <h3 class="font-extrabold text-lg text-royal mb-2">🔐 Đăng Nhập Quản Trị Lời Chúc</h3>
         <p class="text-xs text-slate-500 mb-4">Nhập mật khẩu để xem tên đầy đủ của khách và tải file Excel tổng hợp.</p>
-        <input id="adminPassword" type="password" placeholder="Nhập mật khẩu (Mặc định: 2026)..." class="w-full px-3.5 py-2.5 rounded-xl border border-skyPastel text-xs mb-3 focus:outline-none focus:border-royal" />
+        <input id="adminPassword" type="password" placeholder="Nhập mật khẩu (Mặc định: 2026)..." class="w-full px-3.5 py-2.5 rounded-xl border border-skyPastel text-xs mb-3 focus:outline-none focus:border-royal opacity-60" />
         <button onclick="verifyAdminPassword()" class="w-full py-2.5 rounded-xl bg-royal text-sunYellow font-extrabold text-xs shadow">Mở Khóa Hộp Thư</button>
       </div>
 
@@ -488,11 +480,8 @@
     <p class="mt-0.5 text-[11px]">07.11.2026 (Lễ Vu Quy) • 14.11.2026 (Gia Tiên) • 21.11.2026 (Lễ Tân Hôn)</p>
   </footer>
 
-  <!-- JAVASCRIPT XỬ LÝ ĐỒNG BỘ REALTIME & BẢO MẬT TÊN -->
+  <!-- JAVASCRIPT XỬ LÝ -->
   <script>
-    // =========================================================================
-    // THÔNG TIN SUPABASE CHÍNH THỨC CỦA BẠN:
-    // =========================================================================
     const SUPABASE_URL = 'https://iivycnnuxnmoearnvuvj.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_vrU0N7jPusDwnmOnyd_FeA_2LtD5L-z';
 
@@ -641,9 +630,7 @@
       carouselEl.scrollBy({ left: dir * 240, behavior: 'smooth' });
     }
 
-    // =========================================================================
     // 3. ĐỒNG BỘ REALTIME & NÉN ẢNH
-    // =========================================================================
     const eventLabels = {
       nhagai: 'Lễ Vu Quy 07.11',
       giatien: 'Gia Tiên 14.11',
@@ -656,39 +643,6 @@
     ];
     let currentFilter = 'all';
     let currentLayout = 'compact';
-
-    const DB_NAME = 'TU013_Wedding_Shared_DB';
-    const STORE_PHOTOS = 'guest_media';
-
-    function openLocalDB() {
-      return new Promise((resolve, reject) => {
-        const req = indexedDB.open(DB_NAME, 1);
-        req.onupgradeneeded = (e) => {
-          const db = e.target.result;
-          if (!db.objectStoreNames.contains(STORE_PHOTOS)) {
-            db.createObjectStore(STORE_PHOTOS, { keyPath: 'id' });
-          }
-        };
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = () => reject(req.error);
-      });
-    }
-
-    async function saveMediaToLocalDB(item) {
-      try {
-        const db = await openLocalDB();
-        const tx = db.transaction(STORE_PHOTOS, 'readwrite');
-        tx.objectStore(STORE_PHOTOS).put(item);
-      } catch (e) {}
-    }
-
-    async function removeMediaFromLocalDB(id) {
-      try {
-        const db = await openLocalDB();
-        const tx = db.transaction(STORE_PHOTOS, 'readwrite');
-        tx.objectStore(STORE_PHOTOS).delete(id);
-      } catch (e) {}
-    }
 
     function showUploadToast(msg, show = true) {
       const toast = document.getElementById('uploadToast');
@@ -805,7 +759,6 @@
       if (supabaseClient) {
         await supabaseClient.from('wedding_media').delete().eq('id', id);
       }
-      await removeMediaFromLocalDB(id);
       photos = photos.filter(p => String(p.id) !== String(id));
       renderAllGalleries();
     }
@@ -949,14 +902,6 @@
           `;
         }).join('');
       }
-    }
-
-    function fileToDataURL(file) {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.readAsDataURL(file);
-      });
     }
 
     async function handleBatchUpload(event, category) {
@@ -1147,9 +1092,7 @@
       if (e.key === 'Escape') closeLightbox();
     });
 
-    // =========================================================================
-    // 5. LỜI CHÚC (BẢO MẬT TÊN & XUẤT EXCEL CHO ADMIN)
-    // =========================================================================
+    // 5. LỜI CHÚC
     function maskName(fullName) {
       if (!fullName) return 'Khách ẩn danh';
       const parts = fullName.trim().split(' ');
