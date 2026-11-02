@@ -108,13 +108,6 @@
     .vinyl-paused {
       animation-play-state: paused;
     }
-    @keyframes eqBar {
-      0%, 100% { height: 4px; }
-      50% { height: 12px; }
-    }
-    .eq-bar-1 { animation: eqBar 0.7s ease-in-out infinite; }
-    .eq-bar-2 { animation: eqBar 0.5s ease-in-out infinite 0.2s; }
-    .eq-bar-3 { animation: eqBar 0.8s ease-in-out infinite 0.4s; }
   </style>
 </head>
 <body class="font-sans antialiased selection:bg-sunYellow selection:text-royal">
@@ -128,32 +121,19 @@
     <span id="uploadToastText">Đang đồng bộ ảnh cho mọi người cùng xem...</span>
   </div>
 
-  <!-- TRÌNH PHÁT NHẠC NỀN CỐ ĐỊNH TỐI ƯU -->
-  <!-- ⚠️ NẾU BẠN UP FILE NHẠC TÊN KHÁC LÊN GITHUB, HÃY ĐỔI TÊN Ở 2 DÒNG SRC BÊN DƯỚI ⚠️ -->
+  <!-- TRÌNH PHÁT NHẠC NỀN TỰ ĐỘNG TẢI TRƯỚC (PRELOAD) -->
   <audio id="bgMusic" loop preload="auto">
-    <source src="the-gioi-cua-anh.mp3" type="audio/mpeg">
-    <source src="https://raw.githubusercontent.com/ToUyen132/triuyenandbeyond/main/the-gioi-cua-anh.mp3" type="audio/mpeg">
+    <source src="nhac-nen.mp3" type="audio/mpeg">
+    <source src="https://raw.githubusercontent.com/ToUyen132/triuyenandbeyond/main/nhac-nen.mp3" type="audio/mpeg">
   </audio>
 
-  <div onclick="toggleMusic()" class="fixed bottom-3 right-3 z-40 flex items-center gap-2 bg-white/95 backdrop-blur-md p-1.5 pr-3 rounded-full shadow-xl border-2 border-royal cursor-pointer active:scale-95 transition hover:scale-105" title="Bật / Tắt nhạc nền">
-    <div class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-royal text-sunYellow flex items-center justify-center shadow-md">
-      <div id="vinylDisc" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-dashed border-sunYellow/80 flex items-center justify-center vinyl-spin vinyl-paused">
-        <span class="text-xs">🎵</span>
+  <!-- NÚT BẬT TẮT NHẠC TỐI GIẢN (CHỈ CÒN LOGO) -->
+  <div onclick="toggleMusic()" class="fixed bottom-4 right-4 z-50 bg-white/95 backdrop-blur-md p-1.5 rounded-full shadow-2xl border-2 border-royal cursor-pointer active:scale-95 transition hover:scale-105" title="Bật / Tắt nhạc nền">
+    <div class="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-royal text-sunYellow flex items-center justify-center shadow-md">
+      <div id="vinylDisc" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-dashed border-sunYellow/80 flex items-center justify-center vinyl-spin vinyl-paused">
+        <span class="text-sm">🎵</span>
       </div>
-      <span id="musicStatusDot" class="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-amber-400 border-2 border-white animate-pulse"></span>
-    </div>
-
-    <div class="text-left">
-      <div class="flex items-center gap-1">
-        <span class="text-[9px] font-extrabold uppercase tracking-wider text-royalLight">TU013</span>
-        <div id="musicEq" class="hidden items-end gap-0.5 h-3">
-          <span class="w-0.5 bg-amber-500 rounded-full eq-bar-1"></span>
-          <span class="w-0.5 bg-royal rounded-full eq-bar-2"></span>
-          <span class="w-0.5 bg-amber-500 rounded-full eq-bar-3"></span>
-        </div>
-      </div>
-      <p class="text-[11px] font-extrabold text-royal leading-tight truncate max-w-[90px]">Thế Giới Của Anh 💙</p>
-      <p id="musicHintText" class="text-[9px] text-amber-600 font-extrabold animate-pulse">Chạm để phát nhạc</p>
+      <span id="musicStatusDot" class="absolute top-0 right-0 w-3.5 h-3.5 rounded-full bg-amber-400 border-2 border-white animate-pulse"></span>
     </div>
   </div>
 
@@ -170,7 +150,7 @@
         />
       </a>
 
-      <!-- MENU ĐIỀU HƯỚNG -->
+      <!-- MENU ĐIỀU HƯỚNG VỚI 2 NÚT NGUYÊN BẢN -->
       <nav class="flex items-center gap-1.5 sm:gap-2.5 text-[11px] sm:text-xs font-extrabold shrink-0">
         <a href="#three-events-section" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-skySoft active:bg-sunYellow text-royal shadow-sm transition flex items-center gap-1">
           💍 Wedding Day
@@ -400,8 +380,10 @@
         </form>
 
         <div class="md:col-span-6 flex flex-col justify-between space-y-3">
+          <!-- Bảng hiển thị lời chúc công khai nhưng đã che tên bảo mật -->
           <div id="wishSkyList" class="space-y-2 max-h-44 overflow-y-auto compact-scroll pr-1"></div>
 
+          <!-- Nút Admin Quản Trị & Tải Excel -->
           <div class="pt-2 border-t border-dashed border-skyPastel flex items-center justify-between">
             <span class="text-[10px] text-slate-400 italic">🔐 Khu vực riêng tư Cô Dâu & Chú Rể</span>
             <button onclick="openAdminModal()" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-[11px] shadow transition">
@@ -482,10 +464,15 @@
     <p class="mt-0.5 text-[11px]">07.11.2026 (Lễ Vu Quy) • 14.11.2026 (Gia Tiên) • 21.11.2026 (Lễ Tân Hôn)</p>
   </footer>
 
-  <!-- JAVASCRIPT -->
+  <!-- JAVASCRIPT XỬ LÝ ĐỒNG BỘ REALTIME & BẢO MẬT TÊN -->
   <script>
+    // =========================================================================
+    // THÔNG TIN SUPABASE CHÍNH THỨC CỦA BẠN:
+    // =========================================================================
     const SUPABASE_URL = 'https://iivycnnuxnmoearnvuvj.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_vrU0N7jPusDwnmOnyd_FeA_2LtD5L-z';
+
+    const GOOGLE_DRIVE_SCRIPT_URL = '';
 
     const supabaseClient = (SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase)
       ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
@@ -546,26 +533,14 @@
     const bgMusic = document.getElementById('bgMusic');
     const vinylDisc = document.getElementById('vinylDisc');
     const musicStatusDot = document.getElementById('musicStatusDot');
-    const musicHintText = document.getElementById('musicHintText');
-    const musicEq = document.getElementById('musicEq');
 
     function updateMusicUI(playing) {
       if (playing) {
         vinylDisc.classList.remove('vinyl-paused');
-        musicStatusDot.className = 'absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-white animate-ping';
-        musicHintText.textContent = 'Đang phát nhạc...';
-        musicHintText.classList.remove('text-amber-600', 'animate-pulse');
-        musicHintText.classList.add('text-slate-500');
-        musicEq.classList.remove('hidden');
-        musicEq.classList.add('flex');
+        musicStatusDot.className = 'absolute top-0 right-0 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-white animate-ping';
       } else {
         vinylDisc.classList.add('vinyl-paused');
-        musicStatusDot.className = 'absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-amber-400 border-2 border-white';
-        musicHintText.textContent = 'Chạm để phát nhạc';
-        musicHintText.classList.remove('text-slate-500');
-        musicHintText.classList.add('text-amber-600', 'animate-pulse');
-        musicEq.classList.add('hidden');
-        musicEq.classList.remove('flex');
+        musicStatusDot.className = 'absolute top-0 right-0 w-3.5 h-3.5 rounded-full bg-amber-400 border-2 border-white animate-pulse';
       }
     }
 
