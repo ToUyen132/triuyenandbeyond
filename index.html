@@ -4,6 +4,56 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Chuyến Bay Hạnh Phúc TU013 | Đức Trí & Tố Uyên - Tháng 11.2026</title>
+  
+  <!-- ==========================================
+       LỚP KHIÊN BẢO MẬT & CHỐNG HACKER (ANTI-DEVTOOLS)
+       ========================================== -->
+  <script>
+    // 1. Khóa chuột phải
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    
+    // 2. Chặn bôi đen và kéo thả ảnh
+    document.addEventListener('dragstart', e => e.preventDefault());
+    document.addEventListener('selectstart', e => {
+      if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+      }
+    });
+
+    // 3. Khóa toàn bộ phím tắt soi code (F12, Ctrl+U, Ctrl+Shift+I/J/C)
+    document.onkeydown = function(e) {
+      if(e.keyCode === 123 || 
+        (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
+        (e.ctrlKey && e.keyCode === 85)) {
+        e.preventDefault();
+        return false;
+      }
+    };
+
+    // 4. Vô hiệu hóa Console (Chặn gõ lệnh hack)
+    if (typeof console !== "undefined") {
+      console.log = console.info = console.warn = console.error = console.dir = function() {};
+    }
+
+    // 5. BẪY ĐÓNG BĂNG: Tự động tự hủy giao diện nếu cố tình mở DevTools
+    setInterval(function() {
+      let before = new Date().getTime();
+      debugger; // Lệnh này sẽ làm trình duyệt khựng lại nếu DevTools đang mở
+      let after = new Date().getTime();
+      if (after - before > 100) { // Phát hiện độ trễ -> DevTools đang mở
+        document.body.innerHTML = `
+          <div style="height: 100vh; display: flex; align-items: center; justify-content: center; background-color: #0A2578; color: #FFD13B; font-family: sans-serif; text-align: center; padding: 20px;">
+            <div>
+              <h1 style="font-size: 3rem; margin-bottom: 10px;">⚠️</h1>
+              <h2 style="font-size: 1.5rem; font-weight: bold;">Truy cập bị từ chối!</h2>
+              <p style="font-size: 0.9rem; margin-top: 10px; color: #CDE2F5;">Hành động can thiệp mã nguồn không được phép trên chuyến bay TU013.</p>
+            </div>
+          </div>
+        `;
+      }
+    }, 2000);
+  </script>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Thư viện đám mây Supabase Realtime chịu tải cao cho ngày cưới -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -38,6 +88,12 @@
       color: #0A2578;
       overflow-x: hidden;
       -webkit-tap-highlight-color: transparent;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    input, textarea, select {
+      -webkit-user-select: auto;
+      user-select: auto;
     }
     .washi-tape {
       background: rgba(255, 214, 68, 0.88);
@@ -301,7 +357,7 @@
     </div>
   </section>
 
-  <!-- PHẦN 3: KHO ẢNH CHUNG (TỰ ĐỘNG NHÓM ẢNH THEO SỰ KIỆN KHI CHỌN "TẤT CẢ") -->
+  <!-- PHẦN 3: KHO ẢNH CHUNG -->
   <section id="mega-album" class="py-8 px-3.5 sm:px-4 bg-white/75 border-y-2 border-skyPastel scroll-mt-14">
     <div class="max-w-md lg:max-w-5xl mx-auto">
       <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
@@ -335,7 +391,7 @@
         </label>
       </div>
 
-      <!-- Vùng chứa lưới ảnh Mega (Sẽ được JS render động theo từng nhóm sự kiện) -->
+      <!-- Vùng chứa lưới ảnh Mega -->
       <div id="megaGalleryGrid" class="w-full"></div>
     </div>
   </section>
@@ -359,7 +415,7 @@
     <div id="preWeddingCarousel" class="flex items-center gap-3.5 overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 scroll-smooth"></div>
   </section>
 
-  <!-- PHẦN 5: GỬI LỜI CHÚC BẢO MẬT TÊN KHÁCH MỜI -->
+  <!-- PHẦN 5: GỬI LỜI CHÚC -->
   <section class="py-8 px-3.5 sm:px-4 max-w-md lg:max-w-4xl mx-auto">
     <div class="bg-white/95 rounded-3xl p-5 sm:p-7 shadow-lg border-2 border-skyPastel relative">
       <div class="washi-tape w-28 h-6 mx-auto -mt-8 mb-3 rotate-1 rounded-sm"></div>
@@ -381,10 +437,8 @@
         </form>
 
         <div class="md:col-span-6 flex flex-col justify-between space-y-3">
-          <!-- Bảng hiển thị lời chúc công khai nhưng đã che tên bảo mật -->
           <div id="wishSkyList" class="space-y-2 max-h-44 overflow-y-auto compact-scroll pr-1"></div>
 
-          <!-- Nút Admin Quản Trị & Tải Excel -->
           <div class="pt-2 border-t border-dashed border-skyPastel flex items-center justify-between">
             <span class="text-[10px] text-slate-400 italic">🔐 Khu vực riêng tư Cô Dâu & Chú Rể</span>
             <button onclick="openAdminModal()" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-[11px] shadow transition hover:scale-105">
@@ -396,7 +450,7 @@
     </div>
   </section>
 
-  <!-- MODAL ĐĂNG NHẬP ADMIN (TẢI EXCEL & QUẢN TRỊ ẢNH) -->
+  <!-- MODAL ĐĂNG NHẬP ADMIN -->
   <div id="adminModal" class="fixed inset-0 z-50 bg-royal/90 backdrop-blur-md hidden items-center justify-center p-4">
     <div class="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl border-4 border-sunYellow relative">
       <button onclick="closeAdminModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-rose-500 hover:text-white font-bold flex items-center justify-center transition">✕</button>
@@ -465,7 +519,7 @@
     <p class="mt-0.5 text-[11px]">07.11.2026 (Lễ Vu Quy) • 14.11.2026 (Gia Tiên) • 21.11.2026 (Lễ Tân Hôn)</p>
   </footer>
 
-  <!-- JAVASCRIPT XỬ LÝ ĐỒNG BỘ REALTIME & PHÂN QUYỀN (ADMIN DOWN/XÓA) -->
+  <!-- SCRIPT HOẠT ĐỘNG CHÍNH -->
   <script>
     const SUPABASE_URL = 'https://iivycnnuxnmoearnvuvj.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_vrU0N7jPusDwnmOnyd_FeA_2LtD5L-z';
@@ -476,7 +530,6 @@
 
     const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/ToUyen132/triuyenandbeyond/main/';
 
-    // MẢNG LƯU TRỮ ID ẢNH ĐỂ CẤP QUYỀN SỬA/XÓA CHO NGƯỜI UP 
     let myUploads = JSON.parse(localStorage.getItem('tu013_my_uploads') || '[]');
     window.isAdmin = false;
 
@@ -529,7 +582,6 @@
       });
     }
 
-    // --- XỬ LÝ NHẠC NỀN TỐI ƯU ---
     const bgMusic = document.getElementById('bgMusic');
     const vinylDisc = document.getElementById('vinylDisc');
     const musicStatusDot = document.getElementById('musicStatusDot');
@@ -569,7 +621,6 @@
       });
     });
 
-    // --- ALBUM PRE-WEDDING CHUẨN ---
     const filmstripPhotos = [
       { file: 'KBEA030.jpg', title: 'Save the Date - Đức Trí & Tố Uyên' },
       { file: 'KBEA020.jpg', title: 'Nâng ly chúc mừng hạnh phúc' },
@@ -612,7 +663,6 @@
       carouselEl.scrollBy({ left: dir * 240, behavior: 'smooth' });
     }
 
-    // --- ĐỒNG BỘ REALTIME & XỬ LÝ ẢNH CHUNG ---
     const eventLabels = {
       nhagai: 'Lễ Vu Quy (07.11)',
       giatien: 'Gia Tiên (14.11)',
@@ -729,7 +779,6 @@
       return `<img src="${item.url}" alt="${item.title}" class="${extraClass}" loading="lazy" />`;
     }
 
-    // ADMIN TẢI ẢNH XUỐNG MÁY TÍNH/ĐIỆN THOẠI
     async function downloadPhoto(event, url, title) {
       event.stopPropagation();
       try {
@@ -760,7 +809,6 @@
       event.stopPropagation();
       const strId = String(id);
       
-      // KIỂM TRA QUYỀN BẢO MẬT TRƯỚC KHI XÓA
       if (!window.isAdmin && !myUploads.includes(strId)) {
         alert("Bạn không có quyền xóa ảnh của người khác!");
         return;
@@ -813,7 +861,6 @@
       input.click();
     }
 
-    // HIỂN THỊ NÚT THAO TÁC CÓ BẢO MẬT (NGƯỜI XEM KHÔNG THẤY NÚT)
     function getActionButtonsHTML(item) {
       const strId = String(item.id);
       const isOwner = myUploads.includes(strId);
@@ -823,12 +870,10 @@
 
       let btns = `<div class="absolute top-1.5 right-1.5 z-20 flex items-center gap-1">`;
       
-      // Chỉ Admin mới thấy nút Tải Xuống
       if (window.isAdmin) {
          btns += `<button onclick="downloadPhoto(event, '${item.url}', '${item.title}')" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-emerald-600/90 text-white font-bold text-[10px] sm:text-xs flex items-center justify-center shadow hover:scale-110 transition" title="Tải xuống">⬇️</button>`;
       }
       
-      // Admin hoặc Người up mới thấy nút Đổi/Xóa
       if (canEdit) {
          btns += `<button onclick="triggerReplacePhoto(event, '${item.id}')" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-royal/90 text-sunYellow font-bold text-[10px] sm:text-xs flex items-center justify-center shadow hover:scale-110 transition" title="Đổi">✏️</button>`;
          btns += `<button onclick="deletePhoto(event, '${item.id}')" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-rose-600/90 text-white font-bold text-[10px] sm:text-xs flex items-center justify-center shadow hover:scale-110 transition" title="Xóa">✕</button>`;
@@ -875,7 +920,6 @@
       renderFilmstrip();
     }
 
-    // --- KHO ẢNH CHUNG (TỰ ĐỘNG CHIA NHÓM THEO THỜI GIAN/SỰ KIỆN KHI CHỌN "TẤT CẢ") ---
     function renderMegaGallery() {
       const megaGridContainer = document.getElementById('megaGalleryGrid');
       megaGridContainer.innerHTML = '';
@@ -902,7 +946,6 @@
         const catPhotos = photos.filter(p => p.cat === cat);
         if (catPhotos.length === 0) return;
 
-        // Nếu khách đang xem tab Tất cả -> In ra tiêu đề nhóm để ảnh không bị "chạy lung tung"
         if (currentFilter === 'all') {
           finalHtml += `<h4 class="font-extrabold text-sm sm:text-base text-royal pb-1.5 border-b border-skyPastel w-full tracking-wider mt-4 mb-3">📌 ${eventLabels[cat]}</h4>`;
         }
@@ -990,7 +1033,6 @@
                 title: inserted.title
               });
               
-              // KHÁCH UP ẢNH THÌ ĐƯỢC LƯU MÃ ID VÀO MÁY ĐỂ LÁT ĐƯỢC QUYỀN XÓA/SỬA
               myUploads.push(newIdStr);
               localStorage.setItem('tu013_my_uploads', JSON.stringify(myUploads));
               continue;
@@ -1031,7 +1073,6 @@
       renderMegaGallery();
     }
 
-    // 4. LIGHTBOX LƯỚT ẢNH
     let activeLightboxList = [];
     let activeLightboxIndex = 0;
 
@@ -1141,15 +1182,6 @@
       }
     }, { passive: true });
 
-    window.addEventListener('keydown', (e) => {
-      const modal = document.getElementById('lightboxModal');
-      if (modal.classList.contains('hidden')) return;
-      if (e.key === 'ArrowLeft') stepLightbox(-1);
-      if (e.key === 'ArrowRight') stepLightbox(1);
-      if (e.key === 'Escape') closeLightbox();
-    });
-
-    // 5. LỜI CHÚC (BẢO MẬT TÊN)
     function maskName(fullName) {
       if (!fullName) return 'Khách ẩn danh';
       if (window.isAdmin) return fullName; 
@@ -1191,7 +1223,6 @@
       alert('Đã gửi gắm lời chúc thành công đến Đức Trí & Tố Uyên!');
     }
 
-    // --- QUẢN TRỊ ADMIN (PHÂN QUYỀN TẢI/XÓA TẤT CẢ ẢNH) ---
     function openAdminModal() {
       document.getElementById('adminModal').classList.remove('hidden');
       document.getElementById('adminModal').classList.add('flex');
@@ -1205,14 +1236,14 @@
     function verifyAdminPassword() {
       const pass = document.getElementById('adminPassword').value;
       if (pass === '2026') {
-        window.isAdmin = true; // KÍCH HOẠT QUYỀN ADMIN
+        window.isAdmin = true;
         
         document.getElementById('adminLoginArea').classList.add('hidden');
         document.getElementById('adminDashboardArea').classList.remove('hidden');
         
         renderAdminWishTable();
         renderWishes(); 
-        renderAllGalleries(); // Cập nhật lại UI để Admin thấy nút Tải & Xóa
+        renderAllGalleries();
         
         alert('Đã bật quyền Admin! Bạn có thể xem tên thật, tải xuống hoặc xóa BẤT KỲ ảnh nào trên website.');
       } else {
