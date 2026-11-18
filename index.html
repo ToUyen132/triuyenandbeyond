@@ -118,7 +118,7 @@
   <!-- Thông báo trạng thái tải ảnh lên Kho Chung -->
   <div id="uploadToast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 hidden bg-royal text-sunYellow px-4 py-2 rounded-full shadow-2xl border-2 border-sunYellow text-xs font-extrabold items-center gap-2">
     <span class="animate-spin">⏳</span>
-    <span id="uploadToastText">Đang đồng bộ ảnh cho mọi người cùng xem...</span>
+    <span id="uploadToastText">Đang xử lý...</span>
   </div>
 
   <!-- TRÌNH PHÁT NHẠC NỀN TỰ ĐỘNG TẢI TRƯỚC (PRELOAD) -->
@@ -301,10 +301,10 @@
     </div>
   </section>
 
-  <!-- PHẦN 3: KHO ẢNH CHUNG (ĐÃ XÓA TAGLINE, BỘ LỌC VÀ NÚT TẢI LÊN ĐỂ TINH GỌN) -->
+  <!-- PHẦN 3: KHO ẢNH CHUNG (TỰ ĐỘNG NHÓM ẢNH THEO SỰ KIỆN KHI CHỌN "TẤT CẢ") -->
   <section id="mega-album" class="py-8 px-3.5 sm:px-4 bg-white/75 border-y-2 border-skyPastel scroll-mt-14">
     <div class="max-w-md lg:max-w-5xl mx-auto">
-      <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
         <span class="px-3.5 py-1.5 rounded-full bg-royal text-sunYellow font-extrabold text-[11px] sm:text-xs uppercase tracking-wider shadow">
           ✈️ KHO ẢNH CHUYẾN BAY HẠNH PHÚC
         </span>
@@ -316,7 +316,27 @@
         </div>
       </div>
 
-      <div id="megaGalleryGrid" class="compact-scroll max-h-[400px] overflow-y-auto pr-1 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2"></div>
+      <div class="flex flex-wrap gap-1.5 mb-3">
+        <button onclick="setAlbumFilter('all')" id="filter-all" class="px-3 py-1.5 rounded-full text-[11px] font-extrabold bg-sunYellow text-royal shadow-sm transition">Tất cả (<span id="badge-all">0</span>)</button>
+        <button onclick="setAlbumFilter('nhagai')" id="filter-nhagai" class="px-3 py-1.5 rounded-full text-[11px] font-bold bg-white text-royal border border-skyPastel transition">🌸 Lễ Vu Quy (<span id="badge-nhagai">0</span>)</button>
+        <button onclick="setAlbumFilter('giatien')" id="filter-giatien" class="px-3 py-1.5 rounded-full text-[11px] font-bold bg-white text-royal border border-skyPastel transition">🏮 Gia Tiên (<span id="badge-giatien">0</span>)</button>
+        <button onclick="setAlbumFilter('nhatrai')" id="filter-nhatrai" class="px-3 py-1.5 rounded-full text-[11px] font-bold bg-white text-royal border border-skyPastel transition">🥂 Lễ Tân Hôn (<span id="badge-nhatrai">0</span>)</button>
+      </div>
+
+      <div class="flex items-center gap-2 mb-4">
+        <select id="uploadCategorySelect" class="flex-1 px-3 py-2 rounded-xl bg-white border-2 border-skyPastel text-royal font-bold text-xs focus:outline-none opacity-60">
+          <option value="nhagai">Lưu vào: Lễ Vu Quy (07.11)</option>
+          <option value="giatien">Lưu vào: Gia Tiên (14.11)</option>
+          <option value="nhatrai">Lưu vào: Lễ Tân Hôn (21.11)</option>
+        </select>
+        <label class="px-3.5 py-2 rounded-xl bg-royal active:bg-royalLight text-sunYellow font-extrabold text-xs cursor-pointer shadow-md transition shrink-0 opacity-80 hover:opacity-100 hover:scale-105">
+          ➕ Thêm hình / video
+          <input type="file" accept="image/*,video/*" multiple class="hidden" onchange="handleMegaUpload(event)" />
+        </label>
+      </div>
+
+      <!-- Vùng chứa lưới ảnh Mega (Sẽ được JS render động theo từng nhóm sự kiện) -->
+      <div id="megaGalleryGrid" class="w-full"></div>
     </div>
   </section>
 
@@ -331,8 +351,8 @@
       </div>
 
       <div class="flex items-center gap-1.5">
-        <button onclick="scrollPreStrip(-1)" class="w-8 h-8 rounded-full bg-white/15 active:bg-sunYellow active:text-royal text-white font-extrabold text-xs flex items-center justify-center border border-white/30 transition" title="Lướt trái">❮</button>
-        <button onclick="scrollPreStrip(1)" class="w-8 h-8 rounded-full bg-white/15 active:bg-sunYellow active:text-royal text-white font-extrabold text-xs flex items-center justify-center border border-white/30 transition" title="Lướt phải">❯</button>
+        <button onclick="scrollPreStrip(-1)" class="w-8 h-8 rounded-full bg-white/15 active:bg-sunYellow active:text-royal text-white font-extrabold text-xs flex items-center justify-center border border-white/30 transition hover:scale-110" title="Lướt trái">❮</button>
+        <button onclick="scrollPreStrip(1)" class="w-8 h-8 rounded-full bg-white/15 active:bg-sunYellow active:text-royal text-white font-extrabold text-xs flex items-center justify-center border border-white/30 transition hover:scale-110" title="Lướt phải">❯</button>
       </div>
     </div>
 
@@ -357,16 +377,18 @@
           <h4 class="font-extrabold text-xs sm:text-sm text-royal flex items-center gap-1.5">✈️ Gửi Lời Chúc Đến Đức Trí &amp; Tố Uyên</h4>
           <input id="guestName" type="text" required placeholder="Tên của bạn..." class="w-full px-3 py-2 rounded-xl border border-skyPastel text-xs focus:outline-none focus:border-royal" />
           <textarea id="guestWish" rows="3" required placeholder="Viết lời chúc yêu thương gửi đến Đức Trí & Tố Uyên..." class="w-full px-3 py-2 rounded-xl border border-skyPastel text-xs focus:outline-none focus:border-royal"></textarea>
-          <button type="submit" class="w-full py-2.5 rounded-xl bg-royal active:bg-royalLight text-sunYellow font-extrabold text-xs shadow transition">🚀 Phóng Máy Bay Ngay</button>
+          <button type="submit" class="w-full py-2.5 rounded-xl bg-royal active:bg-royalLight text-sunYellow font-extrabold text-xs shadow transition hover:scale-105">🚀 Phóng Máy Bay Ngay</button>
         </form>
 
         <div class="md:col-span-6 flex flex-col justify-between space-y-3">
+          <!-- Bảng hiển thị lời chúc công khai nhưng đã che tên bảo mật -->
           <div id="wishSkyList" class="space-y-2 max-h-44 overflow-y-auto compact-scroll pr-1"></div>
 
+          <!-- Nút Admin Quản Trị & Tải Excel -->
           <div class="pt-2 border-t border-dashed border-skyPastel flex items-center justify-between">
             <span class="text-[10px] text-slate-400 italic">🔐 Khu vực riêng tư Cô Dâu & Chú Rể</span>
-            <button onclick="openAdminModal()" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-[11px] shadow transition">
-              ⚙️ Admin Tải Excel
+            <button onclick="openAdminModal()" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-[11px] shadow transition hover:scale-105">
+              ⚙️ Admin & Tải File
             </button>
           </div>
         </div>
@@ -374,22 +396,22 @@
     </div>
   </section>
 
-  <!-- MODAL ĐĂNG NHẬP ADMIN XEM TOÀN BỘ LỜI CHÚC & TẢI EXCEL -->
+  <!-- MODAL ĐĂNG NHẬP ADMIN (TẢI EXCEL & QUẢN TRỊ ẢNH) -->
   <div id="adminModal" class="fixed inset-0 z-50 bg-royal/90 backdrop-blur-md hidden items-center justify-center p-4">
     <div class="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl border-4 border-sunYellow relative">
       <button onclick="closeAdminModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-rose-500 hover:text-white font-bold flex items-center justify-center transition">✕</button>
       
       <div id="adminLoginArea">
         <h3 class="font-extrabold text-lg text-royal mb-2">🔐 Đăng Nhập Quản Trị Hệ Thống</h3>
-        <p class="text-xs text-slate-500 mb-4">Nhập mật khẩu để mở khóa danh sách lời chúc đầy đủ tên và kích hoạt quyền XÓA toàn bộ ảnh trên website.</p>
+        <p class="text-xs text-slate-500 mb-4">Nhập mật khẩu để mở khóa danh sách lời chúc đầy đủ tên, kích hoạt quyền tải xuống và xóa TẤT CẢ ảnh trên web.</p>
         <input id="adminPassword" type="password" placeholder="Nhập mật khẩu (Mặc định: 2026)..." class="w-full px-3.5 py-2.5 rounded-xl border border-skyPastel text-xs mb-3 focus:outline-none focus:border-royal opacity-60" />
-        <button onclick="verifyAdminPassword()" class="w-full py-2.5 rounded-xl bg-royal text-sunYellow font-extrabold text-xs shadow">Mở Khóa Quản Trị</button>
+        <button onclick="verifyAdminPassword()" class="w-full py-2.5 rounded-xl bg-royal text-sunYellow font-extrabold text-xs shadow hover:scale-105 transition">Mở Khóa Quản Trị</button>
       </div>
 
       <div id="adminDashboardArea" class="hidden">
         <div class="flex items-center justify-between mb-3">
           <h3 class="font-extrabold text-base text-royal">📋 Danh Sách Lời Chúc Gốc</h3>
-          <button onclick="exportWishesToExcel()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow transition flex items-center gap-1.5">
+          <button onclick="exportWishesToExcel()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow transition flex items-center gap-1.5 hover:scale-105">
             📥 Tải File Excel
           </button>
         </div>
@@ -406,18 +428,18 @@
         <span id="lightboxCounter" class="text-xs font-extrabold text-sunYellow">1 / 16</span>
         <span id="lightboxCaption" class="text-xs font-semibold text-skyPastel truncate hidden sm:inline">Khoảnh khắc</span>
       </div>
-      <button onclick="closeLightbox()" class="w-9 h-9 rounded-full bg-white/20 active:bg-rose-500 text-base font-bold flex items-center justify-center shrink-0">✕</button>
+      <button onclick="closeLightbox()" class="w-9 h-9 rounded-full bg-white/20 active:bg-rose-500 text-base font-bold flex items-center justify-center shrink-0 hover:scale-110 transition">✕</button>
     </div>
 
     <div id="lightboxTouchArea" class="relative flex-1 flex items-center justify-center max-w-5xl w-full mx-auto my-1 overflow-hidden">
-      <button id="lbPrevBtn" onclick="stepLightbox(-1)" class="absolute left-1 sm:left-3 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-royal/80 hover:bg-sunYellow text-sunYellow hover:text-royal border-2 border-white/60 text-lg sm:text-xl font-extrabold flex items-center justify-center shadow-xl active:scale-90 transition" title="Ảnh trước">
+      <button id="lbPrevBtn" onclick="stepLightbox(-1)" class="absolute left-1 sm:left-3 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-royal/80 hover:bg-sunYellow text-sunYellow hover:text-royal border-2 border-white/60 text-lg sm:text-xl font-extrabold flex items-center justify-center shadow-xl active:scale-90 transition hover:scale-110" title="Ảnh trước">
         ❮
       </button>
 
       <img id="lightboxImg" src="" alt="Preview" class="max-h-[72vh] max-w-full object-contain rounded-xl shadow-2xl border-2 border-white transition-transform duration-200" />
       <video id="lightboxVideo" src="" controls playsinline class="hidden max-h-[72vh] max-w-full rounded-xl shadow-2xl border-2 border-white bg-black"></video>
 
-      <button id="lbNextBtn" onclick="stepLightbox(1)" class="absolute right-1 sm:right-3 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-royal/80 hover:bg-sunYellow text-sunYellow hover:text-royal border-2 border-white/60 text-lg sm:text-xl font-extrabold flex items-center justify-center shadow-xl active:scale-90 transition" title="Ảnh tiếp theo">
+      <button id="lbNextBtn" onclick="stepLightbox(1)" class="absolute right-1 sm:right-3 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-royal/80 hover:bg-sunYellow text-sunYellow hover:text-royal border-2 border-white/60 text-lg sm:text-xl font-extrabold flex items-center justify-center shadow-xl active:scale-90 transition hover:scale-110" title="Ảnh tiếp theo">
         ❯
       </button>
     </div>
@@ -436,14 +458,14 @@
         onerror="resolveSmartLogo(this)" 
         ondblclick="document.getElementById('logoFileInput').click()"
         alt="Đức Trí & Tố Uyên - AND BEYOND" 
-        class="brand-logo-img wedding-logo-img h-12 sm:h-16 w-auto max-w-[220px] sm:max-w-[280px] object-contain cursor-pointer" 
+        class="brand-logo-img wedding-logo-img h-12 sm:h-16 w-auto max-w-[220px] sm:max-w-[280px] object-contain cursor-pointer hover:scale-105 transition" 
       />
     </div>
     <p class="font-bold text-royal text-[11px] sm:text-xs">Hãng Hàng Không Tình Yêu TUAIRLINE • Chuyến Bay TU013</p>
     <p class="mt-0.5 text-[11px]">07.11.2026 (Lễ Vu Quy) • 14.11.2026 (Gia Tiên) • 21.11.2026 (Lễ Tân Hôn)</p>
   </footer>
 
-  <!-- JAVASCRIPT XỬ LÝ ĐỒNG BỘ REALTIME & PHÂN QUYỀN XÓA ẢNH BẢO MẬT -->
+  <!-- JAVASCRIPT XỬ LÝ ĐỒNG BỘ REALTIME & PHÂN QUYỀN (ADMIN DOWN/XÓA) -->
   <script>
     const SUPABASE_URL = 'https://iivycnnuxnmoearnvuvj.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_vrU0N7jPusDwnmOnyd_FeA_2LtD5L-z';
@@ -454,7 +476,7 @@
 
     const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/ToUyen132/triuyenandbeyond/main/';
 
-    // Biến toàn cục để quản lý quyền xóa ảnh
+    // MẢNG LƯU TRỮ ID ẢNH ĐỂ CẤP QUYỀN SỬA/XÓA CHO NGƯỜI UP 
     let myUploads = JSON.parse(localStorage.getItem('tu013_my_uploads') || '[]');
     window.isAdmin = false;
 
@@ -507,7 +529,7 @@
       });
     }
 
-    // Nhạc nền
+    // --- XỬ LÝ NHẠC NỀN TỐI ƯU ---
     const bgMusic = document.getElementById('bgMusic');
     const vinylDisc = document.getElementById('vinylDisc');
     const musicStatusDot = document.getElementById('musicStatusDot');
@@ -547,7 +569,7 @@
       });
     });
 
-    // ALBUM CƯỚI PRE-WEDDING
+    // --- ALBUM PRE-WEDDING CHUẨN ---
     const filmstripPhotos = [
       { file: 'KBEA030.jpg', title: 'Save the Date - Đức Trí & Tố Uyên' },
       { file: 'KBEA020.jpg', title: 'Nâng ly chúc mừng hạnh phúc' },
@@ -590,15 +612,16 @@
       carouselEl.scrollBy({ left: dir * 240, behavior: 'smooth' });
     }
 
-    // ĐỒNG BỘ REALTIME & NÉN ẢNH
+    // --- ĐỒNG BỘ REALTIME & XỬ LÝ ẢNH CHUNG ---
     const eventLabels = {
-      nhagai: 'Lễ Vu Quy 07.11',
-      giatien: 'Gia Tiên 14.11',
-      nhatrai: 'Lễ Tân Hôn 21.11'
+      nhagai: 'Lễ Vu Quy (07.11)',
+      giatien: 'Gia Tiên (14.11)',
+      nhatrai: 'Lễ Tân Hôn (21.11)'
     };
 
     let photos = [];
     let wishes = [];
+    let currentFilter = 'all';
     let currentLayout = 'compact';
 
     function showUploadToast(msg, show = true) {
@@ -689,9 +712,6 @@
           .on('postgres_changes', { event: '*', schema: 'public', table: 'wedding_media' }, () => { fetchAllFromSupabase(); })
           .on('postgres_changes', { event: '*', schema: 'public', table: 'wedding_wishes' }, () => { fetchAllFromSupabase(); })
           .subscribe();
-      } else {
-        renderAllGalleries();
-        renderWishes();
       }
     }
 
@@ -709,17 +729,44 @@
       return `<img src="${item.url}" alt="${item.title}" class="${extraClass}" loading="lazy" />`;
     }
 
+    // ADMIN TẢI ẢNH XUỐNG MÁY TÍNH/ĐIỆN THOẠI
+    async function downloadPhoto(event, url, title) {
+      event.stopPropagation();
+      try {
+        showUploadToast('Đang xử lý tải xuống...', true);
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Lỗi mạng');
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = blobUrl;
+        
+        const ext = url.includes('.mp4') || url.includes('video') ? '.mp4' : '.jpg';
+        a.download = `TU013_${title.replace(/\s+/g, '_')}${ext}`;
+        
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(blobUrl);
+        document.body.removeChild(a);
+        showUploadToast('', false);
+      } catch (err) {
+        showUploadToast('', false);
+        window.open(url, '_blank'); 
+      }
+    }
+
     async function deletePhoto(event, id) {
       event.stopPropagation();
       const strId = String(id);
       
-      // KIỂM TRA QUYỀN XÓA ẢNH
+      // KIỂM TRA QUYỀN BẢO MẬT TRƯỚC KHI XÓA
       if (!window.isAdmin && !myUploads.includes(strId)) {
-        alert("Bạn không có quyền xóa ảnh này!");
+        alert("Bạn không có quyền xóa ảnh của người khác!");
         return;
       }
 
-      if (!confirm('Bạn muốn xóa ảnh này khỏi album chung?')) return;
+      if (!confirm('Bạn có chắc chắn muốn xóa ảnh này khỏi album chung?')) return;
 
       if (supabaseClient) {
         await supabaseClient.from('wedding_media').delete().eq('id', id);
@@ -733,7 +780,7 @@
       const strId = String(id);
 
       if (!window.isAdmin && !myUploads.includes(strId)) {
-        alert("Bạn không có quyền sửa ảnh này!");
+        alert("Bạn không có quyền chỉnh sửa ảnh của người khác!");
         return;
       }
 
@@ -766,22 +813,36 @@
       input.click();
     }
 
-    // Sinh mã HTML Nút Hành Động dựa trên phân quyền
+    // HIỂN THỊ NÚT THAO TÁC CÓ BẢO MẬT (NGƯỜI XEM KHÔNG THẤY NÚT)
     function getActionButtonsHTML(item) {
-      const canEdit = window.isAdmin || myUploads.includes(String(item.id));
-      if (!canEdit) return ''; // Người xem không có quyền sẽ không thấy nút xóa/sửa
+      const strId = String(item.id);
+      const isOwner = myUploads.includes(strId);
+      const canEdit = window.isAdmin || isOwner;
+      
+      if (!canEdit && !window.isAdmin) return ''; 
 
-      return `
-        <div class="absolute top-1 right-1 z-20 flex items-center gap-0.5">
-          <button onclick="triggerReplacePhoto(event, '${item.id}')" class="w-6 h-6 rounded-full bg-royal/90 text-sunYellow font-bold text-[10px] flex items-center justify-center shadow hover:scale-110 transition" title="Đổi">✏️</button>
-          <button onclick="deletePhoto(event, '${item.id}')" class="w-6 h-6 rounded-full bg-rose-600/90 text-white font-bold text-[10px] flex items-center justify-center shadow hover:scale-110 transition" title="Xóa">✕</button>
-        </div>
-      `;
+      let btns = `<div class="absolute top-1.5 right-1.5 z-20 flex items-center gap-1">`;
+      
+      // Chỉ Admin mới thấy nút Tải Xuống
+      if (window.isAdmin) {
+         btns += `<button onclick="downloadPhoto(event, '${item.url}', '${item.title}')" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-emerald-600/90 text-white font-bold text-[10px] sm:text-xs flex items-center justify-center shadow hover:scale-110 transition" title="Tải xuống">⬇️</button>`;
+      }
+      
+      // Admin hoặc Người up mới thấy nút Đổi/Xóa
+      if (canEdit) {
+         btns += `<button onclick="triggerReplacePhoto(event, '${item.id}')" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-royal/90 text-sunYellow font-bold text-[10px] sm:text-xs flex items-center justify-center shadow hover:scale-110 transition" title="Đổi">✏️</button>`;
+         btns += `<button onclick="deletePhoto(event, '${item.id}')" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-rose-600/90 text-white font-bold text-[10px] sm:text-xs flex items-center justify-center shadow hover:scale-110 transition" title="Xóa">✕</button>`;
+      }
+      
+      btns += `</div>`;
+      return btns;
     }
 
     function renderAllGalleries() {
       ['nhagai', 'giatien', 'nhatrai'].forEach(cat => {
         const list = photos.filter(p => p.cat === cat);
+        document.getElementById(`badge-${cat}`).textContent = list.length;
+
         const gridEl = document.getElementById(`grid-${cat}`);
         if (list.length === 0) {
           gridEl.innerHTML = `
@@ -814,12 +875,16 @@
       renderFilmstrip();
     }
 
+    // --- KHO ẢNH CHUNG (TỰ ĐỘNG CHIA NHÓM THEO THỜI GIAN/SỰ KIỆN KHI CHỌN "TẤT CẢ") ---
     function renderMegaGallery() {
-      const megaGrid = document.getElementById('megaGalleryGrid');
+      const megaGridContainer = document.getElementById('megaGalleryGrid');
+      megaGridContainer.innerHTML = '';
       
-      if (photos.length === 0) {
-        megaGrid.className = 'grid grid-cols-1';
-        megaGrid.innerHTML = `
+      const filtered = currentFilter === 'all' ? photos : photos.filter(p => p.cat === currentFilter);
+
+      if (filtered.length === 0) {
+        megaGridContainer.className = 'grid grid-cols-1';
+        megaGridContainer.innerHTML = `
           <div class="border-2 border-dashed border-skyPastel bg-skySoft/40 rounded-2xl py-8 px-4 text-center flex flex-col items-center justify-center">
             <span class="text-3xl mb-2">✈️</span>
             <span class="text-royal font-bold text-sm">Kho ảnh đang trống. Hãy là người đầu tiên tải ảnh lên ở các mục trên nhé!</span>
@@ -828,51 +893,67 @@
         return;
       }
 
-      if (currentLayout === 'polaroid') {
-        megaGrid.className = 'compact-scroll max-h-96 overflow-y-auto pr-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5';
-        megaGrid.innerHTML = photos.map((item, idx) => {
+      megaGridContainer.className = 'compact-scroll max-h-[440px] overflow-y-auto pr-1 flex flex-col w-full';
+      
+      const categoriesToRender = currentFilter === 'all' ? ['nhagai', 'giatien', 'nhatrai'] : [currentFilter];
+      let finalHtml = '';
+
+      categoriesToRender.forEach(cat => {
+        const catPhotos = photos.filter(p => p.cat === cat);
+        if (catPhotos.length === 0) return;
+
+        // Nếu khách đang xem tab Tất cả -> In ra tiêu đề nhóm để ảnh không bị "chạy lung tung"
+        if (currentFilter === 'all') {
+          finalHtml += `<h4 class="font-extrabold text-sm sm:text-base text-royal pb-1.5 border-b border-skyPastel w-full tracking-wider mt-4 mb-3">📌 ${eventLabels[cat]}</h4>`;
+        }
+
+        let gridClass = '';
+        if (currentLayout === 'polaroid') gridClass = 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5';
+        else if (currentLayout === 'masonry') gridClass = 'columns-2 sm:columns-3 gap-3 space-y-3';
+        else gridClass = 'grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2';
+
+        finalHtml += `<div class="${gridClass} w-full">`;
+        
+        finalHtml += catPhotos.map((item, idx) => {
           const globalIdx = photos.findIndex(p => String(p.id) === String(item.id));
-          const rot = idx % 2 === 0 ? 'rotate-[-1deg]' : 'rotate-[1deg]';
           const actionBtns = getActionButtonsHTML(item);
-          return `
-            <div class="polaroid-item group bg-white p-2.5 pb-3 rounded-2xl shadow-md border border-skyPastel relative ${rot}">
-              ${actionBtns}
-              <div class="washi-tape w-12 h-3.5 mx-auto -mt-4 mb-1.5 rounded-sm"></div>
-              <div onclick="openGuestLightbox(${globalIdx})" class="aspect-[3/4] rounded-xl overflow-hidden bg-skySoft cursor-pointer">
+          
+          if (currentLayout === 'polaroid') {
+            const rot = idx % 2 === 0 ? 'rotate-[-1deg]' : 'rotate-[1deg]';
+            return `
+              <div class="polaroid-item group bg-white p-2.5 pb-3 rounded-2xl shadow-md border border-skyPastel relative ${rot} break-inside-avoid">
+                ${actionBtns}
+                <div class="washi-tape w-12 h-3.5 mx-auto -mt-4 mb-1.5 rounded-sm"></div>
+                <div onclick="openGuestLightbox(${globalIdx})" class="aspect-[3/4] rounded-xl overflow-hidden bg-skySoft cursor-pointer">
+                  ${renderMediaElement(item, 'w-full h-full object-cover object-top')}
+                </div>
+                <div class="mt-2 flex items-center justify-between gap-1">
+                  <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-skySoft text-royal">${eventLabels[item.cat]}</span>
+                  <span class="text-xs">${item.type === 'video' ? '🎬' : '✈️'}</span>
+                </div>
+              </div>
+            `;
+          } else if (currentLayout === 'masonry') {
+            return `
+              <div onclick="openGuestLightbox(${globalIdx})" class="break-inside-avoid group relative rounded-xl overflow-hidden shadow-md border border-white bg-skySoft cursor-pointer">
+                ${actionBtns}
+                ${renderMediaElement(item, 'w-full aspect-[3/4] object-cover object-top')}
+              </div>
+            `;
+          } else {
+            return `
+              <div onclick="openGuestLightbox(${globalIdx})" class="group cursor-pointer relative aspect-square rounded-xl overflow-hidden border border-skyPastel bg-skySoft">
+                ${actionBtns}
                 ${renderMediaElement(item, 'w-full h-full object-cover object-top')}
               </div>
-              <div class="mt-2 flex items-center justify-between gap-1">
-                <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-skySoft text-royal">${eventLabels[item.cat]}</span>
-                <span class="text-xs">${item.type === 'video' ? '🎬' : '✈️'}</span>
-              </div>
-            </div>
-          `;
+            `;
+          }
         }).join('');
-      } else if (currentLayout === 'masonry') {
-        megaGrid.className = 'compact-scroll max-h-96 overflow-y-auto pr-1 columns-2 sm:columns-3 gap-3 space-y-3';
-        megaGrid.innerHTML = photos.map((item) => {
-          const globalIdx = photos.findIndex(p => String(p.id) === String(item.id));
-          const actionBtns = getActionButtonsHTML(item);
-          return `
-            <div onclick="openGuestLightbox(${globalIdx})" class="break-inside-avoid group relative rounded-xl overflow-hidden shadow-md border border-white bg-skySoft cursor-pointer">
-              ${actionBtns}
-              ${renderMediaElement(item, 'w-full aspect-[3/4] object-cover object-top')}
-            </div>
-          `;
-        }).join('');
-      } else {
-        megaGrid.className = 'compact-scroll max-h-80 overflow-y-auto pr-1 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2';
-        megaGrid.innerHTML = photos.map((item) => {
-          const globalIdx = photos.findIndex(p => String(p.id) === String(item.id));
-          const actionBtns = getActionButtonsHTML(item);
-          return `
-            <div onclick="openGuestLightbox(${globalIdx})" class="group cursor-pointer relative aspect-square rounded-xl overflow-hidden border border-skyPastel bg-skySoft">
-              ${actionBtns}
-              ${renderMediaElement(item, 'w-full h-full object-cover object-top')}
-            </div>
-          `;
-        }).join('');
-      }
+        
+        finalHtml += `</div>`;
+      });
+
+      megaGridContainer.innerHTML = finalHtml;
     }
 
     async function handleBatchUpload(event, category) {
@@ -909,7 +990,7 @@
                 title: inserted.title
               });
               
-              // LƯU QUYỀN SỞ HỮU ẢNH TRÊN THIẾT BỊ NÀY ĐỂ ĐƯỢC PHÉP XÓA
+              // KHÁCH UP ẢNH THÌ ĐƯỢC LƯU MÃ ID VÀO MÁY ĐỂ LÁT ĐƯỢC QUYỀN XÓA/SỬA
               myUploads.push(newIdStr);
               localStorage.setItem('tu013_my_uploads', JSON.stringify(myUploads));
               continue;
@@ -923,6 +1004,22 @@
       event.target.value = '';
     }
 
+    function handleMegaUpload(event) {
+      const cat = document.getElementById('uploadCategorySelect').value;
+      handleBatchUpload(event, cat);
+    }
+
+    function setAlbumFilter(filter) {
+      currentFilter = filter;
+      ['all', 'nhagai', 'giatien', 'nhatrai'].forEach(k => {
+        const btn = document.getElementById(`filter-${k}`);
+        btn.className = k === filter 
+          ? 'px-3 py-1.5 rounded-full text-[11px] font-extrabold bg-sunYellow text-royal shadow-sm transition' 
+          : 'px-3 py-1.5 rounded-full text-[11px] font-bold bg-white text-royal border border-skyPastel transition';
+      });
+      renderMegaGallery();
+    }
+
     function setGalleryLayout(layout) {
       currentLayout = layout;
       ['polaroid', 'masonry', 'compact'].forEach(k => {
@@ -934,7 +1031,7 @@
       renderMegaGallery();
     }
 
-    // LIGHTBOX LƯỚT ẢNH
+    // 4. LIGHTBOX LƯỚT ẢNH
     let activeLightboxList = [];
     let activeLightboxIndex = 0;
 
@@ -1052,10 +1149,10 @@
       if (e.key === 'Escape') closeLightbox();
     });
 
-    // LỜI CHÚC (BẢO MẬT TÊN & XUẤT EXCEL CHO ADMIN)
+    // 5. LỜI CHÚC (BẢO MẬT TÊN)
     function maskName(fullName) {
       if (!fullName) return 'Khách ẩn danh';
-      if (window.isAdmin) return fullName; // Admin xem được tên thật đầy đủ
+      if (window.isAdmin) return fullName; 
       const parts = fullName.trim().split(' ');
       if (parts.length === 1) {
         return parts[0].charAt(0) + '***';
@@ -1094,7 +1191,7 @@
       alert('Đã gửi gắm lời chúc thành công đến Đức Trí & Tố Uyên!');
     }
 
-    // --- QUẢN TRỊ ADMIN (PHÂN QUYỀN XÓA TOÀN BỘ ẢNH) ---
+    // --- QUẢN TRỊ ADMIN (PHÂN QUYỀN TẢI/XÓA TẤT CẢ ẢNH) ---
     function openAdminModal() {
       document.getElementById('adminModal').classList.remove('hidden');
       document.getElementById('adminModal').classList.add('flex');
@@ -1108,16 +1205,16 @@
     function verifyAdminPassword() {
       const pass = document.getElementById('adminPassword').value;
       if (pass === '2026') {
-        window.isAdmin = true; // KÍCH HOẠT QUYỀN LỰC TỐI CAO
+        window.isAdmin = true; // KÍCH HOẠT QUYỀN ADMIN
         
         document.getElementById('adminLoginArea').classList.add('hidden');
         document.getElementById('adminDashboardArea').classList.remove('hidden');
         
         renderAdminWishTable();
-        renderWishes(); // Render lại danh sách để hiện tên thật
-        renderAllGalleries(); // Render lại ảnh để hiện TẤT CẢ nút Xóa
+        renderWishes(); 
+        renderAllGalleries(); // Cập nhật lại UI để Admin thấy nút Tải & Xóa
         
-        alert('Đã bật quyền Admin! Bạn có thể xem tên thật khách mời và xóa BẤT KỲ ảnh nào trên website.');
+        alert('Đã bật quyền Admin! Bạn có thể xem tên thật, tải xuống hoặc xóa BẤT KỲ ảnh nào trên website.');
       } else {
         alert('Mật khẩu không đúng! (Mật khẩu mặc định là: 2026)');
       }
